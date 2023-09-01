@@ -5,7 +5,15 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  productName_ar: {
+    type: String,
+    require: true,
+  },
   color: {
+    type: String,
+    require: true,
+  },
+  color_ar: {
     type: String,
     require: true,
   },
@@ -13,7 +21,15 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  productModel_ar: {
+    type: String,
+    require: true,
+  },
   protocol: {
+    type: String,
+    require: true,
+  },
+  protocol_ar: {
     type: String,
     require: true,
   },
@@ -21,7 +37,16 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  certification_ar: {
+    type: String,
+    require: true,
+  },
+  
   maxResolution: {
+    type: String,
+    require: true,
+  },
+  maxResolution_ar: {
     type: String,
     require: true,
   },
@@ -42,6 +67,10 @@ const schema = new mongoose.Schema({
     require: true,
   },
   description: {
+    type: String,
+    require: true,
+  },
+  description_ar: {
     type: String,
     require: true,
   },

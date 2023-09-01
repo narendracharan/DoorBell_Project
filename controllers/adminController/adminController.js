@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const { error, success } = require("../../response");
 const validator = require("validator");
 const { transporter } = require("../../services/mailServices");
+const languageModels = require("../../models/adminModels/languageModels");
 
 ///-------> admin Signup Api
 exports.adminRegister = async (req, res) => {
@@ -67,14 +68,12 @@ exports.loginAdmin = async (req, res) => {
             .json(error("User Password Are Incorrect", res.statusCode));
         }
       } else {
-        res
-          .status(403)
-          .json(error("User userEmail Are Incorrect", res.statusCode));
+        res.status(403).json(error("User name Are Incorrect", res.statusCode));
       }
     } else {
       res
         .status(403)
-        .json(error("UserEamil and Password Are empty", res.statusCode));
+        .json(error("UserName and Password Are empty", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -181,6 +180,43 @@ exports.adminEditProfile = async (req, res) => {
     } else {
       res.status(200).json(error("Invalid UserId ", res.statusCode));
     }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.addLanguage = async (req, res) => {
+  try {
+    const { language, deviceOs, device_Id } = req.body;
+    if (!language) {
+      res.status(200).json(error("please provide language", res.statusCode));
+    }
+    const newLanguage = new languageModels({
+      language: language,
+      deviceOs: deviceOs,
+      device_Id: device_Id,
+    });
+    const saveData = await newLanguage.save();
+    res.status(200).json(success(res.statusCode, "Success", { saveData }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.updateLanguage = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const data = {
+      language: req.body.language,
+      deviceOs: req.body.deviceOs,
+      device_Id: req.body.device_Id,
+    };
+    const updateLanguage = await languageModels.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    res
+      .status(200)
+      .json(success(res.statusCode, "Success", { updateLanguage }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
