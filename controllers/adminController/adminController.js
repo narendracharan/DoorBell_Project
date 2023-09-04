@@ -53,7 +53,7 @@ exports.loginAdmin = async (req, res) => {
         if (isMatch) {
           const token = await verifyUser.AdminAuthToken();
           return res
-            .header("x-auth-token-user", token)
+            .header("x-auth-token-admin", token)
             .header("access-control-expose-headers", "x-auth-token-admin")
             .status(201)
             .json(
