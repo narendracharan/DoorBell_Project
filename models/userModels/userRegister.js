@@ -21,6 +21,10 @@ const schema=new mongoose.Schema({
         type : Number ,
         required:true 
     },
+    userAppOtp:{
+        type : Number ,
+        required:true 
+    },
     totalafterDiscount:Number
 })
 schema.methods.userAuthToken = function () {

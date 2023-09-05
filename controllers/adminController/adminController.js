@@ -100,7 +100,7 @@ exports.sendUserResetPassword = async (req, res) => {
       );
       return res.status(200).json(success(res.statusCode, "Success", {}));
     } else {
-      res.status(400).json(error("userEmail are empty", res.statusCode));
+      res.status(201).json(error("userEmail are empty", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -115,7 +115,7 @@ exports.resetPassword = async (req, res) => {
     if (newPassword && confirmPassword && userEmail) {
       if (newPassword !== confirmPassword) {
         return res
-          .status(401)
+          .status(201)
           .json(error("newPassword Or confirmPassword Could Not Be Same"));
       } else {
         const passwordHash = await bcrypt.hash(newPassword, 10);

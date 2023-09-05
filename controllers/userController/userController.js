@@ -63,15 +63,15 @@ exports.loginUser= async (req, res) => {
               );
           } else {
             res
-              .status(403)
+              .status(201)
               .json(error("User Password Are Incorrect", res.statusCode));
           }
         } else {
-          res.status(403).json(error("UserEmail Are Incorrect", res.statusCode));
+          res.status(201).json(error("UserEmail Are Incorrect", res.statusCode));
         }
       } else {
         res
-          .status(403)
+          .status(201)
           .json(error("UserEmail and Password Are empty", res.statusCode));
       }
     } catch (err) {
@@ -100,7 +100,7 @@ exports.loginUser= async (req, res) => {
 
         return res.status(200).json(success(res.statusCode, "Success", {message}));
       } else {
-        res.status(400).json(error("userEmail are empty", res.statusCode));
+        res.status(201).json(error("userEmail are empty", res.statusCode));
       }
     } catch (err) {
       console.log(err);
