@@ -13,10 +13,15 @@ const schema=new mongoose.Schema({
         type : String ,
         required:true
     },
+    passwordApp:{
+        type : String ,
+        required:true
+    },
     otp:{
         type : Number ,
         required:true 
-    }
+    },
+    totalafterDiscount:Number
 })
 schema.methods.userAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, "ultra-security", {
