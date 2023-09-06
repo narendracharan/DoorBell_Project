@@ -13,6 +13,10 @@ const schema=new mongoose.Schema({
         type : String ,
         required:true
     },
+    mobileNumber:{
+        type : Number ,
+        required:true 
+    },
     passwordApp:{
         type : String ,
         required:true

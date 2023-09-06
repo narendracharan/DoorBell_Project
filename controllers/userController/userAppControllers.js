@@ -142,3 +142,25 @@ exports.resetUserAppPassword = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+exports.userProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userDetails = await userRegister.findById(id,{userAppOtp:0,totalafterDiscount:0,otp:0,password:0,passwordApp:0});
+    if (userDetails) {
+      res.status(200).json(success(res.statusCode, "Success", { userDetails }));
+    } else {
+      res.status(201).json(error("Invalid userId", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.editUserProfile=async(req,res)=>{
+  try{
+
+  }catch(err){
+    res.status(400).json()
+  }
+}

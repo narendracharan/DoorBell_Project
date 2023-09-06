@@ -4,7 +4,7 @@ const userAuthorisationUser = require("../middleware/userAuthentication")
 const { addToCarts, revomeCarts, cartsList, applyCoupan } = require("../controllers/userController/cartsControllers")
 const { createOrder } = require("../controllers/userController/orderControllers")
 const { tutorialList } = require("../controllers/adminController/tutorialController")
-const { loginUserApp, sendMailOtp, userAppVerify, resetUserAppPassword } = require("../controllers/userController/userAppControllers")
+const { loginUserApp, sendMailOtp, userAppVerify, resetUserAppPassword, userProfile } = require("../controllers/userController/userAppControllers")
 const router=express.Router()
 
 
@@ -26,4 +26,5 @@ router.post("/user-app-login",loginUserApp)
 router.post("/send-mail-otp",sendMailOtp)
 router.post("/verify-user-otp",userAppVerify)
 router.post("/resetPassword-user",resetUserAppPassword)
+router.post("/app-user-profile/:id",userAuthorisationUser,userProfile)
 module.exports=router
