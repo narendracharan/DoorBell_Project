@@ -11,23 +11,27 @@ const schema=new mongoose.Schema({
     },
     password:{
         type : String ,
-        required:true
+        require:true
+    },
+    profilePic:{
+        type : String ,
+        require:true
     },
     mobileNumber:{
         type : Number ,
-        required:true 
+       require:true 
     },
     passwordApp:{
         type : String ,
-        required:true
+       require:true
     },
     otp:{
         type : Number ,
-        required:true 
+        require:true 
     },
     userAppOtp:{
         type : Number ,
-        required:true 
+        require:true 
     },
     totalafterDiscount:Number
 })

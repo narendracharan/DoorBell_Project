@@ -40,6 +40,7 @@ const {
   tutorialUpdate,
   deleteTutorilas,
 } = require("../controllers/adminController/tutorialController");
+const { UserList } = require("../controllers/adminController/userManagement");
 const router = express.Router();
 
 //-admin Routes 
@@ -97,4 +98,5 @@ router.post("/create-coupan",adminAuthorisationUser,createCoupan)
 router.post("/coupan-list",adminAuthorisationUser,coupanList)
 router.post("/edit-coupan/:id",adminAuthorisationUser,editCoupan)
 router.post("/delete-coupan/:id",adminAuthorisationUser,deleteCoupan)
+router.post("/user-list",UserList)
 module.exports = router;

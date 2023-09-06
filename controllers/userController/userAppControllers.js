@@ -179,9 +179,15 @@ exports.editUserProfile = async (req, res) => {
         .status(201)
         .json(error("please provide mobileNumber", res.statusCode));
     }
+    const updateData={
+      userName: userName, 
+      userEmail: userEmail,
+       mobileNumber: mobileNumber ,
+       profilePic:req.file.fieldname
+    }
     const updateUser = await userRegister.findByIdAndUpdate(
       { _id: id },
-      { userName: userName, userEmail: userEmail, mobileNumber: mobileNumber },
+    updateData,
       { new: true }
     );
     res.status(200).json(success(res.statusCode, "Success", { updateUser }));
