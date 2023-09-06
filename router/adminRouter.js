@@ -61,7 +61,7 @@ router.post("/update-language/:id", updateLanguage);
 
 //---> Content Routes
 router.post("/add-content", adminAuthorisationUser, createContent);
-router.post("/content-list", adminAuthorisationUser, contentListing);
+router.get("/content-list", contentListing);
 router.post("/edit-content/:id", adminAuthorisationUser, editContent);
 
 

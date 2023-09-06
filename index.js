@@ -19,6 +19,11 @@ const userRouter = require("./router/userRoutes");
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 
+app.get("/", (req, res) => {
+  console.log("Hello");
+  res.status(200).send("Welcome to Doorbell");
+});
+
 app.listen(5000, () => {
   console.log(`Server is running port no:5000`);
 });

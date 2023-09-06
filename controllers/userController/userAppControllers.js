@@ -146,7 +146,13 @@ exports.resetUserAppPassword = async (req, res) => {
 exports.userProfile = async (req, res) => {
   try {
     const id = req.params.id;
-    const userDetails = await userRegister.findById(id,{userAppOtp:0,totalafterDiscount:0,otp:0,password:0,passwordApp:0});
+    const userDetails = await userRegister.findById(id, {
+      userAppOtp: 0,
+      totalafterDiscount: 0,
+      otp: 0,
+      password: 0,
+      passwordApp: 0,
+    });
     if (userDetails) {
       res.status(200).json(success(res.statusCode, "Success", { userDetails }));
     } else {
@@ -157,10 +163,28 @@ exports.userProfile = async (req, res) => {
   }
 };
 
-exports.editUserProfile=async(req,res)=>{
-  try{
-
-  }catch(err){
-    res.status(400).json()
+exports.editUserProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { userName, userEmail, mobileNumber } = req.body;
+    if (!userName) {
+      res.status(201).json(error("please provide userName", res.statusCode));
+    }
+    if (!userEmail) {
+      res.status(201).json(error("please provide userEmail", res.statusCode));
+    }
+    if (!mobileNumber) {
+      res
+        .status(201)
+        .json(error("please provide mobileNumber", res.statusCode));
+    }
+    const updateUser = await userRegister.findByIdAndUpdate(
+      { _id: id },
+      { userName: userName, userEmail: userEmail, mobileNumber: mobileNumber },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { updateUser }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
   }
-}
+};
