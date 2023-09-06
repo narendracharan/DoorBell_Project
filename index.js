@@ -20,10 +20,10 @@ app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 
 app.get("/", (req, res) => {
-  console.log("Hello");
-  res.status(200).send("Welcome to Doorbell");
+  console.log("i am a beautiful butterfly");
+  res.status(200).send("i am a beautiful butterfly");
 });
 
-app.listen(6000, () => {
+app.listen(3001, () => {
   console.log(`Server is running port no:5000`);
 });
