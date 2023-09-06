@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const app = express();
-//const cors = require("cors");
+const cors = require("cors");
 require("./config/connection");
 app.use(bodyParser.json());
 app.use(morgan("dev"));
@@ -12,7 +12,7 @@ app.use(morgan("dev"));
 //   credentials: true,
 //   optionSuccessStatus: 200,
 // };
-// app.use(cors(corsoptions));
+app.use(cors());
 const adminRouter = require("./router/adminRouter");
 const userRouter = require("./router/userRoutes");
 
