@@ -28,4 +28,5 @@ router.post("/verify-user-otp",userAppVerify)
 router.post("/resetPassword-user",resetUserAppPassword)
 router.post("/app-user-profile/:id",userAuthorisationUser,userProfile)
 router.post("/app-user-update/:id",userAuthorisationUser,editUserProfile)
+router.post("/user-app-about ")
 module.exports=router

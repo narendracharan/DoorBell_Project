@@ -1,3 +1,4 @@
+const contentModels = require("../../models/adminModels/contentModels");
 const tutorialModels = require("../../models/adminModels/tutorialScreen");
 const userRegister = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
@@ -188,3 +189,17 @@ exports.editUserProfile = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+
+exports.aboutUserApp=async(req,res)=>{
+  try{
+const aboutUsList=await contentModels.find({})
+if(aboutUsList){
+  res.status(200).json(success(res.statusCode,"Success",{aboutUsList}))
+}else{
+  res.status(200).json(error("No Data Found",res.statusCode))
+}
+  }catch(err){
+    res.status(400).json(error("Failed",res.statusCode))
+  }
+}
