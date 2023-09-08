@@ -76,7 +76,7 @@ const schema = new mongoose.Schema({
   },
   user_Id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "admin",
+    ref: "Doorbeladmin",
     require: true,
   },
 });

@@ -104,6 +104,7 @@ exports.createOrder = async (req, res) => {
       your Password:${updated.user_Id.passwordApp}
       `,
     };
+    console.log(mailOptions);
     await transporter.sendMail(mailOptions);
     res.status(200).json(success(res.statusCode, "Success", { saveOrder }));
   } catch (err) {

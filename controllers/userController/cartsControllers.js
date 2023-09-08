@@ -99,7 +99,7 @@ exports.applyCoupan = async (req, res) => {
       { totalafterDiscount: cartsTotalSum },
       { new: true }
     );
-   
+
     res.status(200).json(
       success(res.statusCode, "Success", {
         DiscountType,
@@ -107,6 +107,19 @@ exports.applyCoupan = async (req, res) => {
         cartsTotalSum,
       })
     );
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.productList = async (req, res) => {
+  try {
+    const productList = await productModels.find({});
+    if (productList) {
+      res.status(200).json(success(res.statusCode, "Success", { productList }));
+    } else {
+      return res.status(201).json(error("No Data Found", res.statusCode));
+    }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }

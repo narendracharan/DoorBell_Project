@@ -3,27 +3,27 @@ const mongoose=require("mongoose")
 const schema=new mongoose.Schema({
     coupanName:{
         type:String,
-        required:[true,"please enter the name"]
+        required:true
     },
     endDate:{
         type:Date,
-        required:[true,"please enter the name"]
+        require:true
     },
     startDate:{
         type:Date,
-        required:[true,"please enter the name"]
+        require:true
     },
     Discount:{
         type:Number,
-        required:[true,"please enter the name"]
+        require:true
     },
     coupanCode:{
         type:Number,
-        required:[true,"please enter the name"]
+        require:true
     },
     user_Id:{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "admin",
+        ref: "Doorbeladmin",
         require: true,
     }
 

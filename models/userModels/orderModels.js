@@ -42,7 +42,7 @@ const schema = new mongoose.Schema({
     {
       products_Id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "product",
+        ref: "doorBellProduct",
         require: true,
       },
       quantity: {
@@ -54,7 +54,7 @@ const schema = new mongoose.Schema({
   total: [],
   user_Id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "Doorbeluser",
     require: true,
   },
 });
