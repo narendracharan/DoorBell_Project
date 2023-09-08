@@ -20,4 +20,4 @@ const schema=new monoose.Schema({
 })
 
 schema.set("timestamps",true)
-module.exports=monoose.model("content",schema)
+module.exports=monoose.model("Doorbelcontent",schema)

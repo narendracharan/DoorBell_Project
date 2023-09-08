@@ -29,4 +29,4 @@ const schema=new mongoose.Schema({
 
 })
 schema.set("timestamps",true)
-module.exports=mongoose.model("Coupan",schema)
+module.exports=mongoose.model("DoorbelCoupan",schema)

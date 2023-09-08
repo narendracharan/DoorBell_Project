@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(cors());
 const adminRouter = require("./router/adminRouter");
 const userRouter = require("./router/userRoutes");
-
+process.env["BASE_URL"] = "http://ec2-16-171-57-155.eu-north-1.compute.amazonaws.com:3001";
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
 
@@ -24,6 +24,6 @@ app.get("/", (req, res) => {
   res.status(200).send("i am a beautiful butterfly");
 });
 
-app.listen(3001, () => {
-  console.log(`Server is running port no:5000`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running port no:3001`);
 });

@@ -20,4 +20,4 @@ const schema = new mongoose.Schema({
     
 })
 schema.set("timestamps",true)
-module.exports=mongoose.model("tutorial",schema)
+module.exports=mongoose.model("Doorbeltutorial",schema)

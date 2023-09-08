@@ -16,4 +16,4 @@ var schema=new mongoose.Schema({
     }
 })
 schema.set("timestamps",true)
-module.exports = mongoose.model('Device',schema);
+module.exports = mongoose.model('DoorbelDevice',schema);

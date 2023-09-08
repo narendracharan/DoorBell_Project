@@ -1,6 +1,5 @@
 const express = require("express");
 
-
 const {
   adminRegister,
   loginAdmin,
@@ -14,13 +13,11 @@ const {
 const adminAuthorisationUser = require("../middleware/adminAuthentication");
 const upload = require("../middleware/multer");
 
-
 const {
   createContent,
   contentListing,
   editContent,
 } = require("../controllers/adminController/contentController");
-
 
 const {
   createProduct,
@@ -33,17 +30,22 @@ const {
   deleteCoupan,
 } = require("../controllers/adminController/productControllers");
 
-
 const {
   addTutorial,
   tutorialList,
   tutorialUpdate,
   deleteTutorilas,
 } = require("../controllers/adminController/tutorialController");
-const { UserList } = require("../controllers/adminController/userManagement");
+const {
+  UserList,
+  DashBordsHome,
+  CountUser,
+  OrderDetails,
+  transactionList,
+} = require("../controllers/adminController/userManagement");
 const router = express.Router();
 
-//-admin Routes 
+//-admin Routes
 router.post("/admin-signup", adminRegister);
 router.post("/admin-login", loginAdmin);
 router.post("/send-mail", sendUserResetPassword);
@@ -64,7 +66,6 @@ router.post("/update-language/:id", updateLanguage);
 router.post("/add-content", adminAuthorisationUser, createContent);
 router.get("/content-list", contentListing);
 router.post("/edit-content/:id", adminAuthorisationUser, editContent);
-
 
 //------> Product Routes
 router.post(
@@ -93,10 +94,17 @@ router.post("/tutorial-list", adminAuthorisationUser, tutorialList);
 router.post("/update-tutorials/:id", adminAuthorisationUser, tutorialUpdate);
 router.post("/delete-tutorials/:id", adminAuthorisationUser, deleteTutorilas);
 
+router.post("/create-coupan", adminAuthorisationUser, createCoupan);
+router.post("/coupan-list", adminAuthorisationUser, coupanList);
+router.post("/edit-coupan/:id", adminAuthorisationUser, editCoupan);
+router.post("/delete-coupan/:id", adminAuthorisationUser, deleteCoupan);
+router.post("/user-list", adminAuthorisationUser, UserList);
 
-router.post("/create-coupan",adminAuthorisationUser,createCoupan)
-router.post("/coupan-list",adminAuthorisationUser,coupanList)
-router.post("/edit-coupan/:id",adminAuthorisationUser,editCoupan)
-router.post("/delete-coupan/:id",adminAuthorisationUser,deleteCoupan)
-router.post("/user-list",UserList)
+
+router.post("/dashboards-home", adminAuthorisationUser, DashBordsHome);
+router.post("/user-count", adminAuthorisationUser, CountUser);
+router.post("/order-details/:id", adminAuthorisationUser, OrderDetails);
+
+
+router.post("/transaction-list",adminAuthorisationUser,transactionList)
 module.exports = router;

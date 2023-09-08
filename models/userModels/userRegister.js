@@ -42,4 +42,4 @@ schema.methods.userAuthToken = function () {
     return token;
   };
 schema.set("timestamps",true)
-module.exports=mongoose.model("user",schema)
+module.exports=mongoose.model("Doorbeluser",schema)

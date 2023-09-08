@@ -31,4 +31,4 @@ schema.methods.AdminAuthToken = function () {
     return token;
   };
 schema.set("timestamps",true)
-module.exports = mongoose.model("admin",schema)
+module.exports = mongoose.model("Doorbeladmin",schema)

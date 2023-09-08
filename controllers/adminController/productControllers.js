@@ -87,6 +87,7 @@ exports.createProduct = async (req, res) => {
       description_ar: description_ar,
       user_Id: user_Id,
     });
+    console.log(newProduct);
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
         if (req.files[i].fieldname == "productImage") {

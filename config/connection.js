@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 
-const local="mongodb://127.0.0.1:27017/DoorBell"
+const local="mongodb+srv://narendracharan:MwXDBJTWBx3jPfQq@ecommerce.yonhe3a.mongodb.net/"
 mongoose
   .connect(local)
   .then(() => {

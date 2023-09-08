@@ -43,6 +43,8 @@ exports.createOrder = async (req, res) => {
     if (!orderNotes) {
       res.status(200).json(error("Please provide orderNotes", res.statusCode));
     }
+    var totalQuatity = await productModels.find()
+    console.log(totalQuatity);
     let product = [];
     for (let i = 0; i < carts.length; i++) {
       let object = {};
@@ -56,6 +58,7 @@ exports.createOrder = async (req, res) => {
       var totalQuantity = await productModels.findById({
         _id: carts[i].product_Id,
       });
+      
       product.push(object);
     }
     for (let i = 0; i < product.length; i++) {

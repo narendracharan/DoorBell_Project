@@ -30,4 +30,5 @@ router.post("/resetPassword-user",resetUserAppPassword)
 router.post("/app-user-profile/:id",userAuthorisationUser,userProfile)
 router.post("/app-user-update/:id",userAuthorisationUser,upload.single("profilePic"),editUserProfile)
 router.post("/user-app-about",userAuthorisationUser,aboutUserApp)
+
 module.exports=router

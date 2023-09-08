@@ -81,4 +81,4 @@ const schema = new mongoose.Schema({
   },
 });
 schema.set("timestamps", true);
-module.exports = mongoose.model("product", schema);
+module.exports = mongoose.model("doorBellProduct", schema);
