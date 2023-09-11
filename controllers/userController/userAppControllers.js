@@ -1,4 +1,5 @@
 const contentModels = require("../../models/adminModels/contentModels");
+const productModels = require("../../models/adminModels/productModels");
 const tutorialModels = require("../../models/adminModels/tutorialScreen");
 const userRegister = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
@@ -179,15 +180,15 @@ exports.editUserProfile = async (req, res) => {
         .status(201)
         .json(error("please provide mobileNumber", res.statusCode));
     }
-    const updateData={
-      userName: userName, 
+    const updateData = {
+      userName: userName,
       userEmail: userEmail,
-       mobileNumber: mobileNumber ,
-       profilePic:req.file.fieldname
-    }
+      mobileNumber: mobileNumber,
+      profilePic: req.file.fieldname,
+    };
     const updateUser = await userRegister.findByIdAndUpdate(
       { _id: id },
-    updateData,
+      updateData,
       { new: true }
     );
     res.status(200).json(success(res.statusCode, "Success", { updateUser }));
@@ -196,16 +197,29 @@ exports.editUserProfile = async (req, res) => {
   }
 };
 
-
-exports.aboutUserApp=async(req,res)=>{
-  try{
-const aboutUsList=await contentModels.find({})
-if(aboutUsList){
-  res.status(200).json(success(res.statusCode,"Success",{aboutUsList}))
-}else{
-  res.status(200).json(error("No Data Found",res.statusCode))
-}
-  }catch(err){
-    res.status(400).json(error("Failed",res.statusCode))
+exports.aboutUserApp = async (req, res) => {
+  try {
+    const aboutUsList = await contentModels.find({});
+    if (aboutUsList) {
+      res.status(200).json(success(res.statusCode, "Success", { aboutUsList }));
+    } else {
+      res.status(200).json(error("No Data Found", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
   }
-}
+};
+
+exports.homeKitUserApp = async (req, res) => {
+  try {
+    const productList = await productModels.find({
+    });
+    if (productList) {
+      res.status(200).json(success(res.statusCode, "Success", { productList }));
+    } else {
+      res.status(400).json(error("Np Data Found", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};

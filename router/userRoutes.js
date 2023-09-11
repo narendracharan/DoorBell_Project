@@ -6,6 +6,7 @@ const { createOrder } = require("../controllers/userController/orderControllers"
 const { tutorialList } = require("../controllers/adminController/tutorialController")
 const { loginUserApp, sendMailOtp, userAppVerify, resetUserAppPassword, userProfile, editUserProfile, aboutUserApp } = require("../controllers/userController/userAppControllers")
 const upload = require("../middleware/multer")
+const { createContact } = require("../controllers/userController/contactController")
 const router=express.Router()
 
 
@@ -30,5 +31,8 @@ router.post("/resetPassword-user",resetUserAppPassword)
 router.post("/app-user-profile/:id",userAuthorisationUser,userProfile)
 router.post("/app-user-update/:id",userAuthorisationUser,upload.single("profilePic"),editUserProfile)
 router.post("/user-app-about",userAuthorisationUser,aboutUserApp)
+router.post("/user-app-productList",userAuthorisationUser,productList)
+
+router.post("/create-contact",userAuthorisationUser,createContact)
 
 module.exports=router

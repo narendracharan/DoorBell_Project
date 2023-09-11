@@ -43,6 +43,7 @@ const {
   OrderDetails,
   transactionList,
 } = require("../controllers/adminController/userManagement");
+const { contactList, viewDetails, contactDelete } = require("../controllers/userController/contactController");
 const router = express.Router();
 
 //-admin Routes
@@ -64,7 +65,7 @@ router.post("/update-language/:id", updateLanguage);
 
 //---> Content Routes
 router.post("/add-content", adminAuthorisationUser, createContent);
-router.get("/content-list", contentListing);
+router.post("/content-list", contentListing);
 router.post("/edit-content/:id", adminAuthorisationUser, editContent);
 
 //------> Product Routes
@@ -107,4 +108,7 @@ router.post("/order-details/:id", adminAuthorisationUser, OrderDetails);
 
 
 router.post("/transaction-list",adminAuthorisationUser,transactionList)
+router.post("/contact-list",adminAuthorisationUser,contactList)
+router.post("/contact-details/:id",adminAuthorisationUser,viewDetails)
+router.post("/contact-deleted/:id",adminAuthorisationUser,contactDelete)
 module.exports = router;
