@@ -212,8 +212,7 @@ exports.aboutUserApp = async (req, res) => {
 
 exports.homeKitUserApp = async (req, res) => {
   try {
-    const productList = await productModels.find({
-    });
+    const productList = await productModels.find({});
     if (productList) {
       res.status(200).json(success(res.statusCode, "Success", { productList }));
     } else {
