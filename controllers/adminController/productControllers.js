@@ -95,9 +95,9 @@ exports.createProduct = async (req, res) => {
         }
       }
     }
-    const saveProduct = await newProduct.save();
-    console.log(saveProduct);
-    res.status(201).json(success(res.statusCode, "Success", { saveProduct }));
+   // const saveProduct = await newProduct.save();
+    console.log(newProduct);
+   // res.status(201).json(success(res.statusCode, "Success", { saveProduct }));
   } catch (err) {
     console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
@@ -176,6 +176,7 @@ exports.updateProduct = async (req, res) => {
     if (!description) {
       res.status(200).json(error("Please provide description", res.statusCode));
     }
+    console.log(req.file);
     const allData = {
       productName: productName,
       productName_ar: productName_ar,

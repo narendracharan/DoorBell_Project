@@ -222,3 +222,44 @@ exports.homeKitUserApp = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+exports.userforgetPassword = async (req, res) => {
+  try {
+    const { userEmail, password, newPassword, confirmPassword } = req.body;
+    if (!userEmail) {
+      res.status(201).json(error("please provide userEmail", res.statusCode));
+    }
+    if (!password) {
+      res.status(201).json(error("please provide password", res.statusCode));
+    }
+    if (!newPassword) {
+      res.status(201).json(error("please provide newPassword", res.statusCode));
+    }
+    if (!confirmPassword) {
+      res
+        .status(201)
+        .json(error("please provide confirmpassword", res.statusCode));
+    }
+    if (!(newPassword === confirmPassword)) {
+      res
+        .status(201)
+        .json(error("newPassword and confirmPassword not be same"));
+    }
+    const match = await userRegister.findOne({ userEmail: userEmail });
+    if (match.passwordApp == password) {
+      const createPassword = await userRegister.findOneAndUpdate(
+        { userEmail: userEmail },
+        {
+          $set: { passwordApp: confirmPassword },
+        }
+      );
+      res
+        .status(200)
+        .json(success(res.statusCode, "Success", { createPassword }));
+    } else {
+      res.status(201).json(error("Password are incorrect", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
