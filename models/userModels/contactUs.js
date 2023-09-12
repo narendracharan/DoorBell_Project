@@ -9,8 +9,8 @@ const schema=new mongoose.Schema({
         type:String,
         require:true
     },
-    subject:{
-        type:String,
+    mobileNumber:{
+        type:Number,
         require:true
     },
     descripation:{
@@ -19,7 +19,12 @@ const schema=new mongoose.Schema({
     },
     status:{
         type:String,
-       default:true
+       default:"Pending",
+       enum:[
+        "Pending",
+        "progress",
+        "Fixed"
+       ]
     },
     user_Id: {
         type: mongoose.Schema.Types.ObjectId,

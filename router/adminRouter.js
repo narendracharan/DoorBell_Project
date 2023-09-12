@@ -43,7 +43,7 @@ const {
   OrderDetails,
   transactionList,
 } = require("../controllers/adminController/userManagement");
-const { contactList, viewDetails, contactDelete } = require("../controllers/userController/contactController");
+const { contactList, viewDetails, contactDelete, editContact } = require("../controllers/userController/contactController");
 const router = express.Router();
 
 //-admin Routes
@@ -111,4 +111,5 @@ router.post("/transaction-list",adminAuthorisationUser,transactionList)
 router.post("/contact-list",adminAuthorisationUser,contactList)
 router.post("/contact-details/:id",adminAuthorisationUser,viewDetails)
 router.post("/contact-deleted/:id",adminAuthorisationUser,contactDelete)
+router.post("/edit-contact/:id",adminAuthorisationUser,editContact)
 module.exports = router;

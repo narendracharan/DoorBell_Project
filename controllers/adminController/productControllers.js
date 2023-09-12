@@ -66,7 +66,7 @@ exports.createProduct = async (req, res) => {
     if (!user_Id) {
       res.status(200).json(error("Please provide user_Id", res.statusCode));
     }
-
+console.log(req.files);
     const newProduct = new productModels({
       productName: productName,
       productName_ar: productName_ar,
@@ -87,19 +87,18 @@ exports.createProduct = async (req, res) => {
       description_ar: description_ar,
       user_Id: user_Id,
     });
-    console.log(newProduct);
+    console.log(req.files);
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
         if (req.files[i].fieldname == "productImage") {
-          newProduct.productImage.push(req.files[i].fieldname);
+          newProduct.productImage.push(`${process.env.BASE_URL}/${req.files[i].filename}`);
+
         }
       }
     }
-   // const saveProduct = await newProduct.save();
-    console.log(newProduct);
-   // res.status(201).json(success(res.statusCode, "Success", { saveProduct }));
+    const saveProduct = await newProduct.save();
+    res.status(201).json(success(res.statusCode, "Success", { saveProduct }));
   } catch (err) {
-    console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
