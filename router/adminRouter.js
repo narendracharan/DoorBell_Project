@@ -17,6 +17,9 @@ const {
   createContent,
   contentListing,
   editContent,
+  createFaqs,
+  editFaqs,
+  deleteFaq,
 } = require("../controllers/adminController/contentController");
 
 const {
@@ -112,4 +115,7 @@ router.post("/contact-list",adminAuthorisationUser,contactList)
 router.post("/contact-details/:id",adminAuthorisationUser,viewDetails)
 router.post("/contact-deleted/:id",adminAuthorisationUser,contactDelete)
 router.post("/edit-contact/:id",adminAuthorisationUser,editContact)
+router.post("/create-faqs",adminAuthorisationUser,createFaqs)
+router.post("/update-faqs/:id",adminAuthorisationUser,editFaqs)
+router.post("/delete-faqs/:id",adminAuthorisationUser,deleteFaq)
 module.exports = router;

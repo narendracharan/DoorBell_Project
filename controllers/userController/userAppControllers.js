@@ -1,4 +1,5 @@
 const contentModels = require("../../models/adminModels/contentModels");
+const faqsModels = require("../../models/adminModels/faqsModels");
 const productModels = require("../../models/adminModels/productModels");
 const tutorialModels = require("../../models/adminModels/tutorialScreen");
 const userRegister = require("../../models/userModels/userRegister");
@@ -184,7 +185,7 @@ exports.editUserProfile = async (req, res) => {
       userName: userName,
       userEmail: userEmail,
       mobileNumber: mobileNumber,
-      profilePic: req.file.fieldname,
+      profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const updateUser = await userRegister.findByIdAndUpdate(
       { _id: id },
@@ -258,6 +259,19 @@ exports.userforgetPassword = async (req, res) => {
         .json(success(res.statusCode, "Success", { createPassword }));
     } else {
       res.status(201).json(error("Password are incorrect", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.faqsList = async (req, res) => {
+  try {
+    const faqsList = await faqsModels.find({});
+    if (faqsList) {
+      res.status(200).json(success(res.statusCode, "Success", { faqsList }));
+    } else {
+      res.status(201).json(error("No Data Found", res.statusCode));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));

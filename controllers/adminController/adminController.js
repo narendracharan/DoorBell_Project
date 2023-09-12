@@ -168,7 +168,7 @@ exports.adminEditProfile = async (req, res) => {
     if (userId) {
       const data = {
         userName: req.body.userName,
-        adminProfile: req.file.filename,
+        adminProfile:`${process.env.BASE_URL}/${req.file.filename}`,
       };
       if (!data) {
         return res.status(200).json(error("Provide all Filed", res.statusCode));
