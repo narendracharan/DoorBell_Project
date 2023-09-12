@@ -11,17 +11,21 @@ exports.addTutorial = async (req, res) => {
       title_en: title_en,
       title_ar: title_ar,
     });
+    console.log(req.files);
     if (req.files) {
+      for (let i = 0; i < req.files.length; i++) {
       if (req.files[i].fieldname == "tutorialVideo") {
-        newTutorials.tutorialVideo.push(`${process.env.BASE_URL}/${req.file.filename}`);
+        newTutorials.tutorialVideo.push(`${process.env.BASE_URL}/${req.files[i].filename}`);
       }
       if (req.files[i].fieldname == "tutorialVideoTwo") {
-        newTutorials.tutorialVideoTwo.push(`${process.env.BASE_URL}/${req.file.filename}`);
+        newTutorials.tutorialVideoTwo.push(`${process.env.BASE_URL}/${req.files[i].filename}`);
       }
+    }
     }
     const saveTutorials = await newTutorials.save();
     res.status(200).json(success(res.statusCode, "Success", { saveTutorials }));
   } catch (err) {
+    console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
