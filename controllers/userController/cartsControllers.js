@@ -6,7 +6,7 @@ const userRegister = require("../../models/userModels/userRegister");
 
 exports.addToCarts = async (req, res) => {
   try {
-    const { product_Id, quantity, user_Id } = req.body;
+    const { product_Id, quantity,Price, user_Id } = req.body;
     if (!product_Id) {
       return res
         .status(201)
@@ -23,18 +23,15 @@ exports.addToCarts = async (req, res) => {
         .json(error("Please provide user_Id!", res.statusCode));
     }
     const product = await productModels.findById(product_Id).select("Price");
-    let carts = 0;
-    let cartsTotal = carts + product.Price * quantity;
-
     const newCarts = new cartsModels({
       user_Id: user_Id,
       products: [
         {
           products_Id: product_Id,
           quantity: quantity,
+          Price:Price
         },
       ],
-      cartsTotal: cartsTotal,
     });
     const saveCarts = await newCarts.save();
     res.status(200).json(success(res.statusCode, "Success", { saveCarts }));

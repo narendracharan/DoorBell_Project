@@ -11,10 +11,11 @@ exports.addTutorial = async (req, res) => {
       title_en: title_en,
       title_ar: title_ar,
     });
-    console.log(req.files);
+   console.log(req.files);
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
       if (req.files[i].fieldname == "tutorialVideo") {
+       // console.log(`${process.env.BASE_URL}/${req.files[i].filename}`);
         newTutorials.tutorialVideo.push(`${process.env.BASE_URL}/${req.files[i].filename}`);
       }
       if (req.files[i].fieldname == "tutorialVideoTwo") {

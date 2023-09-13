@@ -33,10 +33,15 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  orderStatus: {
+  paymentMethod: {
     type: String,
     default: "Paid",
     enum: ["Paid", "Refund", "Cancelled"],
+  },
+  orderStatus: {
+    type: String,
+    default: "InProgress",
+    enum: ["InProgress", "Cancel", "Delivered"],
   },
   products: [
     {
@@ -45,13 +50,16 @@ const schema = new mongoose.Schema({
         ref: "doorBellProduct",
         require: true,
       },
+      Price:{
+        type: Number,
+      },
       quantity: {
         type: Number,
         default: 1,
       },
     },
   ],
-  total: [],
+  total: Number,
   user_Id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Doorbeluser",

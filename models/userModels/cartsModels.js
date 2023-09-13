@@ -12,6 +12,9 @@ const schema = new mongoose.Schema({
         type: Number,
         default: 1,
       },
+      Price:{
+        type: Number,
+      }
     },
   ],
   user_Id: {

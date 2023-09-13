@@ -21,7 +21,7 @@ router.post("/remove-carts",userAuthorisationUser,revomeCarts)
 router.post("/carts-list",userAuthorisationUser,cartsList)
 router.post("/apply-coupan",userAuthorisationUser,applyCoupan)
 router.post("/create-order",createOrder)
-router.post("/product-list",userAuthorisationUser,productList)
+router.post("/product-list",productList)
 
 router.post("/tutorials-screen",tutorialList)
 router.post("/user-app-login",loginUserApp)

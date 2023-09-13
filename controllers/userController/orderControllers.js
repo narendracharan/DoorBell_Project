@@ -50,22 +50,19 @@ exports.createOrder = async (req, res) => {
       let object = {};
       object.product_Id = carts[i].product_Id;
       object.quantity = carts[i].quantity;
-      var getPrice = await productModels
-        .findById(carts[i].product_Id)
-        .select("Price")
-        .exec();
-      object.Price = getPrice.Price;
+      object.Price = carts[i].Price;
       var totalQuantity = await productModels.findById({
         _id: carts[i].product_Id,
       });
-      
       product.push(object);
     }
+    var total=0
     for (let i = 0; i < product.length; i++) {
-      const dd = totalQuantity.quantity - product[i].quantity;
+      total+= product[i].Price *product[i].quantity
+      totalQuantity.quantity - product[i].quantity;
     }
-    const total = await userRegister.find({ _id: user_Id });
-    const totalPrice = total.map((x) => x.totalafterDiscount);
+    // const total = await userRegister.find({ _id: user_Id });
+    // const totalPrice = total.map((x) => x.totalafterDiscount);
     const password = firstName + "@123";
     await userRegister
       .findByIdAndUpdate(
@@ -74,7 +71,7 @@ exports.createOrder = async (req, res) => {
         { new: true }
       )
       .select("passwordApp");
-    const newOrder = new orderModels({
+     const newOrder = new orderModels({
       firstName: firstName,
       lastName: lastName,
       companyName: companyName,
@@ -83,7 +80,7 @@ exports.createOrder = async (req, res) => {
       country: country,
       postalCode: postalCode,
       orderNotes: orderNotes,
-      total: totalPrice,
+      total: total,
       products: product,
       user_Id: user_Id,
     });
