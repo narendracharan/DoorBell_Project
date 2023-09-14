@@ -44,7 +44,7 @@ exports.createOrder = async (req, res) => {
     if (!orderNotes) {
       res.status(200).json(error("Please provide orderNotes", res.statusCode));
     }
-    var totalQuatity = await productModels.find()
+    var totalQuatity = await productModels.find();
     console.log(totalQuatity);
     let product = [];
     for (let i = 0; i < carts.length; i++) {
@@ -64,15 +64,9 @@ exports.createOrder = async (req, res) => {
     // }
     // const total = await userRegister.find({ _id: user_Id });
     // const totalPrice = total.map((x) => x.totalafterDiscount);
-    const password = firstName + "@123";
-    await userRegister
-      .findByIdAndUpdate(
-        { _id: user_Id },
-        { passwordApp: password },
-        { new: true }
-      )
-      .select("passwordApp");
-     const newOrder = new orderModels({
+    var password = firstName + "@1234";
+
+    const newOrder = new orderModels({
       firstName: firstName,
       lastName: lastName,
       companyName: companyName,
@@ -81,29 +75,40 @@ exports.createOrder = async (req, res) => {
       country: country,
       postalCode: postalCode,
       orderNotes: orderNotes,
-      total:total,
+      total: total,
       products: product,
       user_Id: user_Id,
     });
     const saveOrder = await newOrder.save();
-    await cartsModels.deleteMany({ user_Id: user_Id });
+    const user = await userRegister.findOne({ _id: user_Id });
     const updated = await orderModels
       .findOne({
         _id: newOrder._id,
       })
       .populate("user_Id");
-    var mailOptions = {
-      from: "s04450647@gmail.com",
-      to: updated.user_Id.userEmail,
-      subject: "Order Successfully",
-      text: `Hello ${firstName}
-      Thank you for placing an order with us. 
-      yourEmail: ${updated.user_Id.userEmail}
-      your Password:${updated.user_Id.passwordApp}
-      `,
-    };
-    console.log(mailOptions);
-    await transporter.sendMail(mailOptions);
+
+    if (!user.passwordApp) {
+      await userRegister
+        .findByIdAndUpdate(
+          { _id: user_Id },
+          { passwordApp: password },
+          { new: true }
+        )
+        .select("passwordApp");
+      var mailOptions = {
+        from: "s04450647@gmail.com",
+        to: updated.user_Id.userEmail,
+        subject: "Order Successfully",
+        text: `Hello ${firstName}
+        Thank you for placing an order with us. 
+        yourEmail: ${updated.user_Id.userEmail}
+        your Password:${password}
+        `,
+      };
+      await transporter.sendMail(mailOptions);
+    }
+    await cartsModels.deleteMany({ user_Id: user_Id });
+
     res.status(200).json(success(res.statusCode, "Success", { saveOrder }));
   } catch (err) {
     console.log(err);
