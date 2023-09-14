@@ -20,6 +20,10 @@ const {
   createFaqs,
   editFaqs,
   deleteFaq,
+  Orderlist,
+  adminOrderDetails,
+  OrderDelete,
+  CompletedOrder,
 } = require("../controllers/adminController/contentController");
 
 const {
@@ -108,7 +112,10 @@ router.post("/user-list", adminAuthorisationUser, UserList);
 router.post("/dashboards-home", adminAuthorisationUser, DashBordsHome);
 router.post("/user-count", adminAuthorisationUser, CountUser);
 router.post("/order-details/:id", adminAuthorisationUser, OrderDetails);
-
+router.post("/order-list",adminAuthorisationUser,Orderlist)
+router.post("/admin-order-details/:id",adminAuthorisationUser,adminOrderDetails)
+router.post("/delete-order/:id",adminAuthorisationUser,OrderDelete)
+router.post("/completed-order",adminAuthorisationUser,CompletedOrder)
 
 router.post("/transaction-list",adminAuthorisationUser,transactionList)
 router.post("/contact-list",adminAuthorisationUser,contactList)

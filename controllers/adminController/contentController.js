@@ -1,5 +1,6 @@
 const contentSchema = require("../../models/adminModels/contentModels");
 const faqsModels = require("../../models/adminModels/faqsModels");
+const orderModels = require("../../models/userModels/orderModels");
 const { success, error } = require("../../response");
 
 exports.createContent = async (req, res) => {
@@ -84,6 +85,77 @@ exports.deleteFaq = async (req, res) => {
     const deleteFaq = await faqsModels.findByIdAndDelete(id);
     res.status(200).json(success(res.statusCode, "Success", { deleteFaq }));
   } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.Orderlist = async (req, res) => {
+  try {
+    const { from, to } = req.body;
+    const order = await orderModels.find({
+      $and: [
+        from ? { createdAt: { $gte: new Date(from) } } : {},
+        to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
+      ],
+    });
+    if (order) {
+      res.status(200).json(success(res.statusCode, "Success", { order }));
+    } else {
+      res.status(error("NO Data Found", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.adminOrderDetails = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const orderDetails = await orderModels.findById(id).populate("user_Id");
+    if (orderDetails) {
+      res
+        .status(200)
+        .json(success(res.statusCode, "Success", { orderDetails }));
+    } else {
+      res.status(201).json(error("No Data Found", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.OrderDelete = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteOrder = await orderModels.findByIdAndDelete(id);
+    if (deleteOrder) {
+      res.status(200).json(success(res.statusCode, "Success", { deleteOrder }));
+    } else {
+      res.status(201).json(error("No Data Found", res.statusCode));
+    }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.CompletedOrder = async (req, res) => {
+  try {
+    const {from,to}=req.body
+    const order = await orderModels.find({
+      $and: [
+        from ? { createdAt: { $gte: new Date(from) } } : {},
+        to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
+      ],
+    } )
+    const CompletedOrder=order.filter((x)=>x.orderStatus =="Delivered")
+    if(CompletedOrder){
+      res.status(200).json(success(res.statusCode,"Success",{CompletedOrder}))
+    }
+    else {
+      res.status(201).json(error("No Data Found", res.statusCode));
+    }
+  } catch (err) {
+    console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
