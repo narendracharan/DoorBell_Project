@@ -14,6 +14,7 @@ exports.createOrder = async (req, res) => {
       address,
       city,
       country,
+      total,
       postalCode,
       orderNotes,
       carts,
@@ -56,11 +57,11 @@ exports.createOrder = async (req, res) => {
       });
       product.push(object);
     }
-    var total=0
-    for (let i = 0; i < product.length; i++) {
-      total+= product[i].Price *product[i].quantity
-      totalQuantity.quantity - product[i].quantity;
-    }
+    // var total=0
+    // for (let i = 0; i < product.length; i++) {
+    //   total+= product[i].Price *product[i].quantity
+    //   totalQuantity.quantity - product[i].quantity;
+    // }
     // const total = await userRegister.find({ _id: user_Id });
     // const totalPrice = total.map((x) => x.totalafterDiscount);
     const password = firstName + "@123";
@@ -80,7 +81,7 @@ exports.createOrder = async (req, res) => {
       country: country,
       postalCode: postalCode,
       orderNotes: orderNotes,
-      total: total,
+      total:total,
       products: product,
       user_Id: user_Id,
     });
