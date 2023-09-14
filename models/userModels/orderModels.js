@@ -68,4 +68,4 @@ const schema = new mongoose.Schema({
 });
 
 schema.set("timestamps", true);
-module.exports = mongoose.model("DoorbeluserOrder", schema);
+module.exports = mongoose.model("userorders", schema);

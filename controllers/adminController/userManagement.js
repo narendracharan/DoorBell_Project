@@ -4,6 +4,7 @@ const userModels = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
 const moment = require("moment");
 
+
 exports.UserList = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -40,6 +41,7 @@ exports.UserList = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
 
 exports.DashBordsHome = async (req, res) => {
   try {
