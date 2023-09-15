@@ -46,7 +46,7 @@ exports.editContent = async (req, res) => {
 
 exports.createFaqs = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description ,title_ar,description_ar} = req.body;
     if (!title) {
       res.status(201).json(error("please provide title", res.statusCode));
     }
@@ -56,6 +56,8 @@ exports.createFaqs = async (req, res) => {
     const newFaq = new faqsModels({
       title: title,
       description: description,
+      title_ar:title_ar,
+      description_ar:description_ar
     });
     const saveFaqs = await newFaq.save();
     res.status(200).json(success(res.statusCode, "Success", { saveFaqs }));
@@ -67,10 +69,10 @@ exports.createFaqs = async (req, res) => {
 exports.editFaqs = async (req, res) => {
   try {
     const id = req.params.id;
-    const { title, description } = req.body;
+    const { title, description ,title_ar,description_ar} = req.body;
     const updateFaq = await faqsModels.findByIdAndUpdate(
       id,
-      { title: title, description: description },
+      { title: title, description: description ,title_ar:title_ar,description_ar:description_ar},
       { new: true }
     );
     res.status(200).json(success(res.statusCode, "Success", { updateFaq }));

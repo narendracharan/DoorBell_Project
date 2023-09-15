@@ -9,6 +9,14 @@ const schema=new mongoose.Schema({
     description:{
         type:String,
         require:true
+    },
+    title_ar:{
+        type:String,
+        require:true
+    },
+    description_ar:{
+        type:String,
+        require:true
     }
 })
 schema.set("timestamps",true)

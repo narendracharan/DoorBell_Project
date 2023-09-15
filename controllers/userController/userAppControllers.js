@@ -169,7 +169,7 @@ exports.userProfile = async (req, res) => {
 exports.editUserProfile = async (req, res) => {
   try {
     const id = req.params.id;
-    const { userName, userEmail, mobileNumber } = req.body;
+    const { userName, userEmail, mobileNumber,userName_ar } = req.body;
     if (!userName) {
       res.status(201).json(error("please provide userName", res.statusCode));
     }
@@ -185,6 +185,7 @@ exports.editUserProfile = async (req, res) => {
       userName: userName,
       userEmail: userEmail,
       mobileNumber: mobileNumber,
+      userName_ar:userName_ar,
       profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const updateUser = await userRegister.findByIdAndUpdate(
