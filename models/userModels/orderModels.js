@@ -65,6 +65,11 @@ const schema = new mongoose.Schema({
     ref: "Doorbeluser",
     require: true,
   },
+  address_Id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "userAddress",
+    require: true,
+  },
 });
 
 schema.set("timestamps", true);

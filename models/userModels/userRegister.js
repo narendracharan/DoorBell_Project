@@ -1,6 +1,16 @@
 const mongoose=require("mongoose")
 const jwt=require("jsonwebtoken")
+const bcrypt=require("bcrypt")
+
 const schema=new mongoose.Schema({
+    websiteName:{
+        type:String,
+        require:true
+    },
+    websiteProfile:{
+        type:String,
+        require:true
+    },
     userName:{
         type:String,
         require:true
@@ -37,8 +47,19 @@ const schema=new mongoose.Schema({
         type : Number ,
         require:true 
     },
+    // newAddress:{
+    //     type:String,
+    //     require:true
+    // },
     totalafterDiscount:Number
 })
+
+schema.methods.checkPassword = async function (
+    plainPassword,
+    hashedPassword
+  ) {
+    return await bcrypt.compare(plainPassword, hashedPassword);
+  };
 schema.methods.userAuthToken = function () {
     const token = jwt.sign({ _id: this._id }, "ultra-security", {
       expiresIn: "365d",
