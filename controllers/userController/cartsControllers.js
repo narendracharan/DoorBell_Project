@@ -22,6 +22,31 @@ exports.addToCarts = async (req, res) => {
         .status(201)
         .json(error("Please provide user_Id!", res.statusCode));
     }
+    let cart;
+    cart = await cartsModels.findOne({ user_Id: user_Id });
+    if (cart) {
+      const newProduct = cart.products.filter(
+        (product) =>
+          String(product.products_Id) == String(product_Id) 
+      );
+      if (newProduct.length) {
+        newProduct[0].quantity = newProduct[0].quantity + +quantity;
+        await cart.save();
+        return res
+          .status(201)
+          .json(success(res.statusCode, "Product Added", { cart }));
+      } else {
+        cart.products.push({
+          products_Id: product_Id,
+          quantity: quantity,
+          Price:Price
+        });
+        await cart.save();
+        return res
+          .status(201)
+          .json(success(res.statusCode, "Product Added", { cart }));
+      }
+    }
     const product = await productModels.findById(product_Id).select("Price");
     const newCarts = new cartsModels({
       user_Id: user_Id,

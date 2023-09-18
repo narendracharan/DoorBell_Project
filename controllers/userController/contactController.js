@@ -179,7 +179,7 @@ exports.addressEdit = async (req, res) => {
     if (!pincode) {
       res.status(201).json(error("please provide pincode", res.statusCode));
     }
-    const updateAddress = await addressModels.findByIdAndUpdate(id, {
+    const updateAddress = await addressModels.findOneAndUpdate({_id:id}, {
       title: title,
       address: address,
       country: country,
