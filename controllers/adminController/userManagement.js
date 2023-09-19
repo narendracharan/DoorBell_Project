@@ -1,9 +1,9 @@
+const contentModels = require("../../models/userModels/contactUs");
 const orderModels = require("../../models/userModels/orderModels");
 const userRegister = require("../../models/userModels/userRegister");
 const userModels = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
 const moment = require("moment");
-
 
 exports.UserList = async (req, res) => {
   try {
@@ -42,7 +42,6 @@ exports.UserList = async (req, res) => {
   }
 };
 
-
 exports.DashBordsHome = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -67,8 +66,26 @@ exports.DashBordsHome = async (req, res) => {
 exports.CountUser = async (req, res) => {
   try {
     const countUser = await userModels.find().count();
+    const orderRevenue = await orderModels.aggregate([
+      {
+        $match: {
+          orderStatus: "Delivered",
+          // createdAt: { $gte: new Date(moment(new Date()).startOf("month")) },
+          // createdAt: { $lte: new Date(moment(new Date()).endOf("month")) },
+        },
+      },
+    ]);
+    const supportsTicket = await contentModels.find().count();
     if (countUser) {
-      res.status(200).json(success(res.statusCode, "Success", { countUser }));
+      res
+        .status(200)
+        .json(
+          success(res.statusCode, "Success", {
+            countUser,
+            orderRevenue,
+            supportsTicket,
+          })
+        );
     } else {
       res.status(400).json(error("No Data Found", res.statusCode));
     }
@@ -97,24 +114,21 @@ exports.OrderDetails = async (req, res) => {
   }
 };
 
-
-exports.transactionList=async(req,res)=>{
-  try{
-    const {from,to}=req.body
-    const listaData=await orderModels.find({
+exports.transactionList = async (req, res) => {
+  try {
+    const { from, to } = req.body;
+    const listaData = await orderModels.find({
       $and: [
         from ? { createdAt: { $gte: new Date(from) } } : {},
         to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
       ],
-    })
-    if(listaData){
-      res.status(200).json(success(res.statusCode,"Success",{listaData}))
-    }else{
-      res.status(400).json(error("Failed",res.statusCode))
+    });
+    if (listaData) {
+      res.status(200).json(success(res.statusCode, "Success", { listaData }));
+    } else {
+      res.status(400).json(error("Failed", res.statusCode));
     }
-
-  }catch(err){
-    res.status(400).json(error("Failed",res.statusCode))
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
   }
-}
-
+};

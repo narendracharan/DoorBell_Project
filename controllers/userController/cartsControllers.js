@@ -6,7 +6,7 @@ const userRegister = require("../../models/userModels/userRegister");
 
 exports.addToCarts = async (req, res) => {
   try {
-    const { product_Id, quantity,Price, user_Id } = req.body;
+    const { product_Id, quantity, Price, user_Id } = req.body;
     if (!product_Id) {
       return res
         .status(201)
@@ -26,8 +26,7 @@ exports.addToCarts = async (req, res) => {
     cart = await cartsModels.findOne({ user_Id: user_Id });
     if (cart) {
       const newProduct = cart.products.filter(
-        (product) =>
-          String(product.products_Id) == String(product_Id) 
+        (product) => String(product.products_Id) == String(product_Id)
       );
       if (newProduct.length) {
         newProduct[0].quantity = newProduct[0].quantity + +quantity;
@@ -39,7 +38,7 @@ exports.addToCarts = async (req, res) => {
         cart.products.push({
           products_Id: product_Id,
           quantity: quantity,
-          Price:Price
+          Price: Price,
         });
         await cart.save();
         return res
@@ -54,7 +53,7 @@ exports.addToCarts = async (req, res) => {
         {
           products_Id: product_Id,
           quantity: quantity,
-          Price:Price
+          Price: Price,
         },
       ],
     });
@@ -84,7 +83,7 @@ exports.revomeCarts = async (req, res) => {
 
 exports.cartsList = async (req, res) => {
   try {
-    const listing = await cartsModels.find({}).populate("products.products_Id")
+    const listing = await cartsModels.find({}).populate("products.products_Id");
     res.status(200).json(success(res.statusCode, "Success", { listing }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
