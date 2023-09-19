@@ -99,11 +99,14 @@ exports.createOrder = async (req, res) => {
         from: "s04450647@gmail.com",
         to: updated.user_Id.userEmail,
         subject: "Order Successfully",
-        text: `Hello ${firstName}
+        text: `Your Credentials : AMANIA``Hello ${firstName}
         Thank you for placing an order with us. 
         yourEmail: ${updated.user_Id.userEmail}
-        your Password:${password}
-        `,
+        your Password:${password}<br>
+        Please do not share this email with anyone.<br>This mail contains confidential details<br>
+        <br>
+        <br>
+        Thank you for choosing us and we look forward to serving you again.<br>`,
       };
       await transporter.sendMail(mailOptions);
     }

@@ -44,15 +44,15 @@ exports.loginUserApp = async (req, res) => {
         } else {
           res
             .status(201)
-            .json(error("User Password Are Incorrect", res.statusCode));
+            .json(error("User Password is Incorrect", res.statusCode));
         }
       } else {
-        res.status(201).json(error("UserEmail Are Incorrect", res.statusCode));
+        res.status(201).json(error("UserEmail is Incorrect", res.statusCode));
       }
     } else {
       res
         .status(201)
-        .json(error("UserEmail and Password Are empty", res.statusCode));
+        .json(error("UserEmail and Password is empty", res.statusCode));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.status));
@@ -79,7 +79,7 @@ exports.sendMailOtp = async (req, res) => {
         .status(200)
         .json(success(res.statusCode, "Mail send SuccessFully", {}));
     } else {
-      res.status(201).json(error("userEmail are empty", res.statusCode));
+      res.status(201).json(error("userEmail is empty", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -138,7 +138,7 @@ exports.resetUserAppPassword = async (req, res) => {
           res.status(200).json(success(res.statusCode, "Success", { match }));
         }
       } else {
-        res.status(201).json(error("All Filed are required", res.statusCode));
+        res.status(201).json(error("All Filed is required", res.statusCode));
       }
     }
   } catch (err) {
@@ -259,7 +259,7 @@ exports.userforgetPassword = async (req, res) => {
         .status(200)
         .json(success(res.statusCode, "Success", { createPassword }));
     } else {
-      res.status(201).json(error("Password are incorrect", res.statusCode));
+      res.status(201).json(error("Password is incorrect", res.statusCode));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
