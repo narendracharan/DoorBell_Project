@@ -169,7 +169,7 @@ exports.userProfile = async (req, res) => {
 exports.editUserProfile = async (req, res) => {
   try {
     const id = req.params.id;
-    const { userName, userEmail, mobileNumber,userName_ar } = req.body;
+    const { userName, userEmail, mobileNumber, userName_ar } = req.body;
     if (!userName) {
       res.status(201).json(error("please provide userName", res.statusCode));
     }
@@ -185,8 +185,8 @@ exports.editUserProfile = async (req, res) => {
       userName: userName,
       userEmail: userEmail,
       mobileNumber: mobileNumber,
-      userName_ar:userName_ar,
-      profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
+      userName_ar: userName_ar,
+      ///  profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const updateUser = await userRegister.findByIdAndUpdate(
       { _id: id },
@@ -194,6 +194,17 @@ exports.editUserProfile = async (req, res) => {
       { new: true }
     );
     res.status(200).json(success(res.statusCode, "Success", { updateUser }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.editImage = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const profile = await userRegister.findById(id);
+    profile.profilePic = `${process.env.BASE_URL}/${req.file.filename}`;
+    res.status(200).json(success(res.statusCode, "success", { profile }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
