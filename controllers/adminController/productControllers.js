@@ -136,14 +136,9 @@ exports.updateProduct = async (req, res) => {
       description,
       description_ar,
     } = req.body;
-    const product=await productModels.findById(id)
-    if (req.files) {
-      for (let i = 0; i < req.files.length; i++) {
-        if (req.files[i].fieldname == "productImage") {
-          product.productImage=`${process.env.BASE_URL}/${req.files[i].filename}`
-        }
-      }
-    }
+    const product=await productModels.findOne({_id:id})
+    console.log(req.files);
+    console.log(product);
     const allData = {
       productName: productName,
       productName_ar: productName_ar,
@@ -162,11 +157,21 @@ exports.updateProduct = async (req, res) => {
       quantity: quantity,
       description: description,
       description_ar: description_ar,
-      //productImage:`${process.env.BASE_URL}/${req.files.filename}` ,
+   //   productImage:`${process.env.BASE_URL}/${req.files.filename}` ,
     };
+   
+    if (req.files) {
+        for (let i = 0; i < req.files.length; i++) {
+          if (req.files[i].fieldname == "productImage") {
+            product.productImage=`${process.env.BASE_URL}/${req.files[i].filename}`         }
+        }
+      }
+    await product.save()
     const updateProduct = await productModels.findByIdAndUpdate(id, allData, {
       new: true,
     });
+    
+    console.log(updateProduct);
     res.status(200).json(success(res.statusCode, "Success", { updateProduct }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
