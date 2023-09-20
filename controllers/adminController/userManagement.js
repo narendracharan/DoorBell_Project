@@ -15,12 +15,8 @@ exports.UserList = async (req, res) => {
       {
         $match: {
           $and: [
-            from
-              ? { createdAt: { $gte: moment(new Date(from)).startOf("day") } }
-              : {},
-            to
-              ? { createdAt: { $lte: moment(new Date(to)).endOf("day") } }
-              : {},
+            from ? { createdAt: { $gte: new Date(from) } } : {},
+            to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
           ],
         },
       },
@@ -34,7 +30,6 @@ exports.UserList = async (req, res) => {
       },
       { $addFields: { user: { $size: "$userorders" } } },
     ]);
-    console.log(list);
     res.status(200).json(success(res.statusCode, "Success", { list }));
   } catch (err) {
     console.log(err);
