@@ -136,46 +136,6 @@ exports.updateProduct = async (req, res) => {
       description,
       description_ar,
     } = req.body;
-    if (!productName) {
-      res.status(200).json(error("Please provide productName", res.statusCode));
-    }
-    if (!color) {
-      res.status(200).json(error("Please provide color", res.statusCode));
-    }
-    if (!productModel) {
-      res
-        .status(200)
-        .json(error("Please provide productModel", res.statusCode));
-    }
-    if (!protocol) {
-      res.status(200).json(error("Please provide protocol", res.statusCode));
-    }
-    if (!certification) {
-      res
-        .status(200)
-        .json(error("Please provide certification", res.statusCode));
-    }
-    if (!maxResolution) {
-      res
-        .status(200)
-        .json(error("Please provide maxResolution", res.statusCode));
-    }
-    if (!Price) {
-      res.status(200).json(error("Please provide Price", res.statusCode));
-    }
-    if (!protocol) {
-      res.status(200).json(error("Please provide protocol", res.statusCode));
-    }
-    if (!oldPrice) {
-      res.status(200).json(error("Please provide oldPrice", res.statusCode));
-    }
-    if (!quantity) {
-      res.status(200).json(error("Please provide quantity", res.statusCode));
-    }
-    if (!description) {
-      res.status(200).json(error("Please provide description", res.statusCode));
-    }
-    console.log(req.file);
     const allData = {
       productName: productName,
       productName_ar: productName_ar,
@@ -194,7 +154,7 @@ exports.updateProduct = async (req, res) => {
       quantity: quantity,
       description: description,
       description_ar: description_ar,
-      productImage: req.files.fieldname,
+      productImage:`${process.env.BASE_URL}/${req.files.filename}` ,
     };
     const updateProduct = await productModels.findByIdAndUpdate(id, allData, {
       new: true,
