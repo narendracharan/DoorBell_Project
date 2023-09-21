@@ -120,7 +120,7 @@ router.post("/admin-order-details/:id",adminAuthorisationUser,adminOrderDetails)
 router.post("/delete-order/:id",adminAuthorisationUser,OrderDelete)
 router.post("/completed-order",adminAuthorisationUser,CompletedOrder)
 router.post("/status-change/:id",adminAuthorisationUser,editOrder)
-router.post("/block-user/:id",blockUser)
+router.post("/user-block-admin/:id",adminAuthorisationUser,blockUser)
 
 
 router.post("/transaction-list",adminAuthorisationUser,transactionList)

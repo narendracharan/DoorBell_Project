@@ -21,8 +21,13 @@ exports.UserRegister = async (req, res) => {
         .json(error("Please enter password", res.statusCode));
     }
     const checkMail = await userModels.findOne({ userEmail: userEmail });
+    const checkNAME= await userModels.findOne({userName:userName})
+    if (checkNAME) {
+      return res.status(201).json(error("userName is already register"));
+    }
+    
     if (checkMail) {
-      return res.status(201).json(error("userEmail are already register"));
+      return res.status(201).json(error("userEmail is already register"));
     }
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = new userModels({
@@ -30,8 +35,8 @@ exports.UserRegister = async (req, res) => {
       userEmail: userEmail,
       password: passwordHash,
     });
-    const admin = await newUser.save();
-    res.status(200).json(success(res.statusCode, "Success", { admin }));
+    const user = await newUser.save();
+    res.status(200).json(success(res.statusCode, "Success", { user }));
   } catch (err) {
     console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
