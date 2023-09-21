@@ -72,15 +72,13 @@ exports.CountUser = async (req, res) => {
     ]);
     const supportsTicket = await contentModels.find().count();
     if (countUser) {
-      res
-        .status(200)
-        .json(
-          success(res.statusCode, "Success", {
-            countUser,
-            orderRevenue,
-            supportsTicket,
-          })
-        );
+      res.status(200).json(
+        success(res.statusCode, "Success", {
+          countUser,
+          orderRevenue,
+          supportsTicket,
+        })
+      );
     } else {
       res.status(400).json(error("No Data Found", res.statusCode));
     }
@@ -123,6 +121,24 @@ exports.transactionList = async (req, res) => {
     } else {
       res.status(400).json(error("Failed", res.statusCode));
     }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.editOrder = async (req, res) => {
+  try {
+    const id = req.params.id;
+    var status = req.body.status;
+    if (!status) {
+      res.status(201).json(error("Please provide status"));
+    }
+    const changeStatus = await orderModels.findByIdAndUpdate(
+      id,
+      { orderStatus: status },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { changeStatus }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
