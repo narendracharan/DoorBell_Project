@@ -41,7 +41,7 @@ const schema = new mongoose.Schema({
   orderStatus: {
     type: String,
     default: "InProgress",
-    enum: ["InProgress", "Cancel", "Delivered"],
+    enum: ["InProgress", "Cancelled", "Delivered"],
   },
   products: [
     {

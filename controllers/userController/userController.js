@@ -46,33 +46,41 @@ exports.loginUser = async (req, res) => {
       const verifyUser = await userModels.findOne({
         userEmail: userEmail,
       });
-      if (verifyUser != null) {
-        const isMatch = await bcrypt.compare(password, verifyUser.password);
-        if (isMatch) {
-          const token = await verifyUser.userAuthToken();
-          return res
-            .header("x-auth-token-user", token)
-            .header("access-control-expose-headers", "x-auth-token-user")
-            .status(201)
-            .json(
-              success(res.statusCode, "login SuccessFully", {
-                verifyUser,
-                token,
-              })
-            );
+      if (verifyUser.status == "true") {
+        if (verifyUser != null) {
+          const isMatch = await bcrypt.compare(password, verifyUser.password);
+          if (isMatch) {
+            const token = await verifyUser.userAuthToken();
+            return res
+              .header("x-auth-token-user", token)
+              .header("access-control-expose-headers", "x-auth-token-user")
+              .status(201)
+              .json(
+                success(res.statusCode, "login SuccessFully", {
+                  verifyUser,
+                  token,
+                })
+              );
+          } else {
+            res
+              .status(201)
+              .json(error("User Password Are Incorrect", res.statusCode));
+          }
         } else {
           res
             .status(201)
-            .json(error("User Password Are Incorrect", res.statusCode));
+            .json(error("UserEmail Are Incorrect", res.statusCode));
         }
-      } else {
-        res.status(201).json(error("UserEmail Are Incorrect", res.statusCode));
+      }  else {
+        res.status(201).json(error("You Are Block By Admin", res.statusCode));
       }
-    } else {
-      res
-        .status(201)
-        .json(error("UserEmail and Password Are empty", res.statusCode));
     }
+      else {
+        res
+          .status(201)
+          .json(error("UserEmail and Password Are empty", res.statusCode));
+      }
+   
   } catch (err) {
     console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
@@ -195,7 +203,7 @@ exports.editProfile = async (req, res) => {
 
 exports.changepassword = async (req, res) => {
   try {
-    const id=req.params.id
+    const id = req.params.id;
     const { password, newPassword, confirmPassword } = req.body;
     if (!password) {
       res.status(201).json(error("please provide password", res.statusCode));

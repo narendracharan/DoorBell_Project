@@ -47,6 +47,11 @@ const schema=new mongoose.Schema({
         type : Number ,
         require:true 
     },
+    status:{
+     type:String,
+     default:true
+    },
+
     // newAddress:{
     //     type:String,
     //     require:true

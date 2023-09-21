@@ -143,3 +143,21 @@ exports.editOrder = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+exports.blockUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const status = req.body.status;
+    if (!status) {
+      res.status(201).json(error("Please provide status", res.statusCode));
+    }
+    const updateUser = await userModels.findByIdAndUpdate(
+      id,
+      { status: status },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { updateUser }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
