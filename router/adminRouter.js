@@ -53,6 +53,7 @@ const {
   blockUser,
 } = require("../controllers/adminController/userManagement");
 const { contactList, viewDetails, contactDelete, editContact } = require("../controllers/userController/contactController");
+const { faqsList } = require("../controllers/userController/userAppControllers");
 const router = express.Router();
 
 //-admin Routes
@@ -121,6 +122,7 @@ router.post("/completed-order",adminAuthorisationUser,CompletedOrder)
 router.post("/status-change/:id",adminAuthorisationUser,editOrder)
 router.post("/block-user/:id",blockUser)
 
+
 router.post("/transaction-list",adminAuthorisationUser,transactionList)
 router.post("/contact-list",adminAuthorisationUser,contactList)
 router.post("/contact-details/:id",adminAuthorisationUser,viewDetails)
@@ -129,4 +131,5 @@ router.post("/edit-contact/:id",adminAuthorisationUser,editContact)
 router.post("/create-faqs",adminAuthorisationUser,createFaqs)
 router.post("/update-faqs/:id",adminAuthorisationUser,editFaqs)
 router.post("/delete-faqs/:id",adminAuthorisationUser,deleteFaq)
+router.post("/faqslist",adminAuthorisationUser,faqsList)
 module.exports = router;
