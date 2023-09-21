@@ -279,7 +279,7 @@ exports.userforgetPassword = async (req, res) => {
 
 exports.faqsList = async (req, res) => {
   try {
-    const faqsList = await faqsModels.find({});
+    const faqsList = await faqsModels.find({}).sort({createdAt:-1})
     if (faqsList) {
       res.status(200).json(success(res.statusCode, "Success", { faqsList }));
     } else {
