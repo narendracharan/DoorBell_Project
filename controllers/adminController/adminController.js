@@ -65,15 +65,15 @@ exports.loginAdmin = async (req, res) => {
         } else {
           res
             .status(201)
-            .json(error("User Password Are Incorrect", res.statusCode));
+            .json(error("User Password is Incorrect", res.statusCode));
         }
       } else {
-        res.status(201).json(error("User name Are Incorrect", res.statusCode));
+        res.status(201).json(error("userName is Incorrect", res.statusCode));
       }
     } else {
       res
         .status(201)
-        .json(error("UserName and Password Are empty", res.statusCode));
+        .json(error("UserName and Password is empty", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -100,7 +100,7 @@ exports.sendUserResetPassword = async (req, res) => {
       );
       return res.status(200).json(success(res.statusCode, "Success", {}));
     } else {
-      res.status(201).json(error("userEmail are empty", res.statusCode));
+      res.status(201).json(error("userEmail is empty", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -130,7 +130,7 @@ exports.resetPassword = async (req, res) => {
           .json(success(res.statusCode, "Success", { createPassword }));
       }
     } else {
-      res.status(201).json(error("All Filed are required", res.statusCode));
+      res.status(201).json(error("All Filed is required", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -145,7 +145,7 @@ exports.OtpVerify = async (req, res) => {
     if (!userEmail || !otp) {
       return res
         .status(201)
-        .json(error("Empty Otp Details Are Not Allowed", res.statusCode));
+        .json(error("Empty Otp Details is Not Allowed", res.statusCode));
     }
     const userOtpVerify = await adminSchema.findOne({ userEmail: userEmail });
     if (userOtpVerify.otp == otp) {

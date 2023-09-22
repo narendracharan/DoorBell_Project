@@ -11,17 +11,21 @@ exports.addTutorial = async (req, res) => {
       title_en: title_en,
       title_ar: title_ar,
     });
-   console.log(req.files);
+    console.log(req.files);
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
-      if (req.files[i].fieldname == "tutorialVideo") {
-       // console.log(`${process.env.BASE_URL}/${req.files[i].filename}`);
-        newTutorials.tutorialVideo.push(`${process.env.BASE_URL}/${req.files[i].filename}`);
+        if (req.files[i].fieldname == "tutorialVideo") {
+          // console.log(`${process.env.BASE_URL}/${req.files[i].filename}`);
+          newTutorials.tutorialVideo.push(
+            `${process.env.BASE_URL}/${req.files[i].filename}`
+          );
+        }
+        if (req.files[i].fieldname == "tutorialVideoTwo") {
+          newTutorials.tutorialVideoTwo.push(
+            `${process.env.BASE_URL}/${req.files[i].filename}`
+          );
+        }
       }
-      if (req.files[i].fieldname == "tutorialVideoTwo") {
-        newTutorials.tutorialVideoTwo.push(`${process.env.BASE_URL}/${req.files[i].filename}`);
-      }
-    }
     }
     const saveTutorials = await newTutorials.save();
     res.status(200).json(success(res.statusCode, "Success", { saveTutorials }));
@@ -52,7 +56,7 @@ exports.tutorialUpdate = async (req, res) => {
     const data = {
       title_en: req.body.title_en,
       title_ar: req.body.title_ar,
-      tutorialVideo:`${process.env.BASE_URL}/${req.file.filename}`,
+      tutorialVideo: `${process.env.BASE_URL}/${req.file.filename}`,
       tutorialVideoTwo: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const updateTOturials = await tutorialModels.findByIdAndUpdate(id, data, {
