@@ -99,7 +99,7 @@ exports.createOrder = async (req, res) => {
         from: "s04450647@gmail.com",
         to: updated.user_Id.userEmail,
         subject: "Order Successfully",
-        text: `Your Credentials : AMANIA``Hello ${firstName}
+        text: `Hello ${firstName}
         Thank you for placing an order with us. 
         yourEmail: ${updated.user_Id.userEmail}
         your Password:${password}<br>
