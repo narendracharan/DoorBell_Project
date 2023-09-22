@@ -168,7 +168,7 @@ exports.adminEditProfile = async (req, res) => {
     if (userId) {
       const data = {
         userName: req.body.userName,
-        adminProfile:`${process.env.BASE_URL}/${req.file.filename}`,
+        adminProfile: `${process.env.BASE_URL}/${req.file.filename}`,
       };
       if (!data) {
         return res.status(200).json(error("Provide all Filed", res.statusCode));
@@ -217,6 +217,20 @@ exports.updateLanguage = async (req, res) => {
     res
       .status(200)
       .json(success(res.statusCode, "Success", { updateLanguage }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.adminDetails = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const adminDetail = await adminSchema.findById(id);
+    if (adminDetail) {
+      res.status(200).json(success(res.statusCode, "Success", { adminDetail }));
+    } else {
+      res.status(201).json(error("No Data Found", res.statusCode));
+    }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }

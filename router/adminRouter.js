@@ -9,6 +9,7 @@ const {
   adminEditProfile,
   addLanguage,
   updateLanguage,
+  adminDetails,
 } = require("../controllers/adminController/adminController");
 const adminAuthorisationUser = require("../middleware/adminAuthentication");
 const upload = require("../middleware/multer");
@@ -62,6 +63,7 @@ router.post("/admin-login", loginAdmin);
 router.post("/send-mail", sendUserResetPassword);
 router.post("/otp-verify", OtpVerify);
 router.post("/admin-resetPassword", resetPassword);
+router.post("/admin-details/:id",adminDetails)
 router.post(
   "/edit-profile/:id",
   adminAuthorisationUser,

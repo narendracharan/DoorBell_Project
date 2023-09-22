@@ -31,7 +31,7 @@ exports.UserRegister = async (req, res) => {
     }
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = new userModels({
-      userName: userName,
+      websiteName: userName,
       userEmail: userEmail,
       password: passwordHash,
     });
@@ -69,12 +69,12 @@ exports.loginUser = async (req, res) => {
           } else {
             res
               .status(201)
-              .json(error("User Password Are Incorrect", res.statusCode));
+              .json(error("User Password is Incorrect", res.statusCode));
           }
         } else {
           res
             .status(201)
-            .json(error("UserEmail Are Incorrect", res.statusCode));
+            .json(error("UserEmail is Incorrect", res.statusCode));
         }
       }  else {
         res.status(201).json(error("You Are Block By Admin", res.statusCode));
@@ -113,7 +113,7 @@ exports.sendUserResetPassword = async (req, res) => {
         .status(200)
         .json(success(res.statusCode, "Success", { message }));
     } else {
-      res.status(201).json(error("userEmail are empty", res.statusCode));
+      res.status(201).json(error("userEmail is empty", res.statusCode));
     }
   } catch (err) {
     console.log(err);
@@ -127,7 +127,7 @@ exports.OtpVerify = async (req, res) => {
     if (!userEmail || !otp) {
       return res
         .status(201)
-        .json(error("Empty Otp Details Are Not Allowed", res.statusCode));
+        .json(error("Empty Otp Details is Not Allowed", res.statusCode));
     }
     const userOtpVerify = await userModels.findOne({ userEmail: userEmail });
     if (userOtpVerify.otp == otp) {
@@ -167,7 +167,7 @@ exports.resetPassword = async (req, res) => {
             .json(success(res.statusCode, "Success", { createPassword }));
         }
       } else {
-        res.status(201).json(error("All Filed are required", res.statusCode));
+        res.status(201).json(error("All Filed is required", res.statusCode));
       }
     }
   } catch (err) {
