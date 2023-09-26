@@ -106,7 +106,6 @@ exports.createOrder = async (req, res) => {
         Please do not share this email with anyone.This mail contains confidential details.
         Thank you for choosing us and we look forward to serving you again.`,
       };
-      console.log(mailOptions);
       await transporter.sendMail(mailOptions);
     }
     await cartsModels.deleteMany({ user_Id: user_Id });
