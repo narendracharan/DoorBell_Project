@@ -83,7 +83,8 @@ exports.revomeCarts = async (req, res) => {
 
 exports.cartsList = async (req, res) => {
   try {
-    const listing = await cartsModels.find({}).populate("products.products_Id");
+    const id=req.params.id
+    const listing = await cartsModels.find({user_Id:id}).populate("products.products_Id");
     res.status(200).json(success(res.statusCode, "Success", { listing }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
