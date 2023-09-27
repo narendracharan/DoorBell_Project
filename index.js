@@ -29,5 +29,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running port no:3001`);
+  console.log(`Server is running port no:2053`);
 });
