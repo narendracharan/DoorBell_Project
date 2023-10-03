@@ -1,3 +1,4 @@
+const { MongooseError } = require("mongoose");
 const productModels = require("../../models/adminModels/productModels");
 const cartsModels = require("../../models/userModels/cartsModels");
 const orderModels = require("../../models/userModels/orderModels");
@@ -120,13 +121,14 @@ exports.createOrder = async (req, res) => {
 exports.userOrder = async (req, res) => {
   try {
     const id = req.params.id;
-    const orderList = await orderModels.find({ user_Id: id }).populate("products.product_Id")
+    const orderList = await orderModels.find({ user_Id: id }).populate("products.products_Id")
     if (orderList) {
       res.status(200).json(success(res.statusCode, "Success", { orderList }));
     } else {
       res.status(201).json(error("No Data Found", res.statusCode));
     }
   } catch (err) {
+console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
