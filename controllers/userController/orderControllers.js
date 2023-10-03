@@ -50,11 +50,11 @@ exports.createOrder = async (req, res) => {
     let product = [];
     for (let i = 0; i < carts.length; i++) {
       let object = {};
-      object.product_Id = carts[i].product_Id;
+      object.products_Id = carts[i].products_Id;
       object.quantity = carts[i].quantity;
       object.Price = carts[i].Price;
       var totalQuantity = await productModels.findById({
-        _id: carts[i].product_Id,
+        _id: carts[i].products_Id,
       });
       product.push(object);
     }
@@ -82,12 +82,13 @@ exports.createOrder = async (req, res) => {
     });
     const saveOrder = await newOrder.save();
     const user = await userRegister.findOne({ _id: user_Id });
+    console.log(user);
     const updated = await orderModels
       .findOne({
         _id: newOrder._id,
       })
       .populate("user_Id");
-
+console.log(user.password);
     if (!user.passwordApp) {
       await userRegister
         .findByIdAndUpdate(
@@ -121,14 +122,16 @@ exports.createOrder = async (req, res) => {
 exports.userOrder = async (req, res) => {
   try {
     const id = req.params.id;
-    const orderList = await orderModels.find({ user_Id: id }).populate("products.products_Id")
+    const orderList = await orderModels
+      .find({ user_Id: id })
+      .populate("products.products_Id");
     if (orderList) {
       res.status(200).json(success(res.statusCode, "Success", { orderList }));
     } else {
       res.status(201).json(error("No Data Found", res.statusCode));
     }
   } catch (err) {
-console.log(err);
+    console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
