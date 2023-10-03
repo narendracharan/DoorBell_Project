@@ -46,7 +46,7 @@ exports.editContent = async (req, res) => {
 
 exports.createFaqs = async (req, res) => {
   try {
-    const { title, description ,title_ar,description_ar} = req.body;
+    const { title, description, title_ar, description_ar } = req.body;
     if (!title) {
       res.status(201).json(error("please provide title", res.statusCode));
     }
@@ -56,8 +56,8 @@ exports.createFaqs = async (req, res) => {
     const newFaq = new faqsModels({
       title: title,
       description: description,
-      title_ar:title_ar,
-      description_ar:description_ar
+      title_ar: title_ar,
+      description_ar: description_ar,
     });
     const saveFaqs = await newFaq.save();
     res.status(200).json(success(res.statusCode, "Success", { saveFaqs }));
@@ -69,10 +69,15 @@ exports.createFaqs = async (req, res) => {
 exports.editFaqs = async (req, res) => {
   try {
     const id = req.params.id;
-    const { title, description ,title_ar,description_ar} = req.body;
+    const { title, description, title_ar, description_ar } = req.body;
     const updateFaq = await faqsModels.findByIdAndUpdate(
       id,
-      { title: title, description: description ,title_ar:title_ar,description_ar:description_ar},
+      {
+        title: title,
+        description: description,
+        title_ar: title_ar,
+        description_ar: description_ar,
+      },
       { new: true }
     );
     res.status(200).json(success(res.statusCode, "Success", { updateFaq }));
@@ -142,18 +147,19 @@ exports.OrderDelete = async (req, res) => {
 
 exports.CompletedOrder = async (req, res) => {
   try {
-    const {from,to}=req.body
+    const { from, to } = req.body;
     const order = await orderModels.find({
       $and: [
         from ? { createdAt: { $gte: new Date(from) } } : {},
         to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
       ],
-    } )
-    const CompletedOrder=order.filter((x)=>x.orderStatus =="Delivered")
-    if(CompletedOrder){
-      res.status(200).json(success(res.statusCode,"Success",{CompletedOrder}))
-    }
-    else {
+    });
+    const CompletedOrder = order.filter((x) => x.orderStatus == "Delivered");
+    if (CompletedOrder) {
+      res
+        .status(200)
+        .json(success(res.statusCode, "Success", { CompletedOrder }));
+    } else {
       res.status(201).json(error("No Data Found", res.statusCode));
     }
   } catch (err) {

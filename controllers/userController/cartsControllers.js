@@ -83,8 +83,10 @@ exports.revomeCarts = async (req, res) => {
 
 exports.cartsList = async (req, res) => {
   try {
-    const id=req.params.id
-    const listing = await cartsModels.find({user_Id:id}).populate("products.products_Id");
+    const id = req.params.id;
+    const listing = await cartsModels
+      .find({ user_Id: id })
+      .populate("products.products_Id");
     res.status(200).json(success(res.statusCode, "Success", { listing }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
@@ -130,6 +132,23 @@ exports.applyCoupan = async (req, res) => {
       })
     );
   } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.updateQuantity = async (req, res) => {
+  try {
+    const id=req.params.id
+    const quantity = req.body.quantity;
+    const updateQuantity = await cartsModels.findById(id);
+    if (updateQuantity.products.length) {
+      updateQuantity.products[0].quantity = quantity;
+    }
+    res
+      .status(200)
+      .json(success(res.statusCode, "Success", { updateQuantity }));
+  } catch (err) {
+    console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };

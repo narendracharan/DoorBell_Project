@@ -53,8 +53,15 @@ const {
   editOrder,
   blockUser,
 } = require("../controllers/adminController/userManagement");
-const { contactList, viewDetails, contactDelete, editContact } = require("../controllers/userController/contactController");
-const { faqsList } = require("../controllers/userController/userAppControllers");
+const {
+  contactList,
+  viewDetails,
+  contactDelete,
+  editContact,
+} = require("../controllers/userController/contactController");
+const {
+  faqsList,
+} = require("../controllers/userController/userAppControllers");
 const router = express.Router();
 
 //-admin Routes
@@ -63,7 +70,7 @@ router.post("/admin-login", loginAdmin);
 router.post("/send-mail", sendUserResetPassword);
 router.post("/otp-verify", OtpVerify);
 router.post("/admin-resetPassword", resetPassword);
-router.post("/admin-details/:id",adminDetails)
+router.post("/admin-details/:id", adminDetails);
 router.post(
   "/edit-profile/:id",
   adminAuthorisationUser,
@@ -113,25 +120,27 @@ router.post("/edit-coupan/:id", adminAuthorisationUser, editCoupan);
 router.post("/delete-coupan/:id", adminAuthorisationUser, deleteCoupan);
 router.post("/user-list", adminAuthorisationUser, UserList);
 
-
 router.post("/dashboards-home", adminAuthorisationUser, DashBordsHome);
 router.post("/user-count", adminAuthorisationUser, CountUser);
 router.post("/order-details/:id", adminAuthorisationUser, OrderDetails);
-router.post("/order-list",adminAuthorisationUser,Orderlist)
-router.post("/admin-order-details/:id",adminAuthorisationUser,adminOrderDetails)
-router.post("/delete-order/:id",adminAuthorisationUser,OrderDelete)
-router.post("/completed-order",adminAuthorisationUser,CompletedOrder)
-router.post("/status-change/:id",adminAuthorisationUser,editOrder)
-router.post("/user-block-admin/:id",adminAuthorisationUser,blockUser)
+router.post("/order-list", adminAuthorisationUser, Orderlist);
+router.post(
+  "/admin-order-details/:id",
+  adminAuthorisationUser,
+  adminOrderDetails
+);
+router.post("/delete-order/:id", adminAuthorisationUser, OrderDelete);
+router.post("/completed-order", adminAuthorisationUser, CompletedOrder);
+router.post("/status-change/:id", adminAuthorisationUser, editOrder);
+router.post("/user-block-admin/:id", adminAuthorisationUser, blockUser);
 
-
-router.post("/transaction-list",adminAuthorisationUser,transactionList)
-router.post("/contact-list",adminAuthorisationUser,contactList)
-router.post("/contact-details/:id",adminAuthorisationUser,viewDetails)
-router.post("/contact-deleted/:id",adminAuthorisationUser,contactDelete)
-router.post("/edit-contact/:id",adminAuthorisationUser,editContact)
-router.post("/create-faqs",adminAuthorisationUser,createFaqs)
-router.post("/update-faqs/:id",adminAuthorisationUser,editFaqs)
-router.post("/delete-faqs/:id",adminAuthorisationUser,deleteFaq)
-router.post("/faqslist",adminAuthorisationUser,faqsList)
+router.post("/transaction-list", adminAuthorisationUser, transactionList);
+router.post("/contact-list", adminAuthorisationUser, contactList);
+router.post("/contact-details/:id", adminAuthorisationUser, viewDetails);
+router.post("/contact-deleted/:id", adminAuthorisationUser, contactDelete);
+router.post("/edit-contact/:id", adminAuthorisationUser, editContact);
+router.post("/create-faqs", adminAuthorisationUser, createFaqs);
+router.post("/update-faqs/:id", adminAuthorisationUser, editFaqs);
+router.post("/delete-faqs/:id", adminAuthorisationUser, deleteFaq);
+router.post("/faqslist", adminAuthorisationUser, faqsList);
 module.exports = router;
