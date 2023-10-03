@@ -120,7 +120,7 @@ exports.createOrder = async (req, res) => {
 exports.userOrder = async (req, res) => {
   try {
     const id = req.params.id;
-    const orderList = await orderModels.find({ user_Id: id });
+    const orderList = await orderModels.find({ user_Id: id }).populate("products.product_Id")
     if (orderList) {
       res.status(200).json(success(res.statusCode, "Success", { orderList }));
     } else {

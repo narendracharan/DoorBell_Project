@@ -138,12 +138,13 @@ exports.applyCoupan = async (req, res) => {
 
 exports.updateQuantity = async (req, res) => {
   try {
-    const id=req.params.id
+    const id = req.params.id;
     const quantity = req.body.quantity;
     const updateQuantity = await cartsModels.findById(id);
-    if (updateQuantity.products.length) {
-      updateQuantity.products[0].quantity = quantity;
+    for (const products of updateQuantity.products) {
+      products.quantity = products.quantity + +quantity;
     }
+    await updateQuantity.save();
     res
       .status(200)
       .json(success(res.statusCode, "Success", { updateQuantity }));
