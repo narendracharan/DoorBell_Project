@@ -5,6 +5,18 @@ const schema=new mongoose.Schema({
         type:String,
         require:true
     },
+    firstName:{
+        type:String,
+        require:true
+    },
+    lastName:{
+        type:String,
+        require:true
+    },
+    companyName:{
+        type:String,
+        require:true
+    },
     address:{
         type:String,
         require:true
@@ -14,6 +26,14 @@ const schema=new mongoose.Schema({
         require:true
     },
     locality:{
+        type:String,
+        require:true
+    },
+    orderNotes:{
+        type:String,
+        require:true
+    },
+    city:{
         type:String,
         require:true
     },

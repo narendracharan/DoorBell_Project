@@ -5,6 +5,7 @@ const orderModels = require("../../models/userModels/orderModels");
 const userRegister = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
+const addressModels = require("../../models/userModels/addressModels");
 
 exports.createOrder = async (req, res) => {
   try {
@@ -16,9 +17,12 @@ exports.createOrder = async (req, res) => {
       city,
       country,
       total,
+      address_Id,
       postalCode,
       orderNotes,
       carts,
+      locality,
+      title,
       user_Id,
     } = req.body;
     if (!firstName) {
@@ -46,7 +50,6 @@ exports.createOrder = async (req, res) => {
       res.status(200).json(error("Please provide orderNotes", res.statusCode));
     }
     var totalQuatity = await productModels.find();
-    console.log(totalQuatity);
     let product = [];
     for (let i = 0; i < carts.length; i++) {
       let object = {};
@@ -66,7 +69,22 @@ exports.createOrder = async (req, res) => {
     // const total = await userRegister.find({ _id: user_Id });
     // const totalPrice = total.map((x) => x.totalafterDiscount);
     var password = firstName + "@1234";
-
+    if (!address_Id) {
+      const newAddress = new addressModels({
+        title: title,
+        firstName: firstName,
+        lastName: lastName,
+        companyName: companyName,
+        address: address,
+        country: country,
+        pincode: postalCode,
+        city: city,
+        locality: locality,
+        orderNotes: orderNotes,
+        user_Id:user_Id
+      });
+      await newAddress.save();
+    }
     const newOrder = new orderModels({
       firstName: firstName,
       lastName: lastName,
@@ -82,13 +100,11 @@ exports.createOrder = async (req, res) => {
     });
     const saveOrder = await newOrder.save();
     const user = await userRegister.findOne({ _id: user_Id });
-    console.log(user);
     const updated = await orderModels
       .findOne({
         _id: newOrder._id,
       })
       .populate("user_Id");
-console.log(user.password);
     if (!user.passwordApp) {
       await userRegister
         .findByIdAndUpdate(
@@ -111,6 +127,7 @@ console.log(user.password);
       await transporter.sendMail(mailOptions);
     }
     await cartsModels.deleteMany({ user_Id: user_Id });
+    const userAddress = await addressModels.find({ user_Id: user_Id });
 
     res.status(200).json(success(res.statusCode, "Success", { saveOrder }));
   } catch (err) {
