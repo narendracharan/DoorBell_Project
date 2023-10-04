@@ -15,7 +15,6 @@ exports.addTutorial = async (req, res) => {
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
         if (req.files[i].fieldname == "tutorialVideo") {
-          // console.log(`${process.env.BASE_URL}/${req.files[i].filename}`);
           newTutorials.tutorialVideo.push(
             `${process.env.BASE_URL}/${req.files[i].filename}`
           );

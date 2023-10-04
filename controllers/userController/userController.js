@@ -21,11 +21,11 @@ exports.UserRegister = async (req, res) => {
         .json(error("Please enter password", res.statusCode));
     }
     const checkMail = await userModels.findOne({ userEmail: userEmail });
-    const checkNAME= await userModels.findOne({userName:userName})
+    const checkNAME = await userModels.findOne({ userName: userName });
     if (checkNAME) {
       return res.status(201).json(error("userName is already register"));
     }
-    
+
     if (checkMail) {
       return res.status(201).json(error("userEmail is already register"));
     }
@@ -72,20 +72,16 @@ exports.loginUser = async (req, res) => {
               .json(error("User Password is Incorrect", res.statusCode));
           }
         } else {
-          res
-            .status(201)
-            .json(error("UserEmail is Incorrect", res.statusCode));
+          res.status(201).json(error("UserEmail is Incorrect", res.statusCode));
         }
-      }  else {
+      } else {
         res.status(201).json(error("You Are Block By Admin", res.statusCode));
       }
+    } else {
+      res
+        .status(201)
+        .json(error("UserEmail and Password Are empty", res.statusCode));
     }
-      else {
-        res
-          .status(201)
-          .json(error("UserEmail and Password Are empty", res.statusCode));
-      }
-   
   } catch (err) {
     console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
@@ -179,7 +175,7 @@ exports.resetPassword = async (req, res) => {
 exports.editProfile = async (req, res) => {
   try {
     const id = req.params.id;
-    const { websiteName, websiteProfile } = req.body;
+    const { websiteName, mobileNumber, userEmail } = req.body;
     if (!websiteName) {
       res.status(201).json(error("please provide name", res.statusCode));
     }
@@ -188,6 +184,8 @@ exports.editProfile = async (req, res) => {
     // }
     const data = {
       websiteName: websiteName,
+      mobileNumber: mobileNumber,
+      userEmail: userEmail,
       websiteProfile: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const user = await userModels.findById(id, {
@@ -241,5 +239,14 @@ exports.changepassword = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.userDetails = async (req, res) => {
+  try {
+    const userDetails = await userModels.findById(req.params.id);
+    res.status(200).json(success(res.statusCode, "Success", { userDetails }));
+  } catch (err) {
+    res.status(400).json(error("Error in User Profile", res.statusCode));
   }
 };

@@ -7,6 +7,7 @@ const {
   resetPassword,
   editProfile,
   changepassword,
+  userDetails,
 } = require("../controllers/userController/userController");
 const userAuthorisationUser = require("../middleware/userAuthentication");
 const {
@@ -59,6 +60,7 @@ router.post(
   userAuthorisationUser,
   editProfile
 );
+router.post("/user-Details/:id",userAuthorisationUser,userDetails)
 router.post("/add-to-carts", userAuthorisationUser, addToCarts);
 router.post("/remove-carts", userAuthorisationUser, revomeCarts);
 router.post("/carts-list/:id", userAuthorisationUser, cartsList);
