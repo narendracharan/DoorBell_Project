@@ -141,7 +141,8 @@ exports.userOrder = async (req, res) => {
     const id = req.params.id;
     const orderList = await orderModels
       .find({ user_Id: id })
-      .populate("products.products_Id");
+      .populate("products.products_Id")
+      .populate("user_Id")
     if (orderList) {
       res.status(200).json(success(res.statusCode, "Success", { orderList }));
     } else {
