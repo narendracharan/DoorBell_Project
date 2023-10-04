@@ -21,6 +21,7 @@ const {
   createOrder,
   userOrder,
   orderDetails,
+  orderDelete,
 } = require("../controllers/userController/orderControllers");
 const {
   tutorialList,
@@ -66,6 +67,7 @@ router.post("/update-quantity/:id", userAuthorisationUser,updateQuantity);
 router.post("/create-order", createOrder);
 router.post("/user-order/:id", userAuthorisationUser, userOrder);
 router.post("/order-details/:id", userAuthorisationUser, orderDetails);
+router.post("/delete-order/:id",userAuthorisationUser,orderDelete)
 router.post("/change-password/:id", userAuthorisationUser, changepassword);
 
 router.post("/add-address", userAuthorisationUser, createAddress);

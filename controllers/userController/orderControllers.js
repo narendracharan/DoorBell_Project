@@ -22,6 +22,7 @@ exports.createOrder = async (req, res) => {
       orderNotes,
       carts,
       locality,
+      mobileNumber,
       title,
       user_Id,
     } = req.body;
@@ -81,7 +82,8 @@ exports.createOrder = async (req, res) => {
         city: city,
         locality: locality,
         orderNotes: orderNotes,
-        user_Id:user_Id
+        mobileNumber: mobileNumber,
+        user_Id: user_Id,
       });
       await newAddress.save();
     }
@@ -127,8 +129,6 @@ exports.createOrder = async (req, res) => {
       await transporter.sendMail(mailOptions);
     }
     await cartsModels.deleteMany({ user_Id: user_Id });
-    const userAddress = await addressModels.find({ user_Id: user_Id });
-
     res.status(200).json(success(res.statusCode, "Success", { saveOrder }));
   } catch (err) {
     console.log(err);
@@ -164,6 +164,15 @@ exports.orderDetails = async (req, res) => {
     } else {
       res.status(201).json(error("NO Data Found", res.statusCode));
     }
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.orderDelete = async (req, res) => {
+  try {
+    const deleteOrder = await orderModels.findByIdAndDelete(req.params.id);
+    res.status(200).json(success(res.statusCode, "SUccess", { deleteOrder }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
