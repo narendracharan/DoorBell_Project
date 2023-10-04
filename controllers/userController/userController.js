@@ -198,7 +198,7 @@ exports.editProfile = async (req, res) => {
     const updateProfile = await userModels.findByIdAndUpdate(id, data, {
       new: true,
     });
-    res.status(200).json(success(res.statusCode, "Success", { user }));
+    res.status(200).json(success(res.statusCode, "Success", { updateProfile }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
