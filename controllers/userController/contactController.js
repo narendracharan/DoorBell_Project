@@ -163,7 +163,7 @@ exports.addressList = async (req, res) => {
 exports.addressEdit = async (req, res) => {
   try {
     const id = req.params.id;
-    const { title, address, country, locality, pincode } = req.body;
+    const { title, address, country, locality, pincode ,city,firstName,lastName,companyName,mobileNumber} = req.body;
     if (!title) {
       res.status(201).json(error("please provide title", res.statusCode));
     }
@@ -183,10 +183,15 @@ exports.addressEdit = async (req, res) => {
       { _id: id },
       {
         title: title,
+        firstName:firstName,
+        lastName : lastName ,
         address: address,
         country: country,
         locality: locality,
         pincode: pincode,
+        city:city,
+        mobileNumber:mobileNumber,
+        companyName:companyName
       }
     );
     if (updateAddress) {
