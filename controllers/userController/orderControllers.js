@@ -11,45 +11,54 @@ exports.createOrder = async (req, res) => {
   try {
     const {
       firstName,
+      firstName_ar,
       lastName,
+      lastName_ar,
       companyName,
+      companyName_ar,
       address,
+      address_ar,
       city,
+      city_ar,
       country,
+      country_ar,
       total,
       address_Id,
       postalCode,
       orderNotes,
+      orderNotes_ar,
       carts,
       locality,
+      locality_ar,
       mobileNumber,
       title,
+      title_ar,
       user_Id,
     } = req.body;
-    if (!firstName) {
-      res.status(200).json(error("Please provide firstName", res.statusCode));
-    }
-    if (!lastName) {
-      res.status(200).json(error("Please provide lastName", res.statusCode));
-    }
-    if (!companyName) {
-      res.status(200).json(error("Please provide companyName", res.statusCode));
-    }
-    if (!address) {
-      res.status(200).json(error("Please provide address", res.statusCode));
-    }
-    if (!city) {
-      res.status(200).json(error("Please provide city", res.statusCode));
-    }
-    if (!country) {
-      res.status(200).json(error("Please provide country", res.statusCode));
-    }
-    if (!postalCode) {
-      res.status(200).json(error("Please provide postalCode", res.statusCode));
-    }
-    if (!orderNotes) {
-      res.status(200).json(error("Please provide orderNotes", res.statusCode));
-    }
+    // if (!firstName) {
+    //   res.status(200).json(error("Please provide firstName", res.statusCode));
+    // }
+    // if (!lastName) {
+    //   res.status(200).json(error("Please provide lastName", res.statusCode));
+    // }
+    // if (!companyName) {
+    //   res.status(200).json(error("Please provide companyName", res.statusCode));
+    // }
+    // if (!address) {
+    //   res.status(200).json(error("Please provide address", res.statusCode));
+    // }
+    // if (!city) {
+    //   res.status(200).json(error("Please provide city", res.statusCode));
+    // }
+    // if (!country) {
+    //   res.status(200).json(error("Please provide country", res.statusCode));
+    // }
+    // if (!postalCode) {
+    //   res.status(200).json(error("Please provide postalCode", res.statusCode));
+    // }
+    // if (!orderNotes) {
+    //   res.status(200).json(error("Please provide orderNotes", res.statusCode));
+    // }
     var totalQuatity = await productModels.find();
     let product = [];
     for (let i = 0; i < carts.length; i++) {
@@ -73,15 +82,24 @@ exports.createOrder = async (req, res) => {
     if (!address_Id) {
       const newAddress = new addressModels({
         title: title,
+        title_ar:title_ar,
         firstName: firstName,
+        firstName_ar:firstName_ar,
         lastName: lastName,
+        lastName_ar:lastName_ar,
         companyName: companyName,
+        companyName_ar:companyName_ar,
         address: address,
+        address_ar:address_ar,
         country: country,
+        country_ar:country_ar,
         pincode: postalCode,
         city: city,
+        city_ar:city_ar,
         locality: locality,
+        locality_ar:locality_ar,
         orderNotes: orderNotes,
+        orderNotes_ar:orderNotes_ar,
         mobileNumber: mobileNumber,
         user_Id: user_Id,
       });
@@ -89,13 +107,20 @@ exports.createOrder = async (req, res) => {
     }
     const newOrder = new orderModels({
       firstName: firstName,
+      firstName_ar:firstName_ar,
       lastName: lastName,
+      lastName_ar:lastName_ar,
       companyName: companyName,
+      companyName_ar:companyName_ar,
       address: address,
+      address_ar:address_ar,
       city: city,
+      city_ar:city_ar,
       country: country,
+      country_ar:country_ar,
       postalCode: postalCode,
       orderNotes: orderNotes,
+      orderNotes_ar:orderNotes_ar,
       total: total,
       products: product,
       user_Id: user_Id,

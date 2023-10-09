@@ -129,13 +129,13 @@ exports.transactionList = async (req, res) => {
 exports.editOrder = async (req, res) => {
   try {
     const id = req.params.id;
-    var status = req.body.status;
+    var {status,status_ar} = req.body.status;
     if (!status) {
       res.status(201).json(error("Please provide status"));
     }
     const changeStatus = await orderModels.findByIdAndUpdate(
       id,
-      { orderStatus: status },
+      { orderStatus: status ,orderStatus_ar:status_ar},
       { new: true }
     );
     res.status(200).json(success(res.statusCode, "Success", { changeStatus }));

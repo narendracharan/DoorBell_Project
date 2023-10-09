@@ -4,27 +4,29 @@ const { error, success } = require("../../response");
 
 exports.createContact = async (req, res) => {
   try {
-    const { userName, userEmail, mobileNumber, descripation, user_Id } =
+    const { userName,userName_ar, userEmail, mobileNumber, descripation, descripation_ar,user_Id } =
       req.body;
-    if (!userName) {
-      res.status(201).json(error("Please provide userName", res.statusCode));
-    }
-    if (!userEmail) {
-      res.status(201).json(error("Please provide userName", res.statusCode));
-    }
-    if (!mobileNumber) {
-      res
-        .status(201)
-        .json(error("Please provide mobileNumber", res.statusCode));
-    }
-    if (!descripation) {
-      res.status(201).json(error("Please provide userName", res.statusCode));
-    }
+    // if (!userName) {
+    //   res.status(201).json(error("Please provide userName", res.statusCode));
+    // }
+    // if (!userEmail) {
+    //   res.status(201).json(error("Please provide userName", res.statusCode));
+    // }
+    // if (!mobileNumber) {
+    //   res
+    //     .status(201)
+    //     .json(error("Please provide mobileNumber", res.statusCode));
+    // }
+    // if (!descripation) {
+    //   res.status(201).json(error("Please provide userName", res.statusCode));
+    // }
     const newContact = new contactModels({
       userName: userName,
+      userName_ar:userName_ar,
       userEmail: userEmail,
       mobileNumber: mobileNumber,
       descripation: descripation,
+      descripation_ar:descripation_ar,
       user_Id: user_Id,
     });
     const saveData = await newContact.save();
@@ -163,35 +165,43 @@ exports.addressList = async (req, res) => {
 exports.addressEdit = async (req, res) => {
   try {
     const id = req.params.id;
-    const { title, address, country, locality, pincode ,city,firstName,lastName,companyName,mobileNumber} = req.body;
-    if (!title) {
-      res.status(201).json(error("please provide title", res.statusCode));
-    }
-    if (!address) {
-      res.status(201).json(error("please provide address", res.statusCode));
-    }
-    if (!country) {
-      res.status(201).json(error("please provide country", res.statusCode));
-    }
-    if (!locality) {
-      res.status(201).json(error("please provide locality", res.statusCode));
-    }
-    if (!pincode) {
-      res.status(201).json(error("please provide pincode", res.statusCode));
-    }
+    const { title, title_ar,address, address_ar,country,country_ar, locality,locality_ar, pincode ,city,city_ar,firstName,firstName_ar,lastName,lastName_ar,companyName,companyName_ar,mobileNumber} = req.body;
+    // if (!title) {
+    //   res.status(201).json(error("please provide title", res.statusCode));
+    // }
+    // if (!address) {
+    //   res.status(201).json(error("please provide address", res.statusCode));
+    // }
+    // if (!country) {
+    //   res.status(201).json(error("please provide country", res.statusCode));
+    // }
+    // if (!locality) {
+    //   res.status(201).json(error("please provide locality", res.statusCode));
+    // }
+    // if (!pincode) {
+    //   res.status(201).json(error("please provide pincode", res.statusCode));
+    // }
     const updateAddress = await addressModels.findOneAndUpdate(
       { _id: id },
       {
         title: title,
+        title_ar:title_ar,
         firstName:firstName,
+        firstName_ar:firstName_ar,
         lastName : lastName ,
+        lastName_ar:lastName_ar,
         address: address,
+        address_ar:address_ar,
         country: country,
+        country_ar:country_ar,
         locality: locality,
+        locality_ar:locality_ar,
         pincode: pincode,
         city:city,
+        city_ar:city_ar,
         mobileNumber:mobileNumber,
-        companyName:companyName
+        companyName:companyName,
+        companyName_ar:companyName_ar
       }
     );
     if (updateAddress) {
