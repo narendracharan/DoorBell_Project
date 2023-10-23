@@ -32,10 +32,6 @@ const {
   productList,
   updateProduct,
   productDelete,
-  createCoupan,
-  coupanList,
-  editCoupan,
-  deleteCoupan,
 } = require("../controllers/adminController/productControllers");
 
 const {
@@ -62,6 +58,23 @@ const {
 const {
   faqsList,
 } = require("../controllers/userController/userAppControllers");
+const {
+  createCoupan,
+  coupanList,
+  editCoupan,
+  deleteCoupan,
+  userCoupan,
+  userCoupanList,
+  userUpdateCoupan,
+  userDeleteCoupan,
+} = require("../controllers/adminController/coupanController");
+const {
+  addAgent,
+  agentlist,
+  agentUpdate,
+  deleteAgent,
+  assignOrder,
+} = require("../controllers/adminController/agentControllers");
 const router = express.Router();
 
 //-admin Routes
@@ -114,12 +127,25 @@ router.post("/tutorial-list", adminAuthorisationUser, tutorialList);
 router.post("/update-tutorials/:id", adminAuthorisationUser, tutorialUpdate);
 router.post("/delete-tutorials/:id", adminAuthorisationUser, deleteTutorilas);
 
+//Delivery Agent Routes
+router.post("/create-agent", adminAuthorisationUser,upload.any(), addAgent);
+router.post("/agent-list",adminAuthorisationUser, agentlist);
+router.post("/agent-update/:id",adminAuthorisationUser, upload.any(), agentUpdate);
+router.post("/agent-delete/:id",adminAuthorisationUser, deleteAgent);
+router.post("/agent-assign-order/:id",adminAuthorisationUser,assignOrder)
+
+//Coupan Management Routes
 router.post("/create-coupan", adminAuthorisationUser, createCoupan);
 router.post("/coupan-list", adminAuthorisationUser, coupanList);
 router.post("/edit-coupan/:id", adminAuthorisationUser, editCoupan);
 router.post("/delete-coupan/:id", adminAuthorisationUser, deleteCoupan);
+router.post("/user-coupan",adminAuthorisationUser, userCoupan);
+router.post("/user-coupan-list",adminAuthorisationUser,userCoupanList)
+router.post("/user-coupan-update/:id",adminAuthorisationUser,userUpdateCoupan)
+router.post("/delete-coupan/:id",adminAuthorisationUser,userDeleteCoupan)
 router.post("/user-list", adminAuthorisationUser, UserList);
 
+//DashBoards Routes
 router.post("/dashboards-home", adminAuthorisationUser, DashBordsHome);
 router.post("/user-count", adminAuthorisationUser, CountUser);
 router.post("/order-details/:id", adminAuthorisationUser, OrderDetails);

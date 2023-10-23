@@ -92,6 +92,16 @@ const schema = new mongoose.Schema({
       },
     },
   ],
+  deliverdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "agent",
+    require: true,
+  },
+  assignStatus: {
+    type: String,
+    default: "UnAssign",
+    enum: ["Assign", "UnAssign", "Accepted", "Decline"],
+  },
   total: Number,
   user_Id: {
     type: mongoose.Schema.Types.ObjectId,

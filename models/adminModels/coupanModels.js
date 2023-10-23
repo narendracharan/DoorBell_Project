@@ -18,7 +18,7 @@ const schema=new mongoose.Schema({
         require:true
     },
     coupanCode:{
-        type:Number,
+        type:String,
         require:true
     },
     user_Id:{

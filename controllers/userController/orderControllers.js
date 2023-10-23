@@ -197,7 +197,7 @@ exports.orderDetails = async (req, res) => {
 
 exports.orderDelete = async (req, res) => {
   try {
-    const deleteOrder = await   orderModels.findByIdAndDelete(req.params.id);
+    const deleteOrder = await orderModels.findByIdAndDelete(req.params.id);
     res.status(200).json(success(res.statusCode, "SUccess", { deleteOrder }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));

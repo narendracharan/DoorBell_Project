@@ -190,87 +190,8 @@ exports.productDelete = async (req, res) => {
   }
 };
 
-exports.createCoupan = async (req, res) => {
-  try {
-    const { coupanName, endDate, startDate, Discount, coupanCode, user_Id } =
-      req.body;
-    if (!coupanName) {
-      res.status(200).json(error("please Enter coupanName", res.statusCode));
-    }
-    if (!endDate) {
-      res.status(200).json(error("please Enter endDate ", res.statusCode));
-    }
-    if (!startDate) {
-      res.status(200).json(error("please Enter startDate", res.statusCode));
-    }
-    if (!Discount) {
-      res.status(200).json(error("please Enter Discount", res.statusCode));
-    }
-    if (!coupanCode) {
-      res.status(200).json(error("please Enter coupanCode", res.statusCode));
-    }
-    const newCoupan = new coupanModels({
-      coupanName: coupanName,
-      endDate: endDate,
-      startDate: startDate,
-      Discount: Discount,
-      coupanCode: coupanCode,
-      user_Id: user_Id,
-    });
-    const coupan = await newCoupan.save();
-    res.status(200).json(success(res.statusCode, "Success", { coupan }));
-  } catch (err) {
-    console.log(err);
-    res.status(400).json(error("Failed", res.statusCode));
-  }
-};
 
-exports.coupanList = async (req, res) => {
-  try {
-    const { from, to } = req.body;
-    const list = await coupanModels.find({
-      $and: [
-        from ? { createdAt: { $gte: new Date(from) } } : {},
-        to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
-      ],
-    });
-    if (list) {
-      res.status(200).json(success(res.statusCode, "Success", { list }));
-    } else {
-      res.status(200).json(error("Data are Not Found", res.statusCode));
-    }
-  } catch (err) {
-    res.status(400).json("Failed", res.statusCode);
-  }
-};
 
-exports.editCoupan = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const { coupanName, endDate, startDate, Discount, coupanCode } = req.body;
-    const Data = {
-      coupanName: coupanName,
-      endDate: endDate,
-      startDate: startDate,
-      Discount: Discount,
-      coupanCode: coupanCode,
-    };
-    const updateData = await coupanModels.findByIdAndUpdate(id, Data, {
-      new: true,
-    });
-    res.status(200).json(success(res.statusCode, "Success", { updateData }));
-  } catch (err) {
-    res.status(400).json(error("Failed", res.statusCode));
-  }
-};
 
-exports.deleteCoupan = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const deleteData = await coupanModels.findByIdAndDelete(id);
-    res.status(200).json(success(res.statusCode, "Success", { deleteData }));
-  } catch (err) {
-    console.log(err);
-    res.status(400).json(error("Failed", res.statusCode));
-  }
-};
+
+

@@ -14,9 +14,10 @@ const {
   addToCarts,
   revomeCarts,
   cartsList,
-  applyCoupan,
   productList,
   updateQuantity,
+  coupanApply,
+  coupanList,
 } = require("../controllers/userController/cartsControllers");
 const {
   createOrder,
@@ -64,7 +65,8 @@ router.post("/user-Details/:id",userAuthorisationUser,userDetails)
 router.post("/add-to-carts", userAuthorisationUser, addToCarts);
 router.post("/remove-carts", userAuthorisationUser, revomeCarts);
 router.post("/carts-list/:id", userAuthorisationUser, cartsList);
-router.post("/apply-coupan", userAuthorisationUser, applyCoupan);
+router.post("/apply-coupan", userAuthorisationUser, coupanApply);
+router.post("/universal-coupan-list",userAuthorisationUser,coupanList)
 router.post("/update-quantity/:id", userAuthorisationUser,updateQuantity);
 router.post("/create-order", createOrder);
 router.post("/user-order/:id", userAuthorisationUser, userOrder);
