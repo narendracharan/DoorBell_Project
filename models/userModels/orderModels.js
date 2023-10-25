@@ -68,8 +68,8 @@ const schema = new mongoose.Schema({
   },
   orderStatus: {
     type: String,
-    default: "In-Progress",
-    enum: ["In-Progress", "Cancelled", "Delivered"],
+    default: "Pending",
+    enum: ["In-Progress", "Cancelled", "Delivered","Pending"],
   },
   orderStatus_ar: {
     type: String,

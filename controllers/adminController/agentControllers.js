@@ -44,18 +44,18 @@ exports.addAgent = async (req, res) => {
       idNumber: idNumber,
       address: address,
     });
-    if (req.files) {
-      for (let i = 0; i < req.files.length; i++) {
-        // if (req.files[i].fieldname == "profile_Pic") {
-        //   newUser.profile_Pic = `${process.env.BASE_URL}/${req.files[i].filename}`;
-        // }
-        if (req.files[i].fieldname == "document") {
-          newUser.document.push(
-            `${process.env.BASE_URL}/${req.files[i].filename}`
-          );
-        }
-      }
-    }
+    // if (req.files) {
+    //   for (let i = 0; i < req.files.length; i++) {
+    //     // if (req.files[i].fieldname == "profile_Pic") {
+    //     //   newUser.profile_Pic = `${process.env.BASE_URL}/${req.files[i].filename}`;
+    //     // }
+    //     if (req.files[i].fieldname == "document") {
+    //       newUser.document.push(
+    //         `${process.env.BASE_URL}/${req.files[i].filename}`
+    //       );
+    //     }
+    //   }
+    //   }
     await newUser.save();
     res.status(200).json(success(res.statusCode, "Success", { newUser }));
   } catch (err) {
@@ -144,5 +144,50 @@ exports.assignOrder = async (req, res) => {
     res.status(200).json(success(res.statusCode, "Success", { order }));
   } catch (err) {
     res.status(400).json(error("Error In Assign Order", res.statusCode));
+  }
+};
+
+exports.agentOrderList = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const orderList = await orderModels.find({ deliverdBy: id });
+    orderList.filter(
+      (x) => x.orderStatus == "In-Progress" || x.orderStatus == "Delivered"
+    );
+    res.status(200).json(success(res.statusCode, "Success", { orderList }));
+  } catch (err) {
+    res.status(400).json(error("Error in Agent Order", res.statusCode));
+  }
+};
+
+exports.orderDetails = async (req, res) => {
+  try {
+    const orderDetails = await orderModels
+      .findById(req.params.id)
+      .populate(["user_Id", "deliverdBy", "products.products_Id"]);
+    res.status(200).json(success(res.statusCode, "Success", { orderDetails }));
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(error("Error In Order Details", res.statusCode));
+  }
+};
+
+exports.updateOrderStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    var status = req.body.status;
+    if (!status) {
+      return res
+        .status(201)
+        .json(error("please provide  status", res.statusCode));
+    }
+    const order = await orderModels.findById(id);
+    if (status) {
+      order.orderStatus = status;
+    }
+    await order.save();
+    res.status(200).json(success(res.statusCode, "Success", { order }));
+  } catch (err) {
+    res.status(400).json(error("Error In Order Status", res.statusCode));
   }
 };

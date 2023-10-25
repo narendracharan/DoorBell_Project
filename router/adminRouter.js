@@ -74,6 +74,7 @@ const {
   agentUpdate,
   deleteAgent,
   assignOrder,
+  agentOrder,
 } = require("../controllers/adminController/agentControllers");
 const router = express.Router();
 
@@ -128,11 +129,12 @@ router.post("/update-tutorials/:id", adminAuthorisationUser, tutorialUpdate);
 router.post("/delete-tutorials/:id", adminAuthorisationUser, deleteTutorilas);
 
 //Delivery Agent Routes
-router.post("/create-agent", adminAuthorisationUser,upload.any(), addAgent);
+router.post("/create-agent", adminAuthorisationUser, addAgent);
 router.post("/agent-list",adminAuthorisationUser, agentlist);
 router.post("/agent-update/:id",adminAuthorisationUser, upload.any(), agentUpdate);
 router.post("/agent-delete/:id",adminAuthorisationUser, deleteAgent);
 router.post("/agent-assign-order/:id",adminAuthorisationUser,assignOrder)
+
 
 //Coupan Management Routes
 router.post("/create-coupan", adminAuthorisationUser, createCoupan);

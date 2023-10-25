@@ -98,7 +98,9 @@ exports.updateQuantity = async (req, res) => {
   try {
     const id = req.params.id;
     const quantity = req.body.quantity;
-    const updateQuantity = await cartsModels.findById(id);
+    const updateQuantity = await cartsModels
+      .findById(id)
+      .populate("products.products_Id");
     for (const products of updateQuantity.products) {
       products.quantity = products.quantity + +quantity;
     }

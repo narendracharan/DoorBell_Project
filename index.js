@@ -15,12 +15,14 @@ app.use(morgan("dev"));
 app.use(cors());
 const adminRouter = require("./router/adminRouter");
 const userRouter = require("./router/userRoutes");
+const agentRouter=require("./router/agentRouter")
 const path  = require("path");
 
 //process.env["BASE_URL"] = "http://ec2-16-171-57-155.eu-north-1.compute.amazonaws.com:3001";
 
 app.use("/admin", adminRouter);
 app.use("/user", userRouter);
+app.use("/agent",agentRouter)
 const staticPath = path.join(__dirname, "./public");
 app.use(express.static("./public"));
 app.get("/", (req, res) => {
