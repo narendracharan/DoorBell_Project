@@ -16,7 +16,12 @@ const schema=new monoose.Schema({
     Description_ar:{
         type:String,
         require:true
+    },
+    Desption_ar:{
+        type:String,
+        require:true
     }
+
 })
 
 schema.set("timestamps",true)
