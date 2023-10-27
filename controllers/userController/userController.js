@@ -113,7 +113,7 @@ exports.sendUserResetPassword = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(500).json(error("Failed", res.statusCode));
+    res.status(400).json(error("Failed", res.statusCode));
   }
 };
 
