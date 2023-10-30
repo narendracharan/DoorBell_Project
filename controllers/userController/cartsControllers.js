@@ -132,7 +132,7 @@ exports.coupanApply = async (req, res) => {
     const { coupanCode, user_Id } = req.body;
     const validCoupan = await coupanModels.findOne({ coupanCode: coupanCode });
 
-    if (validCoupan == null) {
+    if (!validCoupan) {
       return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
     }
     if (new Date() > validCoupan.endDate) {
@@ -142,14 +142,12 @@ exports.coupanApply = async (req, res) => {
     }
     let user = 1;
     let DiscountType = validCoupan.Discount;
-    console.log(validCoupan.user == validCoupan.total);
-    if (validCoupan.user > validCoupan.total) {
+    if (validCoupan.user == validCoupan.total) {
       return res
         .status(201)
         .json(error("User Coupan Limit Expired ", res.statusCode));
     }
     validCoupan.total = validCoupan.total + +user;
-    console.log(validCoupan.total);
     await validCoupan.save();
     res.status(200).json(
       success(res.statusCode, "Success", {
@@ -178,7 +176,7 @@ exports.UsercoupanApply = async (req, res) => {
     }
     let user = 1;
     let DiscountType = validCoupan.Discount;
-    if (validCoupan.user > validCoupan.total) {
+    if (validCoupan.user == validCoupan.total) {
       return res
         .status(201)
         .json(error("User Coupan Limit Expired ", res.statusCode));
