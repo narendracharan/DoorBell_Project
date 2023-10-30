@@ -4,7 +4,8 @@ const { error, success } = require("../../response");
 
 exports.createCoupan = async (req, res) => {
   try {
-    const { coupanName, endDate, startDate, Discount,user, coupanCode } = req.body;
+    const { coupanName, endDate, startDate, Discount, user, coupanCode } =
+      req.body;
     if (!coupanName) {
       return res
         .status(201)
@@ -30,14 +31,13 @@ exports.createCoupan = async (req, res) => {
         .status(201)
         .json(error("Please Provide Coupan Code ", res.statusCode));
     }
-    console.log(req.body);
     const newCoupan = new coupanSchema({
       coupanName: coupanName,
       startDate: startDate,
       endDate: endDate,
       Discount: Discount,
       coupanCode: coupanCode,
-      user:user
+      user: user,
     });
     await newCoupan.save();
     res.status(200).json(success(res.statusCode, "Success", { newCoupan }));
@@ -68,7 +68,8 @@ exports.coupanList = async (req, res) => {
 exports.editCoupan = async (req, res) => {
   try {
     const id = req.params.id;
-    const { coupanName, endDate, startDate, Discount,user, coupanCode } = req.body;
+    const { coupanName, endDate, startDate, Discount, user, coupanCode } =
+      req.body;
     const coupan = await coupanSchema.findById(id);
     console.log(coupan);
     if (coupanName) {
@@ -86,8 +87,8 @@ exports.editCoupan = async (req, res) => {
     if (endDate) {
       coupan.endDate = endDate;
     }
-    if(user){
-      coupan.user=user
+    if (user) {
+      coupan.user = user;
     }
     await coupan.save();
 
@@ -109,7 +110,8 @@ exports.deleteCoupan = async (req, res) => {
 
 exports.userCoupan = async (req, res) => {
   try {
-    const { coupanName, endDate, startDate,user, Discount } = req.body;
+    const { coupanName, endDate, startDate, user, coupanCode, Discount } =
+      req.body;
     if (!coupanName) {
       return res
         .status(201)
@@ -136,7 +138,8 @@ exports.userCoupan = async (req, res) => {
       endDate: endDate,
       startDate: startDate,
       Discount: Discount,
-      user:user
+      user: user,
+      coupanCode: coupanCode,
     });
     await newCoupan.save();
     res.status(201).json(success(res.statusCode, "Success", { newCoupan }));
@@ -160,7 +163,8 @@ exports.userCoupanList = async (req, res) => {
 
 exports.userUpdateCoupan = async (req, res) => {
   try {
-    const { coupanName, endDate, user,startDate, Discount } = req.body;
+    const { coupanName, endDate, user, coupanCode, startDate, Discount } =
+      req.body;
     const coupan = await userCoupan.findById(req.params.id);
     if (coupanName) {
       coupan.coupanName = coupanName;
@@ -174,8 +178,11 @@ exports.userUpdateCoupan = async (req, res) => {
     if (Discount) {
       coupan.Discount = Discount;
     }
-    if(user){
-      coupan.user=user
+    if (user) {
+      coupan.user = user;
+    }
+    if (coupanCode) {
+      coupan.coupanCode = coupanCode;
     }
     await coupan.save();
     res.status(200).json(success(res.statusCode, "Success", { coupan }));
