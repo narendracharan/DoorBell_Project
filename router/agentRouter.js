@@ -7,7 +7,7 @@ const router=express.Router()
 
 router.post("/agent-order/:id",agentAuthorisationUser,agentOrderList)
 router.post("/order-details/:id",agentAuthorisationUser,orderDetails)
-router.post("/order-status/:id",agentAuthorisationUser,updateOrderStatus)
+router.post("/order-status/:id",upload.single("delivered_Img"),agentAuthorisationUser,updateOrderStatus)
 router.post("/agent-login",agentLogin)
 router.post("/send-Email",sendEmail)
 router.post("/otp-verify",agentOtpVerify)

@@ -131,16 +131,60 @@ exports.coupanApply = async (req, res) => {
   try {
     const { coupanCode, user_Id } = req.body;
     const validCoupan = await coupanModels.findOne({ coupanCode: coupanCode });
+
     if (validCoupan == null) {
-      return res.status(400).json(error("Invalid Coupan Code", res.statusCode));
+      return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
     }
     if (new Date() > validCoupan.endDate) {
       return res
-        .status(400)
+        .status(201)
         .json(error("Coupan Code is Expired", res.statusCode));
     }
+    let user = 1;
     let DiscountType = validCoupan.Discount;
+    console.log(validCoupan.user == validCoupan.total);
+    if (validCoupan.user > validCoupan.total) {
+      return res
+        .status(201)
+        .json(error("User Coupan Limit Expired ", res.statusCode));
+    }
+    validCoupan.total = validCoupan.total + +user;
+    console.log(validCoupan.total);
+    await validCoupan.save();
+    res.status(200).json(
+      success(res.statusCode, "Success", {
+        DiscountType,
+        user_Id,
+      })
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
 
+exports.UsercoupanApply = async (req, res) => {
+  try {
+    const { coupanCode, user_Id } = req.body;
+    const validCoupan = await userCoupan.findOne({ coupanCode: coupanCode });
+
+    if (!validCoupan) {
+      return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
+    }
+    if (new Date() > validCoupan.endDate) {
+      return res
+        .status(201)
+        .json(error("Coupan Code is Expired", res.statusCode));
+    }
+    let user = 1;
+    let DiscountType = validCoupan.Discount;
+    if (validCoupan.user > validCoupan.total) {
+      return res
+        .status(201)
+        .json(error("User Coupan Limit Expired ", res.statusCode));
+    }
+    validCoupan.total = validCoupan.total + +user;
+    await validCoupan.save();
     res.status(200).json(
       success(res.statusCode, "Success", {
         DiscountType,

@@ -18,6 +18,7 @@ const {
   updateQuantity,
   coupanApply,
   coupanList,
+  UsercoupanApply,
 } = require("../controllers/userController/cartsControllers");
 const {
   createOrder,
@@ -66,6 +67,7 @@ router.post("/add-to-carts", userAuthorisationUser, addToCarts);
 router.post("/remove-carts", userAuthorisationUser, revomeCarts);
 router.post("/carts-list/:id", userAuthorisationUser, cartsList);
 router.post("/apply-coupan", userAuthorisationUser, coupanApply);
+router.post("/apply-universal-coupan",userAuthorisationUser,UsercoupanApply)
 router.post("/universal-coupan-list",userAuthorisationUser,coupanList)
 router.post("/update-quantity/:id", userAuthorisationUser,updateQuantity);
 router.post("/create-order", createOrder);

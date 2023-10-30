@@ -69,7 +69,11 @@ const schema = new mongoose.Schema({
   orderStatus: {
     type: String,
     default: "Pending",
-    enum: ["In-Progress", "Cancelled", "Delivered","Pending"],
+    enum: ["In-Progress", "Cancelled", "Delivered", "Pending"],
+  },
+  delivered_Img: {
+    type: String,
+    require: true,
   },
   orderStatus_ar: {
     type: String,
@@ -83,7 +87,7 @@ const schema = new mongoose.Schema({
         ref: "doorBellProduct",
         require: true,
       },
-      Price:{
+      Price: {
         type: Number,
       },
       quantity: {

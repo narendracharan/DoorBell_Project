@@ -17,6 +17,18 @@ const schema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  user:{
+    type: Number,
+    require: true,
+  },
+  coupanCode:{
+    type:String,
+    require:true
+},
+total:{
+  type: Number,
+  default:0
+},
   user_Id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Doorbeladmin",

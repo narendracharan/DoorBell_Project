@@ -186,6 +186,9 @@ exports.updateOrderStatus = async (req, res) => {
     if (status) {
       order.orderStatus = status;
     }
+    if(req.file){
+      order.delivered_Img=`${process.env.BASE_URL}/${req.file.filename}`;
+    }
     await order.save();
     res.status(200).json(success(res.statusCode, "Success", { order }));
   } catch (err) {
@@ -219,7 +222,7 @@ exports.agentLogin = async (req, res) => {
       password: password,
     });
     if (!isMatch) {
-      return res.status(201).json(error("User is Not Matched", res.statusCode));
+      return res.status(201).json(error("User Password is Not Matched", res.statusCode));
     }
 
     const token = await verifyUser.AgentAuthToken();

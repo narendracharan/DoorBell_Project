@@ -144,7 +144,7 @@ router.post("/delete-coupan/:id", adminAuthorisationUser, deleteCoupan);
 router.post("/user-coupan",adminAuthorisationUser, userCoupan);
 router.post("/user-coupan-list",adminAuthorisationUser,userCoupanList)
 router.post("/user-coupan-update/:id",adminAuthorisationUser,userUpdateCoupan)
-router.post("/delete-coupan/:id",adminAuthorisationUser,userDeleteCoupan)
+router.post("/user-delete-coupan/:id",adminAuthorisationUser,userDeleteCoupan)
 router.post("/user-list", adminAuthorisationUser, UserList);
 
 //DashBoards Routes
