@@ -6,6 +6,7 @@ const userRegister = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 const addressModels = require("../../models/userModels/addressModels");
+const sendMail = require("../../services/EmailServices");
 
 exports.createOrder = async (req, res) => {
   try {
@@ -140,18 +141,29 @@ exports.createOrder = async (req, res) => {
           { new: true }
         )
         .select("passwordApp");
-      var mailOptions = {
-        from: "s04450647@gmail.com",
-        to: updated.user_Id.userEmail,
-        subject: "Order Successfully",
-        text: `Hello ${firstName}
-        Thank you for placing an order with us. 
-        yourEmail: ${updated.user_Id.userEmail}
-        your Password:${password}
-        Please do not share this email with anyone.This mail contains confidential details.
-        Thank you for choosing us and we look forward to serving you again.`,
-      };
-      await transporter.sendMail(mailOptions);
+        await sendMail(
+          updated.user_Id.userEmail,
+          `Order Successfully`,
+          firstName,
+          `<br.
+          <br>
+          Thank you for placing an order with us.<br>
+          <br>
+          <b> YourEmail: ${updated.user_Id.userEmail}.</b>
+          <br>
+          Your Password:${password}
+          <br>
+          <br>
+          Please do not share this email with anyone.This mail contains confidential details.<br>
+          <br>
+          Thank you for choosing us and we look forward to serving you again
+          <br>
+          <br>
+          Amania<br>
+          Customer Service Team<br>
+          91164721
+          `
+        )
     }
     await cartsModels.deleteMany({ user_Id: user_Id });
     res.status(200).json(success(res.statusCode, "Success", { saveOrder }));

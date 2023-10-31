@@ -4,12 +4,12 @@ const nodemailer = require("nodemailer");
 const sendMail = async (
   to,
   subject,
-  fullName_en,
+  firstName,
   body,
   adminDocs,
   attachments
 ) => {
-  const user = websiteName === undefined ? "" : websiteName.length ? websiteName : "";
+  const user = firstName === undefined ? "" : firstName.length ? firstName : "";
   const documents =
     adminDocs === undefined ? "" : adminDocs.length ? adminDocs : "";
   //   console.log(user);
@@ -51,7 +51,7 @@ const sendMail = async (
                                     <span
                                        style="display: inline-block; background-color: #fff; border-radius: 10px; padding: 10px;">
                                        <img style="display: inline-block; max-width: 150px;"
-                                          src="https://patenta-sa.com:2053/1698041746311hwbi3.png"
+                                          src="https://www.techgropsedev.com:2053/1698728857692y5ybll.png"
                                           alt="Amania">
                                     </span>
                                  </td>
