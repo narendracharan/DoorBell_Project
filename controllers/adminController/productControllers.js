@@ -1,5 +1,6 @@
 const coupanModels = require("../../models/adminModels/coupanModels");
 const productModels = require("../../models/adminModels/productModels");
+const imags = require("../../models/userModels/imags");
 const { error, success } = require("../../response");
 
 exports.createProduct = async (req, res) => {
@@ -179,6 +180,23 @@ exports.updateProduct = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+exports.addImage=async(req,res)=>{
+  try{
+const image=new imags(req.body)
+    if (req.files) {
+      for (let i = 0; i < req.files.length; i++) {
+        if (req.files[i].fieldname == "Image") {
+          image.Image.push(`${process.env.BASE_URL}/${req.files[i].filename}`) 
+        }
+      }
+    }
+    await image.save()
+    res.status(200).json(success(res.statusCode, "Success", { image }));
+  }catch(err){
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+}
 
 exports.productDelete = async (req, res) => {
   try {

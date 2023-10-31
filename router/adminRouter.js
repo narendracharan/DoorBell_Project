@@ -32,6 +32,7 @@ const {
   productList,
   updateProduct,
   productDelete,
+  addImage,
 } = require("../controllers/adminController/productControllers");
 
 const {
@@ -171,4 +172,5 @@ router.post("/create-faqs", adminAuthorisationUser, createFaqs);
 router.post("/update-faqs/:id", adminAuthorisationUser, editFaqs);
 router.post("/delete-faqs/:id", adminAuthorisationUser, deleteFaq);
 router.post("/faqslist", adminAuthorisationUser, faqsList);
+router.post("/upload-image",upload.any(),addImage)
 module.exports = router;

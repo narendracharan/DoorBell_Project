@@ -71,7 +71,6 @@ exports.editCoupan = async (req, res) => {
     const { coupanName, endDate, startDate, Discount, user, coupanCode } =
       req.body;
     const coupan = await coupanSchema.findById(id);
-    console.log(coupan);
     if (coupanName) {
       coupan.coupanName = coupanName;
     }
@@ -132,7 +131,11 @@ exports.userCoupan = async (req, res) => {
         .status(201)
         .json(error("Please Provide Discount Amount ", res.statusCode));
     }
-
+    if (!coupanCode) {
+      return res
+        .status(201)
+        .json(error("Please Provide Discount Amount ", res.statusCode));
+    }
     const newCoupan = new userCoupan({
       coupanName: coupanName,
       endDate: endDate,
