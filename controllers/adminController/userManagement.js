@@ -129,7 +129,7 @@ exports.transactionList = async (req, res) => {
 exports.editOrder = async (req, res) => {
   try {
     const id = req.params.id;
-    var {status,status_ar} = req.body.status;
+    var {status,status_ar} = req.body;
     if (!status) {
       res.status(201).json(error("Please provide status"));
     }
