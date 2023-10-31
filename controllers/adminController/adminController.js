@@ -44,40 +44,44 @@ exports.adminRegister = async (req, res) => {
 exports.loginAdmin = async (req, res) => {
   try {
     const { userName, password } = req.body;
-    if (userName && password) {
-      const verifyUser = await adminSchema.findOne({
-        userName: userName,
-      });
-      if (verifyUser != null) {
-        const isMatch = await bcrypt.compare(password, verifyUser.password);
-        if (isMatch) {
-          const token = await verifyUser.AdminAuthToken();
-          return res
-            .header("x-auth-token-admin", token)
-            .header("access-control-expose-headers", "x-auth-token-admin")
-            .status(201)
-            .json(
-              success(res.statusCode, "login SuccessFully", {
-                verifyUser,
-                token,
-              })
-            );
-        } else {
-          res
-            .status(201)
-            .json(error("User Password is Incorrect", res.statusCode));
-        }
-      } else {
-        res.status(201).json(error("userName is Incorrect", res.statusCode));
-      }
-    } else {
-      res
+    if (!userName) {
+      return res
         .status(201)
-        .json(error("UserName and Password is empty", res.statusCode));
+        .json(error("Please Provide UserName", res.statusCode));
     }
+    if (!password) {
+      return res
+        .status(201)
+        .json(error("Please Provide Password", res.statusCode));
+    }
+    const verifyUser = await adminSchema.findOne({
+      userName: userName,
+    });
+    if (!verifyUser) {
+      return res
+        .status(201)
+        .json(error("User Are Not Register", res.statusCode));
+    }
+    const isMatch = await bcrypt.compare(password, verifyUser.password);
+    if (!isMatch) {
+      return res
+        .status(201)
+        .json(error("User Password is Incorrect", res.statusCode));
+    }
+    const token = await verifyUser.AdminAuthToken();
+    return res
+      .header("x-auth-token-admin", token)
+      .header("access-control-expose-headers", "x-auth-token-admin")
+      .status(201)
+      .json(
+        success(res.statusCode, "login SuccessFully", {
+          verifyUser,
+          token,
+        })
+      );
   } catch (err) {
     console.log(err);
-    res.status(400).json(error("Failed", res.statusCode));
+    res.status(400).json(error("Error In Admin Login", res.statusCode));
   }
 };
 
@@ -86,22 +90,20 @@ exports.sendUserResetPassword = async (req, res) => {
   try {
     const { userEmail } = req.body;
     const user = await adminSchema.findOne({ userEmail: userEmail });
-    if (user) {
-      const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
-      let info = await transporter.sendMail({
-        from: "s04450647@gmail.com",
-        to: userEmail,
-        subject: "Email Send For Reset Password",
-        text: `This ${otp} Otp Verify To Email`,
-      });
-      await adminSchema.findOneAndUpdate(
-        { userEmail: userEmail },
-        { otp: otp }
-      );
-      return res.status(200).json(success(res.statusCode, "Success", {}));
-    } else {
-      res.status(201).json(error("userEmail is empty", res.statusCode));
+    if (!user) {
+      return res
+        .status(201)
+        .json(error("userEmail is Not Register", res.statusCode));
     }
+    const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+    let info = await transporter.sendMail({
+      from: "s04450647@gmail.com",
+      to: userEmail,
+      subject: "Email Send For Reset Password",
+      text: `This ${otp} Otp Verify To Email`,
+    });
+    await adminSchema.findOneAndUpdate({ userEmail: userEmail }, { otp: otp });
+    return res.status(200).json(success(res.statusCode, "Success", {}));
   } catch (err) {
     console.log(err);
     res.status(500).json(error("Failed", res.statusCode));
@@ -165,21 +167,17 @@ exports.adminEditProfile = async (req, res) => {
   try {
     const id = req.params.id;
     const userId = await adminSchema.findById({ _id: id });
-    if (userId) {
-      const data = {
-        userName: req.body.userName,
-        adminProfile: `${process.env.BASE_URL}/${req.file.filename}`,
-      };
-      if (!data) {
-        return res.status(200).json(error("Provide all Filed", res.statusCode));
-      }
-      const updateData = await adminSchema.findByIdAndUpdate(id, data, {
-        new: true,
-      });
-      res.status(200).json(success(res.statusCode, "Success", { updateData }));
-    } else {
-      res.status(200).json(error("Invalid UserId ", res.statusCode));
+    if (!userId) {
+      return res.status(200).json(error("Invalid UserId ", res.statusCode));
     }
+    const data = {
+      userName: req.body.userName,
+      adminProfile: `${process.env.BASE_URL}/${req.file.filename}`,
+    };
+    const updateData = await adminSchema.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+    res.status(200).json(success(res.statusCode, "Success", { updateData }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
@@ -227,9 +225,9 @@ exports.adminDetails = async (req, res) => {
     const id = req.params.id;
     const adminDetail = await adminSchema.findById(id);
     if (adminDetail) {
-      res.status(200).json(success(res.statusCode, "Success", { adminDetail }));
-    } else {
-      res.status(201).json(error("No Data Found", res.statusCode));
+      return res
+        .status(200)
+        .json(success(res.statusCode, "Success", { adminDetail }));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));

@@ -104,7 +104,7 @@ exports.Orderlist = async (req, res) => {
         from ? { createdAt: { $gte: new Date(from) } } : {},
         to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
       ],
-    }).populate("user_Id")
+    }).populate(["user_Id","deliverdBy"])
     if (order) {
       res.status(200).json(success(res.statusCode, "Success", { order }));
     } else {

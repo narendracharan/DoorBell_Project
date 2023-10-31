@@ -47,40 +47,45 @@ exports.UserRegister = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { userEmail, password } = req.body;
-    if (userEmail && password) {
-      const verifyUser = await userModels.findOne({
-        userEmail: userEmail,
-      });
-      if (verifyUser.status == "true") {
-        if (verifyUser != null) {
-          const isMatch = await bcrypt.compare(password, verifyUser.password);
-          if (isMatch) {
-            const token = await verifyUser.userAuthToken();
-            return res
-              .header("x-auth-token-user", token)
-              .header("access-control-expose-headers", "x-auth-token-user")
-              .status(201)
-              .json(
-                success(res.statusCode, "login SuccessFully", {
-                  verifyUser,
-                  token,
-                })
-              );
-          } else {
-            res
-              .status(201)
-              .json(error("User Password is Incorrect", res.statusCode));
-          }
-        } else {
-          res.status(201).json(error("UserEmail is Incorrect", res.statusCode));
-        }
-      } else {
-        res.status(201).json(error("You Are Block By Admin", res.statusCode));
-      }
-    } else {
-      res
+    if (!userEmail) {
+      return res
         .status(201)
-        .json(error("UserEmail and Password Are empty", res.statusCode));
+        .json(error("Please Provide UserEmail", res.statusCode));
+    }
+    if (!password) {
+      return res
+        .status(201)
+        .json(error("Please Provide Password", res.statusCode));
+    }
+
+    const verifyUser = await userModels.findOne({
+      userEmail: userEmail,
+    });
+    if (!verifyUser) {
+      return res
+        .status(201)
+        .json(error("User Email Not Register", res.statusCode));
+    }
+    if (verifyUser.status == "true") {
+      const isMatch = await bcrypt.compare(password, verifyUser.password);
+      if (!isMatch) {
+        return res
+          .status(201)
+          .json(error("User Password is Incorrect", res.statusCode));
+      }
+      const token = await verifyUser.userAuthToken();
+      return res
+        .header("x-auth-token-user", token)
+        .header("access-control-expose-headers", "x-auth-token-user")
+        .status(201)
+        .json(
+          success(res.statusCode, "login SuccessFully", {
+            verifyUser,
+            token,
+          })
+        );
+    } else {
+      res.status(201).json(error("You Are Block By Admin", res.statusCode));
     }
   } catch (err) {
     console.log(err);

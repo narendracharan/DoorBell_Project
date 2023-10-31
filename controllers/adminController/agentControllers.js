@@ -280,7 +280,7 @@ exports.agentOtpVerify = async (req, res) => {
         .status(201)
         .json(error("Please Provide UserEmail", res.statusCode));
     }
-    if (!userEmail) {
+    if (!otp) {
       return res.status(201).json(error("Please Provide OTP", res.statusCode));
     }
     const userOtpVerify = await agentSchema.findOne({ userEmail: userEmail });

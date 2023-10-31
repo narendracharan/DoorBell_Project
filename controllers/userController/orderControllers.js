@@ -1,4 +1,3 @@
-const { MongooseError } = require("mongoose");
 const productModels = require("../../models/adminModels/productModels");
 const cartsModels = require("../../models/userModels/cartsModels");
 const orderModels = require("../../models/userModels/orderModels");
@@ -83,24 +82,24 @@ exports.createOrder = async (req, res) => {
     if (!address_Id) {
       const newAddress = new addressModels({
         title: title,
-        title_ar:title_ar,
+        title_ar: title_ar,
         firstName: firstName,
-        firstName_ar:firstName_ar,
+        firstName_ar: firstName_ar,
         lastName: lastName,
-        lastName_ar:lastName_ar,
+        lastName_ar: lastName_ar,
         companyName: companyName,
-        companyName_ar:companyName_ar,
+        companyName_ar: companyName_ar,
         address: address,
-        address_ar:address_ar,
+        address_ar: address_ar,
         country: country,
-        country_ar:country_ar,
+        country_ar: country_ar,
         pincode: postalCode,
         city: city,
-        city_ar:city_ar,
+        city_ar: city_ar,
         locality: locality,
-        locality_ar:locality_ar,
+        locality_ar: locality_ar,
         orderNotes: orderNotes,
-        orderNotes_ar:orderNotes_ar,
+        orderNotes_ar: orderNotes_ar,
         mobileNumber: mobileNumber,
         user_Id: user_Id,
       });
@@ -108,20 +107,20 @@ exports.createOrder = async (req, res) => {
     }
     const newOrder = new orderModels({
       firstName: firstName,
-      firstName_ar:firstName_ar,
+      firstName_ar: firstName_ar,
       lastName: lastName,
-      lastName_ar:lastName_ar,
+      lastName_ar: lastName_ar,
       companyName: companyName,
-      companyName_ar:companyName_ar,
+      companyName_ar: companyName_ar,
       address: address,
-      address_ar:address_ar,
+      address_ar: address_ar,
       city: city,
-      city_ar:city_ar,
+      city_ar: city_ar,
       country: country,
-      country_ar:country_ar,
+      country_ar: country_ar,
       postalCode: postalCode,
       orderNotes: orderNotes,
-      orderNotes_ar:orderNotes_ar,
+      orderNotes_ar: orderNotes_ar,
       total: total,
       products: product,
       user_Id: user_Id,
@@ -141,15 +140,15 @@ exports.createOrder = async (req, res) => {
           { new: true }
         )
         .select("passwordApp");
-        await sendMail(
-          updated.user_Id.userEmail,
-          `Order Successfully`,
-          firstName,
-          `<br.
+      await sendMail(
+        updated.user_Id.userEmail,
+        `Order Successfully`,
+        firstName,
+        `<br.
           <br>
           Thank you for placing an order with us.<br>
           <br>
-          <b> YourEmail: ${updated.user_Id.userEmail}.</b>
+          <b> Your Email: ${updated.user_Id.userEmail}.</b>
           <br>
           Your Password:${password}
           <br>
@@ -163,7 +162,7 @@ exports.createOrder = async (req, res) => {
           Customer Service Team<br>
           91164721
           `
-        )
+      );
     }
     await cartsModels.deleteMany({ user_Id: user_Id });
     res.status(200).json(success(res.statusCode, "Success", { saveOrder }));
@@ -179,7 +178,7 @@ exports.userOrder = async (req, res) => {
     const orderList = await orderModels
       .find({ user_Id: id })
       .populate("products.products_Id")
-      .populate("user_Id")
+      .populate("user_Id");
     if (orderList) {
       res.status(200).json(success(res.statusCode, "Success", { orderList }));
     } else {

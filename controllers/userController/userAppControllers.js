@@ -96,16 +96,15 @@ exports.userAppVerify = async (req, res) => {
         .json(error("Empty Otp Details Are Not Allowed", res.statusCode));
     }
     const userOtpVerify = await userRegister.findOne({ userEmail: userEmail });
-    if (userOtpVerify) {
-      if (userOtpVerify.userAppOtp == otp) {
-        return res
-          .status(200)
-          .json(success(res.statusCode, "Verify Otp Successfully", {}));
-      } else {
-        return res.status(200).json(error("Invalid Otp", res.statusCode));
-      }
-    } else {
+    if (!userOtpVerify) {
       return res.status(200).json(error("Invalid userEmail", res.statusCode));
+    }
+    if (userOtpVerify.userAppOtp == otp) {
+      return res
+        .status(200)
+        .json(success(res.statusCode, "Verify Otp Successfully", {}));
+    } else {
+      return res.status(200).json(error("Invalid Otp", res.statusCode));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
@@ -115,31 +114,43 @@ exports.userAppVerify = async (req, res) => {
 exports.resetUserAppPassword = async (req, res) => {
   try {
     const { newPassword, confirmPassword, userEmail } = req.body;
+    if (!newPassword) {
+      return res
+        .status(200)
+        .json(error("Please Provide NewPassword", res.statusCode));
+    }
+    if (!confirmPassword) {
+      return res
+        .status(200)
+        .json(error("Please Provide confirmPassword", res.statusCode));
+    }
+    if (!userEmail) {
+      return res
+        .status(200)
+        .json(error("Please Provide userEmail", res.statusCode));
+    }
     const match = await userRegister.findOne(
       { userEmail: userEmail },
       { password: 0, totalafterDiscount: 0, userAppOtp: 0, otp: 0 }
     );
     if (!match) {
-      res.status(200).json(error("userEmail are incorrect", res.statusCode));
+      return res
+        .status(200)
+        .json(error("userEmail are incorrect", res.statusCode));
+    }
+    if (newPassword !== confirmPassword) {
+      return res
+        .status(401)
+        .json(error("newPassword Or confirmPassword Could Not Be Same"));
     } else {
-      if (newPassword && confirmPassword && userEmail) {
-        if (newPassword !== confirmPassword) {
-          return res
-            .status(401)
-            .json(error("newPassword Or confirmPassword Could Not Be Same"));
-        } else {
-          // const passwordHash = await bcrypt.hash(newPassword, 10);
-          const createPassword = await userRegister.findOneAndUpdate(
-            { userEmail: userEmail },
-            {
-              $set: { passwordApp: confirmPassword },
-            }
-          );
-          res.status(200).json(success(res.statusCode, "Success", { match }));
+      // const passwordHash = await bcrypt.hash(newPassword, 10);
+      const createPassword = await userRegister.findOneAndUpdate(
+        { userEmail: userEmail },
+        {
+          $set: { passwordApp: confirmPassword },
         }
-      } else {
-        res.status(201).json(error("All Filed is required", res.statusCode));
-      }
+      );
+      res.status(200).json(success(res.statusCode, "Success", { match }));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
@@ -279,7 +290,7 @@ exports.userforgetPassword = async (req, res) => {
 
 exports.faqsList = async (req, res) => {
   try {
-    const faqsList = await faqsModels.find({}).sort({createdAt:-1})
+    const faqsList = await faqsModels.find({}).sort({ createdAt: -1 });
     if (faqsList) {
       res.status(200).json(success(res.statusCode, "Success", { faqsList }));
     } else {
