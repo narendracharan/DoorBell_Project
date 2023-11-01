@@ -135,6 +135,9 @@ exports.coupanApply = async (req, res) => {
     if (!validCoupan) {
       return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
     }
+    console.log(new Date());
+    console.log(validCoupan.endDate);
+    console.log(new Date() > validCoupan.endDate);
     if (new Date() > validCoupan.endDate) {
       return res
         .status(201)
@@ -169,6 +172,7 @@ exports.UsercoupanApply = async (req, res) => {
     if (!validCoupan) {
       return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
     }
+   
     if (new Date() > validCoupan.endDate) {
       return res
         .status(201)

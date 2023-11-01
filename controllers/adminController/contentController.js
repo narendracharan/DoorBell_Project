@@ -99,17 +99,21 @@ exports.deleteFaq = async (req, res) => {
 exports.Orderlist = async (req, res) => {
   try {
     const { from, to } = req.body;
-    const order = await orderModels.find({
-      $and: [
-        from ? { createdAt: { $gte: new Date(from) } } : {},
-        to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
-      ],
-    }).populate(["user_Id","deliverdBy"])
-    if (order) {
-      res.status(200).json(success(res.statusCode, "Success", { order }));
-    } else {
-      res.status(error("NO Data Found", res.statusCode));
-    }
+    const userOrder = await orderModels
+      .find({
+        $and: [
+          from ? { createdAt: { $gte: new Date(from) } } : {},
+          to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
+        ],
+      })
+      .populate(["user_Id", "deliverdBy"]);
+    const order = userOrder.filter(
+      (x) =>
+        x.orderStatus == "Pending" ||
+        x.orderStatus == "In-Progress" ||
+        x.orderStatus == "Cancelled"
+    );
+    res.status(200).json(success(res.statusCode, "Success", { order }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
@@ -148,12 +152,14 @@ exports.OrderDelete = async (req, res) => {
 exports.CompletedOrder = async (req, res) => {
   try {
     const { from, to } = req.body;
-    const order = await orderModels.find({
-      $and: [
-        from ? { createdAt: { $gte: new Date(from) } } : {},
-        to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
-      ],
-    }).populate("user_Id")
+    const order = await orderModels
+      .find({
+        $and: [
+          from ? { createdAt: { $gte: new Date(from) } } : {},
+          to ? { createdAt: { $lte: new Date(`${to}T23:59:59`) } } : {},
+        ],
+      })
+      .populate("user_Id");
     const CompletedOrder = order.filter((x) => x.orderStatus == "Delivered");
     if (CompletedOrder) {
       res
