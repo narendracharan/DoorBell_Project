@@ -186,8 +186,8 @@ exports.updateOrderStatus = async (req, res) => {
     if (status) {
       order.orderStatus = status;
     }
-    if(req.file){
-      order.delivered_Img=`${process.env.BASE_URL}/${req.file.filename}`;
+    if (req.file) {
+      order.delivered_Img = `${process.env.BASE_URL}/${req.file.filename}`;
     }
     await order.save();
     res.status(200).json(success(res.statusCode, "Success", { order }));
@@ -222,7 +222,9 @@ exports.agentLogin = async (req, res) => {
       password: password,
     });
     if (!isMatch) {
-      return res.status(201).json(error("User Password is Not Matched", res.statusCode));
+      return res
+        .status(201)
+        .json(error("User Password is Not Matched", res.statusCode));
     }
 
     const token = await verifyUser.AgentAuthToken();
@@ -232,6 +234,7 @@ exports.agentLogin = async (req, res) => {
       .status(201)
       .json(
         success(res.statusCode, "login SuccessFully", {
+          verifyUser,
           token,
         })
       );
@@ -367,7 +370,7 @@ exports.agentEditProfile = async (req, res) => {
         .json(error("please provide mobileNumber", res.statusCode));
     }
     if (!userEmail) {
-      res.status(201).json(error("please provide userName", res.statusCode));
+      res.status(201).json(error("please provide userEmail", res.statusCode));
     }
     const agent = await agentSchema.findById(req.params.id);
     if (userName) {
@@ -382,7 +385,7 @@ exports.agentEditProfile = async (req, res) => {
     if (req.file) {
       agent.profile_Pic = `${process.env.BASE_URL}/${req.file.filename}`;
     }
-    await agent.save()
+    await agent.save();
     res.status(200).json(success(res.statusCode, "Success", {}));
   } catch (err) {
     res.status(400).json(error("Error In Update Profile", res.statusCode));
