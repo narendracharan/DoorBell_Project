@@ -116,6 +116,7 @@ exports.createOrder = async (req, res) => {
       address_ar: address_ar,
       city: city,
       city_ar: city_ar,
+      address_Id: address_Id,
       country: country,
       country_ar: country_ar,
       postalCode: postalCode,
@@ -194,13 +195,7 @@ exports.orderDetails = async (req, res) => {
   try {
     const id = req.params.id;
     const orderDetails = await orderModels.findById(id);
-    if (orderDetails) {
-      res
-        .status(200)
-        .json(success(res.statusCode, "Success", { orderDetails }));
-    } else {
-      res.status(201).json(error("NO Data Found", res.statusCode));
-    }
+    res.status(200).json(success(res.statusCode, "Success", { orderDetails }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }

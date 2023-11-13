@@ -4,6 +4,9 @@ const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 const userRegister = require("../../models/userModels/userRegister");
 const bcrypt = require("bcrypt");
+
+
+
 exports.UserRegister = async (req, res) => {
   try {
     const { userName, userEmail, password } = req.body;

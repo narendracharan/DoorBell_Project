@@ -40,6 +40,7 @@ const {
   userforgetPassword,
   faqsList,
   editImage,
+  chetingAdmin,
 } = require("../controllers/userController/userAppControllers");
 const upload = require("../middleware/multer");
 const {
@@ -101,5 +102,4 @@ router.post("/user-app-productList", userAuthorisationUser, productList);
 router.post("/create-contact", userAuthorisationUser, createContact);
 router.post("/user-forgetpassword", userAuthorisationUser, userforgetPassword);
 router.post("/faqs-list", userAuthorisationUser, faqsList);
-
 module.exports = router;

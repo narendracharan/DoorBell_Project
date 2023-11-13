@@ -90,10 +90,13 @@ exports.sendMailOtp = async (req, res) => {
 exports.userAppVerify = async (req, res) => {
   try {
     const { userEmail, otp } = req.body;
-    if (!userEmail || !otp) {
+    if (!userEmail) {
       return res
         .status(201)
-        .json(error("Empty Otp Details Are Not Allowed", res.statusCode));
+        .json(error("Please Provide User Email", res.statusCode));
+    }
+    if (!otp) {
+      return res.status(201).json(error("Please Provide Otp", res.statusCode));
     }
     const userOtpVerify = await userRegister.findOne({ userEmail: userEmail });
     if (!userOtpVerify) {
@@ -240,7 +243,7 @@ exports.homeKitUserApp = async (req, res) => {
     if (productList) {
       res.status(200).json(success(res.statusCode, "Success", { productList }));
     } else {
-      res.status(400).json(error("Np Data Found", res.statusCode));
+      res.status(400).json(error("No Data Found", res.statusCode));
     }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
