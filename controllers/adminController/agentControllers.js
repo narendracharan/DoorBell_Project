@@ -151,7 +151,7 @@ exports.assignOrder = async (req, res) => {
 exports.agentOrderList = async (req, res) => {
   try {
     const id = req.params.id;
-    const order = await orderModels.find({ deliverdBy: id });
+    const order = await orderModels.find({ deliverdBy: id }).populate(["deliverdBy","address_Id"])
     const orderList = order.filter((x) => x.orderStatus == "In-Progress");
   
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
@@ -163,7 +163,7 @@ exports.agentOrderList = async (req, res) => {
 exports.agentOrderHistory = async (req, res) => {
   try {
     const id = req.params.id;
-    const order = await orderModels.find({ deliverdBy: id });
+    const order = await orderModels.find({ deliverdBy: id }).populate(["deliverdBy","address_Id"])
     const orderList = order.filter((x) => x.orderStatus == "Delivered");
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
