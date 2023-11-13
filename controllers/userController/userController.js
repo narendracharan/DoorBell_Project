@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 
 exports.UserRegister = async (req, res) => {
   try {
-    const { userName, userEmail, password } = req.body;
+    const { userName, userEmail, password ,longitude,latitude} = req.body;
     if (!userName) {
       return res.status(201).json(error("Please enter  name", res.statusCode));
     }
@@ -26,17 +26,19 @@ exports.UserRegister = async (req, res) => {
     const checkMail = await userModels.findOne({ userEmail: userEmail });
     const checkNAME = await userModels.findOne({ userName: userName });
     if (checkNAME) {
-      return res.status(201).json(error("userName is already register"));
+      return res.status(201).json(error("userName is already register",res.statusCode));
     }
 
     if (checkMail) {
-      return res.status(201).json(error("userEmail is already register"));
+      return res.status(201).json(error("userEmail is already register",res.statusCode));
     }
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = new userModels({
       websiteName: userName,
       userEmail: userEmail,
       password: passwordHash,
+      latitude:latitude,
+      longitude:longitude
     });
     const user = await newUser.save();
     res.status(200).json(success(res.statusCode, "Success", { user }));
