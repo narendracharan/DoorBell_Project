@@ -151,10 +151,9 @@ exports.assignOrder = async (req, res) => {
 exports.agentOrderList = async (req, res) => {
   try {
     const id = req.params.id;
-    const orderList = await orderModels.find({ deliverdBy: id });
-    orderList.filter(
-      (x) => x.orderStatus == "In-Progress" 
-    );
+    const order = await orderModels.find({ deliverdBy: id });
+    const orderList = order.filter((x) => x.orderStatus == "In-Progress");
+  
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
     res.status(400).json(error("Error in Agent Order", res.statusCode));
@@ -164,10 +163,8 @@ exports.agentOrderList = async (req, res) => {
 exports.agentOrderHistory = async (req, res) => {
   try {
     const id = req.params.id;
-    const orderList = await orderModels.find({ deliverdBy: id });
-    orderList.filter(
-      (x) => x.orderStatus == "Delivered"
-    );
+    const order = await orderModels.find({ deliverdBy: id });
+    const orderList = order.filter((x) => x.orderStatus == "Delivered");
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
     res.status(400).json(error("Error in Agent Order", res.statusCode));
