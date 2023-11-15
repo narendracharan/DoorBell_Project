@@ -200,7 +200,7 @@ exports.editUserProfile = async (req, res) => {
       userEmail: userEmail,
       mobileNumber: mobileNumber,
       userName_ar: userName_ar,
-      ///  profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
+       profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const updateUser = await userRegister.findByIdAndUpdate(
       { _id: id },
