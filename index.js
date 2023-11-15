@@ -22,6 +22,12 @@ const adminRouter = require("./router/adminRouter");
 const userRouter = require("./router/userRoutes");
 const agentRouter = require("./router/agentRouter");
 const path = require("path");
+const {
+  getMessages,
+  sendMessage,
+  getClinicianChats,
+  getClinicianChatsByChatId,
+} = require("./controllers/userController/chatControllers");
 
 //process.env["BASE_URL"] = "http://ec2-16-171-57-155.eu-north-1.compute.amazonaws.com:3001";
 
