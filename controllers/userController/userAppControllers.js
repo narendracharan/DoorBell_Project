@@ -195,19 +195,21 @@ exports.editUserProfile = async (req, res) => {
         .status(201)
         .json(error("please provide mobileNumber", res.statusCode));
     }
-    const updateData = {
-      userName: userName,
-      userEmail: userEmail,
-      mobileNumber: mobileNumber,
-      userName_ar: userName_ar,
-       profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
-    };
-    const updateUser = await userRegister.findByIdAndUpdate(
-      { _id: id },
-      updateData,
-      { new: true }
-    );
-    res.status(200).json(success(res.statusCode, "Success", { updateUser }));
+    const profile = await userRegister.findById(id);
+    if (userName) {
+      profile.userName = userName;
+    }
+    if (userEmail) {
+      profile.userEmail = userEmail;
+    }
+    if (userName_ar) {
+      profile.userName_ar = userName_ar;
+    }
+    //if (req.file.length) {
+      profile.profilePic = `${process.env.BASE_URL}/${req.file.filename}`;
+   // }
+    await profile.save();
+    res.status(200).json(success(res.statusCode, "Success", { profile }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
