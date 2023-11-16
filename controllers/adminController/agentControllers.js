@@ -154,7 +154,7 @@ exports.agentOrderList = async (req, res) => {
     const order = await orderModels
       .find({ deliverdBy: id })
       .populate(["deliverdBy", "address_Id"]);
-    const orderList = order.filter((x) => x.orderStatus == "In-Progress");
+    const orderList = order.filter((x) => x.orderStatus == "InProgress");
 
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
@@ -426,6 +426,7 @@ exports.orderUploadImage = async (req, res) => {
     await order.save();
     res.status(201).json(success(res.statusCode, "Success", { order }));
   } catch (err) {
+    console.log(err);
     res.status(400).json(error("Error In Upload Image", res.statusCode));
   }
 };
