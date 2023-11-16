@@ -15,5 +15,5 @@ router.post("/otp-verify",agentOtpVerify)
 router.post("/reset-password",agentPasswordReset,)
 router.post("/edit-profile/:id",agentAuthorisationUser,upload.single("profile_Pic"),agentEditProfile)
 router.post("/agent-details/:id",agentAuthorisationUser,agentDetails)
-router.post("/upload-order-img/:id",agentAuthorisationUser,upload.single("delivered_Img"),orderUploadImage)
+router.post("/upload-img/:id",agentAuthorisationUser,upload.single("delivered_Img"),orderUploadImage)
  module.exports=router
