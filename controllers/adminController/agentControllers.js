@@ -151,9 +151,11 @@ exports.assignOrder = async (req, res) => {
 exports.agentOrderList = async (req, res) => {
   try {
     const id = req.params.id;
-    const order = await orderModels.find({ deliverdBy: id }).populate(["deliverdBy","address_Id"])
+    const order = await orderModels
+      .find({ deliverdBy: id })
+      .populate(["deliverdBy", "address_Id"]);
     const orderList = order.filter((x) => x.orderStatus == "In-Progress");
-  
+
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
     res.status(400).json(error("Error in Agent Order", res.statusCode));
@@ -163,7 +165,9 @@ exports.agentOrderList = async (req, res) => {
 exports.agentOrderHistory = async (req, res) => {
   try {
     const id = req.params.id;
-    const order = await orderModels.find({ deliverdBy: id }).populate(["deliverdBy","address_Id"])
+    const order = await orderModels
+      .find({ deliverdBy: id })
+      .populate(["deliverdBy", "address_Id"]);
     const orderList = order.filter((x) => x.orderStatus == "Delivered");
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
@@ -196,9 +200,9 @@ exports.updateOrderStatus = async (req, res) => {
     if (status) {
       order.orderStatus = status;
     }
-    if (req.file) {
-      order.delivered_Img = `${process.env.BASE_URL}/${req.file.filename}`;
-    }
+    // if (req.file) {
+    //   order.delivered_Img = `${process.env.BASE_URL}/${req.file.filename}`;
+    // }
     await order.save();
     res.status(200).json(success(res.statusCode, "Success", { order }));
   } catch (err) {
@@ -399,5 +403,29 @@ exports.agentEditProfile = async (req, res) => {
     res.status(200).json(success(res.statusCode, "Success", {}));
   } catch (err) {
     res.status(400).json(error("Error In Update Profile", res.statusCode));
+  }
+};
+
+exports.agentDetails = async (req, res) => {
+  try {
+    const agent = await agentSchema.findById(req.params.id);
+    if (!agent) {
+      return res.status(201).json(error("Invalid User", res.statusCode));
+    }
+    res.status(200).json(success(res.statusCode, "Success", { agent }));
+  } catch (err) {
+    res.status(400).json(error("Error In Agent Details", res.statusCode));
+  }
+};
+
+exports.orderUploadImage = async (req, res) => {
+  try {
+    const order = await orderModels.findById(req.params.id);
+
+    order.delivered_Img = `${process.env.BASE_URL}/${req.file.filename}`;
+    await order.save();
+    res.status(201).json(success(res.statusCode, "Success", { order }));
+  } catch (err) {
+    res.status(400).json(error("Error In Upload Image", res.statusCode));
   }
 };

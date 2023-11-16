@@ -78,6 +78,8 @@ exports.createOrder = async (req, res) => {
     // }
     // const total = await userRegister.find({ _id: user_Id });
     // const totalPrice = total.map((x) => x.totalafterDiscount);
+    const userCount=await userRegister.find().count()
+    const order_Id="doorBell"+userCount
     var password = firstName + "@1234";
     if (!address_Id) {
       const newAddress = new addressModels({
@@ -122,6 +124,7 @@ exports.createOrder = async (req, res) => {
       postalCode: postalCode,
       orderNotes: orderNotes,
       orderNotes_ar: orderNotes_ar,
+      order_Id:order_Id,
       total: total,
       products: product,
       user_Id: user_Id,

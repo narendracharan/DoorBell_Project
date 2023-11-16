@@ -61,6 +61,10 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  order_Id:{
+    type: String,
+    require: true,
+  },
   paymentMethod: {
     type: String,
     default: "Paid",
@@ -69,7 +73,7 @@ const schema = new mongoose.Schema({
   orderStatus: {
     type: String,
     default: "Pending",
-    enum: ["In-Progress", "Cancelled", "Delivered", "Pending"],
+    enum: ["InProgress", "Cancelled", "Delivered", "Pending"],
   },
   delivered_Img: {
     type: String,
