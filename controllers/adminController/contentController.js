@@ -110,7 +110,7 @@ exports.Orderlist = async (req, res) => {
     const order = userOrder.filter(
       (x) =>
         x.orderStatus == "Pending" ||
-        x.orderStatus == "In-Progress" ||
+        x.orderStatus == "InProgress" ||
         x.orderStatus == "Cancelled"
     );
     res.status(200).json(success(res.statusCode, "Success", { order }));
