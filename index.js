@@ -71,6 +71,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   console.log(`Server is running port no:2053`);
 });
