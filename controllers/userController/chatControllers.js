@@ -16,9 +16,9 @@ exports.getMessages = async (chatId) => {
         if (message.sentBy == "Clinician") {
           const user = await clinicianModels.findById(message.senderId);
           message.user = {
-            name: user.userName,
+            name: user.name,
             id: user._id,
-            profile_image: user.profilePic,
+            profile_image: user.profile_image,
           };
         } else {
           const user = await userRegister.findById(message.senderId);
@@ -131,9 +131,9 @@ exports.getMessages = async (chatId) => {
         if (message.sentBy == "Clinician") {
           const user = await clinicianModels.findById(message.senderId);
           message.user = {
-            name: user.userName,
+            name: user.name,
             id: user._id,
-            profile_image: user.profilePic,
+            profile_image: user.profile_image,
           };
         } else {
           const user = await userRegister.findById(message.senderId);

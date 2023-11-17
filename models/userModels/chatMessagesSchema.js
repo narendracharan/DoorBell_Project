@@ -1,15 +1,23 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-  sentBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Doorbeluser",
-      require: true,
-  },
   chatId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Doorbeluser",
-    require: true,
+    type: mongoose.Types.ObjectId,
+    ref: "Chat",
+    required: true,
+  },
+  text: {
+    type: String,
+    required: true,
+  },
+  senderId: {
+    type: String,
+    required: true,
+  },
+  sentBy: {
+    type: String,
+    required: true,
+    enum: ["Mother", "Daughter", "Clinician"],
   },
 });
 
