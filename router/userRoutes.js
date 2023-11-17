@@ -52,6 +52,8 @@ const {
 } = require("../controllers/userController/contactController");
 const router = express.Router();
 
+
+///---> User Signup Routes
 router.post("/register-user", UserRegister);
 router.post("/user-login", loginUser);
 router.post("/send-Email", sendUserResetPassword);
@@ -64,25 +66,38 @@ router.post(
   editProfile
 );
 router.post("/user-Details/:id",userAuthorisationUser,userDetails)
+
+
+//----> Add To Carts Routes
 router.post("/add-to-carts", userAuthorisationUser, addToCarts);
 router.post("/remove-carts", userAuthorisationUser, revomeCarts);
 router.post("/carts-list/:id", userAuthorisationUser, cartsList);
+
+
+//----> Apply Coupan Routes
 router.post("/apply-coupan", userAuthorisationUser, coupanApply);
 router.post("/apply-universal-coupan",userAuthorisationUser,UsercoupanApply)
 router.post("/universal-coupan-list",userAuthorisationUser,coupanList)
 router.post("/update-quantity/:id", userAuthorisationUser,updateQuantity);
-router.post("/create-order", createOrder);
+
+
+///------> Create Order Routes
+router.post("/create-order",userAuthorisationUser, createOrder);
 router.post("/user-order/:id", userAuthorisationUser, userOrder);
 router.post("/order-details/:id", userAuthorisationUser, orderDetails);
 router.post("/delete-order/:id",userAuthorisationUser,orderDelete)
 router.post("/change-password/:id", userAuthorisationUser, changepassword);
 
+
+///----> Add Address Routes
 router.post("/add-address", userAuthorisationUser, createAddress);
 router.post("/address-list/:id", userAuthorisationUser, addressList);
 router.post("/edit-address/:id", userAuthorisationUser, addressEdit);
 router.post("/delete-address/:id", userAuthorisationUser, deleteAddress);
 router.post("/product-list", productList);
 
+
+/// User App Routes
 router.post("/tutorials-screen", tutorialList);
 router.post("/user-app-login", loginUserApp);
 router.post("/send-mail-otp", sendMailOtp);

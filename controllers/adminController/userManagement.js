@@ -5,6 +5,7 @@ const userModels = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
 const moment = require("moment");
 
+//------> User List Api 
 exports.UserList = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -37,6 +38,7 @@ exports.UserList = async (req, res) => {
   }
 };
 
+/// Dash Bords Home Api
 exports.DashBordsHome = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -58,6 +60,7 @@ exports.DashBordsHome = async (req, res) => {
   }
 };
 
+//--------> Count User Api
 exports.CountUser = async (req, res) => {
   try {
     const countUser = await userModels.find().count();
@@ -71,7 +74,7 @@ exports.CountUser = async (req, res) => {
       },
     ]);
     const supportsTicket = await contentModels.find().count();
-    if (countUser) {
+   // if (countUser) {
       res.status(200).json(
         success(res.statusCode, "Success", {
           countUser,
@@ -79,14 +82,15 @@ exports.CountUser = async (req, res) => {
           supportsTicket,
         })
       );
-    } else {
-      res.status(400).json(error("No Data Found", res.statusCode));
-    }
+    // } else {
+    //   res.status(400).json(error("No Data Found", res.statusCode));
+    // }
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
 
+//------> Order Details Api 
 exports.OrderDetails = async (req, res) => {
   try {
     const id = req.params.id;
@@ -107,6 +111,7 @@ exports.OrderDetails = async (req, res) => {
   }
 };
 
+//--------> transaction List api
 exports.transactionList = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -126,6 +131,8 @@ exports.transactionList = async (req, res) => {
   }
 };
 
+
+// Edit Order Api
 exports.editOrder = async (req, res) => {
   try {
     const id = req.params.id;
@@ -143,6 +150,8 @@ exports.editOrder = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+//--------->>>> Block User Api
 
 exports.blockUser = async (req, res) => {
   try {

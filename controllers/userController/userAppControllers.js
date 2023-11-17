@@ -6,6 +6,7 @@ const userRegister = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 
+///------> Tutorilas Screen Api
 exports.TutorialScreen = async (req, res) => {
   try {
     const listTutorials = await tutorialModels.find({});
@@ -15,6 +16,8 @@ exports.TutorialScreen = async (req, res) => {
   }
 };
 
+
+///---> Login User APi
 exports.loginUserApp = async (req, res) => {
   try {
     const { userEmail, passwordApp } = req.body;
@@ -59,6 +62,7 @@ exports.loginUserApp = async (req, res) => {
   }
 };
 
+//--> Send Otp In Email
 exports.sendMailOtp = async (req, res) => {
   try {
     const { userEmail } = req.body;
@@ -87,6 +91,7 @@ exports.sendMailOtp = async (req, res) => {
   }
 };
 
+// ---> Verify Otp
 exports.userAppVerify = async (req, res) => {
   try {
     const { userEmail, otp } = req.body;
@@ -114,6 +119,8 @@ exports.userAppVerify = async (req, res) => {
   }
 };
 
+
+///  -----> Reset Password Api
 exports.resetUserAppPassword = async (req, res) => {
   try {
     const { newPassword, confirmPassword, userEmail } = req.body;
@@ -160,6 +167,9 @@ exports.resetUserAppPassword = async (req, res) => {
   }
 };
 
+
+//-------> User Profile
+
 exports.userProfile = async (req, res) => {
   try {
     const id = req.params.id;
@@ -180,6 +190,8 @@ exports.userProfile = async (req, res) => {
   }
 };
 
+
+///-------> Edit User Profile
 exports.editUserProfile = async (req, res) => {
   try {
     const id = req.params.id;
@@ -215,6 +227,8 @@ exports.editUserProfile = async (req, res) => {
   }
 };
 
+
+///---------> Edit Image Api
 exports.editImage = async (req, res) => {
   try {
     const id = req.params.id;
@@ -226,6 +240,8 @@ exports.editImage = async (req, res) => {
   }
 };
 
+
+///--------> About User APi
 exports.aboutUserApp = async (req, res) => {
   try {
     const aboutUsList = await contentModels.find({});
@@ -239,6 +255,8 @@ exports.aboutUserApp = async (req, res) => {
   }
 };
 
+
+//---> Home Kit User App APi
 exports.homeKitUserApp = async (req, res) => {
   try {
     const productList = await productModels.find({});
@@ -252,6 +270,8 @@ exports.homeKitUserApp = async (req, res) => {
   }
 };
 
+
+//---------> Forget Password Api
 exports.userforgetPassword = async (req, res) => {
   try {
     const { userEmail, password, newPassword, confirmPassword } = req.body;
@@ -293,6 +313,8 @@ exports.userforgetPassword = async (req, res) => {
   }
 };
 
+
+//--------> Faqs List Api
 exports.faqsList = async (req, res) => {
   try {
     const faqsList = await faqsModels.find({}).sort({ createdAt: -1 });

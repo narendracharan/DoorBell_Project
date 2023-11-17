@@ -2,6 +2,8 @@ const coupanSchema = require("../../models/adminModels/coupanModels");
 const userCoupan = require("../../models/adminModels/userCoupan");
 const { error, success } = require("../../response");
 
+
+//--------> Create Coupan Api
 exports.createCoupan = async (req, res) => {
   try {
     const { coupanName, endDate, startDate, Discount, user, coupanCode } =
@@ -46,6 +48,8 @@ exports.createCoupan = async (req, res) => {
   }
 };
 
+
+/// Coupan List Api
 exports.coupanList = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -65,6 +69,7 @@ exports.coupanList = async (req, res) => {
   }
 };
 
+// Edit Coupan APi
 exports.editCoupan = async (req, res) => {
   try {
     const id = req.params.id;
@@ -96,6 +101,8 @@ exports.editCoupan = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+//---> Delete Coupan APi
 exports.deleteCoupan = async (req, res) => {
   try {
     const id = req.params.id;
@@ -107,6 +114,7 @@ exports.deleteCoupan = async (req, res) => {
   }
 };
 
+///----------> User Coupan Api
 exports.userCoupan = async (req, res) => {
   try {
     const { coupanName, endDate, startDate, user, coupanCode, Discount } =
@@ -151,6 +159,7 @@ exports.userCoupan = async (req, res) => {
   }
 };
 
+///-----> User Coupan List
 exports.userCoupanList = async (req, res) => {
   try {
     const list = await userCoupan.find({});
@@ -164,6 +173,7 @@ exports.userCoupanList = async (req, res) => {
   }
 };
 
+/// User Update Coupan
 exports.userUpdateCoupan = async (req, res) => {
   try {
     const { coupanName, endDate, user, coupanCode, startDate, Discount } =
@@ -194,6 +204,8 @@ exports.userUpdateCoupan = async (req, res) => {
   }
 };
 
+
+//User Delete Coupan
 exports.userDeleteCoupan = async (req, res) => {
   try {
     const deleteCoupan = await userCoupan.findByIdAndDelete(req.params.id);

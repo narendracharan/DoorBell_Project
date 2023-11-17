@@ -5,6 +5,8 @@ const coupanModels = require("../../models/adminModels/coupanModels");
 const userRegister = require("../../models/userModels/userRegister");
 const userCoupan = require("../../models/adminModels/userCoupan");
 
+
+/// ------ >  Add To Carts Api
 exports.addToCarts = async (req, res) => {
   try {
     const { product_Id, quantity, Price, user_Id } = req.body;
@@ -65,6 +67,7 @@ exports.addToCarts = async (req, res) => {
   }
 };
 
+// -------> Remove Carts Api
 exports.revomeCarts = async (req, res) => {
   try {
     const carts_Id = req.body.carts_Id;
@@ -82,6 +85,8 @@ exports.revomeCarts = async (req, res) => {
   }
 };
 
+
+// ---------> Carts List Api
 exports.cartsList = async (req, res) => {
   try {
     const id = req.params.id;
@@ -94,6 +99,7 @@ exports.cartsList = async (req, res) => {
   }
 };
 
+///----------> Update Quantity Api
 exports.updateQuantity = async (req, res) => {
   try {
     const id = req.params.id;
@@ -114,6 +120,7 @@ exports.updateQuantity = async (req, res) => {
   }
 };
 
+///-------> Product List Api
 exports.productList = async (req, res) => {
   try {
     const productList = await productModels.find({});
@@ -127,6 +134,8 @@ exports.productList = async (req, res) => {
   }
 };
 
+
+//-----> Apply Coupan Api
 exports.coupanApply = async (req, res) => {
   try {
     const { coupanCode, user_Id } = req.body;
@@ -135,9 +144,6 @@ exports.coupanApply = async (req, res) => {
     if (!validCoupan) {
       return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
     }
-    console.log(new Date());
-    console.log(validCoupan.endDate);
-    console.log(new Date() > validCoupan.endDate);
     if (new Date() > validCoupan.endDate) {
       return res
         .status(201)
@@ -164,6 +170,7 @@ exports.coupanApply = async (req, res) => {
   }
 };
 
+//--------> User Coupan Apply
 exports.UsercoupanApply = async (req, res) => {
   try {
     const { coupanCode, user_Id } = req.body;
@@ -199,6 +206,7 @@ exports.UsercoupanApply = async (req, res) => {
   }
 };
 
+///--------> Coupan List Api
 exports.coupanList = async (req, res) => {
   try {
     const coupan = await userCoupan.find({});

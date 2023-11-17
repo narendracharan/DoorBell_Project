@@ -18,7 +18,7 @@ app.use(morgan("dev"));
 //   optionSuccessStatus: 200,
 // };
 app.use(cors());
-const adminRouter = require("./router/adminRouter");
+const adminRouter = require("./router/adminRo uter");
 const userRouter = require("./router/userRoutes");
 const agentRouter = require("./router/agentRouter");
 const path = require("path");

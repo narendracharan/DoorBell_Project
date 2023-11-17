@@ -183,6 +183,7 @@ exports.adminEditProfile = async (req, res) => {
   }
 };
 
+//-----> Add Language Api
 exports.addLanguage = async (req, res) => {
   try {
     const { language, deviceOs, device_Id } = req.body;
@@ -201,6 +202,7 @@ exports.addLanguage = async (req, res) => {
   }
 };
 
+//------> Update Language Api
 exports.updateLanguage = async (req, res) => {
   try {
     const id = req.params.id;
@@ -220,6 +222,7 @@ exports.updateLanguage = async (req, res) => {
   }
 };
 
+//----------> Admin Details Api
 exports.adminDetails = async (req, res) => {
   try {
     const id = req.params.id;

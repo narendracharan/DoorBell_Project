@@ -3,6 +3,8 @@ const productModels = require("../../models/adminModels/productModels");
 const imags = require("../../models/userModels/imags");
 const { error, success } = require("../../response");
 
+
+///// Create Product Api
 exports.createProduct = async (req, res) => {
   try {
     const {
@@ -105,6 +107,8 @@ exports.createProduct = async (req, res) => {
   }
 };
 
+
+//------- Product List Api 
 exports.productList = async (req, res) => {
   try {
     const productListing = await productModels.find({});
@@ -116,6 +120,8 @@ exports.productList = async (req, res) => {
   }
 };
 
+
+////-----------> Update Product Api
 exports.updateProduct = async (req, res) => {
   try {
     const id = req.params.id;
@@ -181,6 +187,7 @@ exports.updateProduct = async (req, res) => {
   }
 };
 
+
 exports.addImage=async(req,res)=>{
   try{
 const image=new imags(req.body)
@@ -198,6 +205,8 @@ const image=new imags(req.body)
   }
 }
 
+
+/// Product Delete Api
 exports.productDelete = async (req, res) => {
   try {
     const id = req.params.id;

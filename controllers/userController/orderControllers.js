@@ -7,6 +7,10 @@ const { transporter } = require("../../services/mailServices");
 const addressModels = require("../../models/userModels/addressModels");
 const sendMail = require("../../services/EmailServices");
 
+
+
+
+//  ------>    Create Order Api
 exports.createOrder = async (req, res) => {
   try {
     const {
@@ -176,6 +180,8 @@ exports.createOrder = async (req, res) => {
   }
 };
 
+
+///----------> User Order Api
 exports.userOrder = async (req, res) => {
   try {
     const id = req.params.id;
@@ -194,6 +200,8 @@ exports.userOrder = async (req, res) => {
   }
 };
 
+
+// --------- > Order Details APi
 exports.orderDetails = async (req, res) => {
   try {
     const id = req.params.id;
@@ -204,6 +212,8 @@ exports.orderDetails = async (req, res) => {
   }
 };
 
+
+/// ------> Order Delete Api
 exports.orderDelete = async (req, res) => {
   try {
     const deleteOrder = await orderModels.findByIdAndDelete(req.params.id);

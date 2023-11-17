@@ -2,6 +2,7 @@ const addressModels = require("../../models/userModels/addressModels");
 const contactModels = require("../../models/userModels/contactUs");
 const { error, success } = require("../../response");
 
+// Create Contact Api
 exports.createContact = async (req, res) => {
   try {
     const { userName,userName_ar, userEmail, mobileNumber, descripation, descripation_ar,user_Id } =
@@ -36,6 +37,8 @@ exports.createContact = async (req, res) => {
   }
 };
 
+
+//-----> Contact List Api
 exports.contactList = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -56,6 +59,8 @@ exports.contactList = async (req, res) => {
   }
 };
 
+
+// View Contact Api
 exports.viewDetails = async (req, res) => {
   try {
     const id = req.params.id;
@@ -72,6 +77,7 @@ exports.viewDetails = async (req, res) => {
   }
 };
 
+//---> Contact Delete Api
 exports.contactDelete = async (req, res) => {
   try {
     const id = req.params.id;
@@ -88,6 +94,7 @@ exports.contactDelete = async (req, res) => {
   }
 };
 
+//----> Edit Contact Api
 exports.editContact = async (req, res) => {
   try {
     const id = req.params.id;
@@ -110,6 +117,8 @@ exports.editContact = async (req, res) => {
   }
 };
 
+
+//  ----------> Create Address Api
 exports.createAddress = async (req, res) => {
   try {
     const { title, address, country, locality, pincode, user_Id } = req.body;
@@ -146,6 +155,7 @@ exports.createAddress = async (req, res) => {
   }
 };
 
+/// ----------> Address List APi
 exports.addressList = async (req, res) => {
   try {
     const id = req.params.id;
@@ -162,6 +172,8 @@ exports.addressList = async (req, res) => {
   }
 };
 
+
+// ----------> Address Edit Api
 exports.addressEdit = async (req, res) => {
   try {
     const id = req.params.id;
@@ -216,6 +228,7 @@ exports.addressEdit = async (req, res) => {
   }
 };
 
+///-------->  Delete Address Api
 exports.deleteAddress = async (req, res) => {
   try {
     const id = req.params.id;

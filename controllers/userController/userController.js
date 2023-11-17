@@ -6,7 +6,7 @@ const userRegister = require("../../models/userModels/userRegister");
 const bcrypt = require("bcrypt");
 
 
-
+//----------User Register Api
 exports.UserRegister = async (req, res) => {
   try {
     const { userName, userEmail, password ,longitude,latitude} = req.body;
@@ -98,6 +98,7 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+//----> Send Email APi 
 exports.sendUserResetPassword = async (req, res) => {
   try {
     const { userEmail } = req.body;
@@ -127,6 +128,8 @@ exports.sendUserResetPassword = async (req, res) => {
   }
 };
 
+
+///-----> Otp Verify Api
 exports.OtpVerify = async (req, res) => {
   try {
     const { userEmail, otp } = req.body;
@@ -148,6 +151,8 @@ exports.OtpVerify = async (req, res) => {
   }
 };
 
+
+//---> Reset Password Api
 exports.resetPassword = async (req, res) => {
   try {
     const { newPassword, confirmPassword, userEmail } = req.body;
@@ -182,6 +187,8 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+
+///--------> Edit Profile Api
 exports.editProfile = async (req, res) => {
   try {
     const id = req.params.id;
@@ -214,6 +221,8 @@ exports.editProfile = async (req, res) => {
   }
 };
 
+
+///------> Change Password Api
 exports.changepassword = async (req, res) => {
   try {
     const id = req.params.id;
@@ -252,6 +261,8 @@ exports.changepassword = async (req, res) => {
   }
 };
 
+
+///----> User Details Api
 exports.userDetails = async (req, res) => {
   try {
     const userDetails = await userModels.findById(req.params.id);

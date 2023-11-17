@@ -3,6 +3,8 @@ const faqsModels = require("../../models/adminModels/faqsModels");
 const orderModels = require("../../models/userModels/orderModels");
 const { success, error } = require("../../response");
 
+
+//----------> create Contenrt Api
 exports.createContent = async (req, res) => {
   try {
     const { title_en, Description_en, title_ar, Description_ar } = req.body;
@@ -19,6 +21,8 @@ exports.createContent = async (req, res) => {
   }
 };
 
+
+//------> Content List Api
 exports.contentListing = async (req, res) => {
   try {
     const listing = await contentSchema.find({});
@@ -28,6 +32,8 @@ exports.contentListing = async (req, res) => {
   }
 };
 
+
+//---> Edit Content Api
 exports.editContent = async (req, res) => {
   try {
     const id = req.params.id;
@@ -44,6 +50,8 @@ exports.editContent = async (req, res) => {
   }
 };
 
+
+//------> Create Faqs Api
 exports.createFaqs = async (req, res) => {
   try {
     const { title, description, title_ar, description_ar } = req.body;
@@ -66,6 +74,7 @@ exports.createFaqs = async (req, res) => {
   }
 };
 
+//---------> Edit Faqs Api
 exports.editFaqs = async (req, res) => {
   try {
     const id = req.params.id;
@@ -86,6 +95,8 @@ exports.editFaqs = async (req, res) => {
   }
 };
 
+
+//-------> delete Faqs Api
 exports.deleteFaq = async (req, res) => {
   try {
     const id = req.params.id;
@@ -96,6 +107,8 @@ exports.deleteFaq = async (req, res) => {
   }
 };
 
+
+///--------> Order List api
 exports.Orderlist = async (req, res) => {
   try {
     const { from, to } = req.body;
@@ -119,6 +132,8 @@ exports.Orderlist = async (req, res) => {
   }
 };
 
+
+///-------> Admin Order Api
 exports.adminOrderDetails = async (req, res) => {
   try {
     const id = req.params.id;
@@ -129,6 +144,8 @@ exports.adminOrderDetails = async (req, res) => {
   }
 };
 
+
+//------------> Order Delete Api
 exports.OrderDelete = async (req, res) => {
   try {
     const id = req.params.id;
@@ -140,6 +157,8 @@ exports.OrderDelete = async (req, res) => {
   }
 };
 
+
+//-----> Complete Order Api
 exports.CompletedOrder = async (req, res) => {
   try {
     const { from, to } = req.body;

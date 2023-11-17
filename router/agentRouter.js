@@ -4,7 +4,7 @@ const upload = require("../middleware/multer")
 const agentAuthorisationUser = require("../middleware/agentAuthentication")
 const router=express.Router()
 
-
+///-----> Agents Routes
 router.post("/agent-order/:id",agentAuthorisationUser,agentOrderList)
 router.post("/order-details/:id",agentAuthorisationUser,orderDetails)
 router.post("/agent-order-history/:id",agentAuthorisationUser,agentOrderHistory)

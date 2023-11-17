@@ -3,6 +3,8 @@ const orderModels = require("../../models/userModels/orderModels");
 const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 
+
+//----> Add Agent Api
 exports.addAgent = async (req, res) => {
   try {
     const { userName, userEmail, password, mobileNumber, idNumber, address } =
@@ -64,6 +66,8 @@ exports.addAgent = async (req, res) => {
   }
 };
 
+
+//----------> Agent List Api
 exports.agentlist = async (req, res) => {
   try {
     const list = await agentSchema.find({});
@@ -77,6 +81,8 @@ exports.agentlist = async (req, res) => {
   }
 };
 
+
+///---------> Agent Update Api
 exports.agentUpdate = async (req, res) => {
   try {
     const { userName, userEmail, password, mobileNumber, idNumber, address } =
@@ -114,6 +120,8 @@ exports.agentUpdate = async (req, res) => {
   }
 };
 
+
+/// Agent Delete Api
 exports.deleteAgent = async (req, res) => {
   try {
     const deleteAgent = await agentSchema.findByIdAndDelete(req.params.id);
@@ -123,6 +131,7 @@ exports.deleteAgent = async (req, res) => {
   }
 };
 
+//--------> Assign Order Api
 exports.assignOrder = async (req, res) => {
   try {
     const id = req.params.id;
@@ -148,6 +157,7 @@ exports.assignOrder = async (req, res) => {
   }
 };
 
+/// ----> Agent Order List
 exports.agentOrderList = async (req, res) => {
   try {
     const id = req.params.id;
@@ -162,6 +172,7 @@ exports.agentOrderList = async (req, res) => {
   }
 };
 
+//--------> Agent Order History
 exports.agentOrderHistory = async (req, res) => {
   try {
     const id = req.params.id;
@@ -175,6 +186,8 @@ exports.agentOrderHistory = async (req, res) => {
   }
 };
 
+
+//--------> order Details Api
 exports.orderDetails = async (req, res) => {
   try {
     const orderDetails = await orderModels
@@ -187,6 +200,7 @@ exports.orderDetails = async (req, res) => {
   }
 };
 
+//------> Update Order Status Api
 exports.updateOrderStatus = async (req, res) => {
   try {
     const id = req.params.id;
@@ -210,6 +224,7 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
+///---------> Agent Login Api
 exports.agentLogin = async (req, res) => {
   try {
     const { userEmail, password } = req.body;
@@ -258,6 +273,7 @@ exports.agentLogin = async (req, res) => {
   }
 };
 
+///------> Send Email Api
 exports.sendEmail = async (req, res) => {
   try {
     const { userEmail } = req.body;
@@ -289,6 +305,8 @@ exports.sendEmail = async (req, res) => {
   }
 };
 
+
+//--------> Agent Otp Verify Api
 exports.agentOtpVerify = async (req, res) => {
   try {
     const { userEmail, otp } = req.body;
@@ -322,6 +340,8 @@ exports.agentOtpVerify = async (req, res) => {
   }
 };
 
+
+// Agent Passowrd Reset Api
 exports.agentPasswordReset = async (req, res) => {
   try {
     const { newPassword, confirmPassword, userEmail } = req.body;
@@ -372,6 +392,8 @@ exports.agentPasswordReset = async (req, res) => {
   }
 };
 
+
+//--------> Agent Edit Profile
 exports.agentEditProfile = async (req, res) => {
   try {
     const { userName, mobileNumber, userEmail } = req.body;
@@ -406,6 +428,8 @@ exports.agentEditProfile = async (req, res) => {
   }
 };
 
+
+///----------------> Agent Details Api
 exports.agentDetails = async (req, res) => {
   try {
     const agent = await agentSchema.findById(req.params.id);
@@ -418,6 +442,8 @@ exports.agentDetails = async (req, res) => {
   }
 };
 
+
+///-------------> Order Upload Image Api
 exports.orderUploadImage = async (req, res) => {
   try {
     const order = await orderModels.findById(req.params.id);
