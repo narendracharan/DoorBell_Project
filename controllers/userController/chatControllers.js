@@ -36,11 +36,11 @@ exports.getClinicianChats = async (_id) => {
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
     const chat = await chatModels.findById(chatId).populate([["user1", "user2"]])
-    // const chats = await chatModels
-    //   .find({
-    //     clinicinId: chat.clinician,
-    //   })
-    //   .sort({ updatedAt: -1 });
+    const chats = await chatModels
+      .find({
+        _id: chat._id,
+      })
+      .sort({ updatedAt: -1 });
     return chat;
   } catch (err) {
     console.log(err);

@@ -44,13 +44,13 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  socket.on("createRoom", async (chatId) => {
-    console.log("createRoom", chatId);
-    socket.join(chatId);
-    const messages = await getMessages(chatId);
-    console.log(messages);
-    io.to(chatId).emit("messageList", messages);
-  });
+  // socket.on("createRoom", async (chatId) => {
+  //   console.log("createRoom", chatId);
+  //   socket.join(chatId);
+  //   const messages = await getMessages(chatId);
+  //   console.log(messages);
+  //   io.to(chatId).emit("messageList", messages);
+  // });
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);
     const messages = await sendMessage(data);
