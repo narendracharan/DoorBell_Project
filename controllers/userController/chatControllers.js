@@ -5,10 +5,8 @@ const userRegister = require("../../models/userModels/userRegister");
 
 exports.getMessages = async (chatId) => {
   try {
-    const messages = await chatMessagesSchema
-      .find({
-        chatId: chatId,
-      })
+    const messages = await chatModels
+      .find()
       .sort({ createdAt: 1 })
       .lean();
     return messages;
