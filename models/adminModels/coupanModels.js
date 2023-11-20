@@ -25,9 +25,13 @@ const schema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  total:{
+  total: {
     type: Number,
-    default:0
+    default: 0,
+  },
+  subTotal: {
+    type: Number,
+    default: 0,
   },
   user_Id: {
     type: mongoose.Schema.Types.ObjectId,

@@ -1,34 +1,34 @@
 const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema({
-    mother: {
+    user1: {
       type: mongoose.Types.ObjectId,
-      ref: "user",
+      ref: "Doorbeluser",
       required: true,
     },
-    daughter: {
+    user2: {
       type: mongoose.Types.ObjectId,
-      ref: "user",
+      ref: "Doorbeluser",
       required: true,
     },
-    clinician: {
-      type: mongoose.Types.ObjectId,
-      ref: "clinician",
-      required: true,
-    },
+    // clinician: {
+    //   type: mongoose.Types.ObjectId,
+    //   ref: "clinician",
+    //   required: true,
+    // },
     lastMessage: {
       type: String,
       required: false,
       default: "",
     },
-    name: {
-      type: String,
-      required: false,
-    },
-    profile_image: {
-      type: String,
-      required: false,
-    },
+    // name: {
+    //   type: String,
+    //   required: false,
+    // },
+    // profile_image: {
+    //   type: String,
+    //   required: false,
+    // },
     timestamp: {
       type: Date,
       required: false,

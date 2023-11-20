@@ -2,7 +2,6 @@ const coupanSchema = require("../../models/adminModels/coupanModels");
 const userCoupan = require("../../models/adminModels/userCoupan");
 const { error, success } = require("../../response");
 
-
 //--------> Create Coupan Api
 exports.createCoupan = async (req, res) => {
   try {
@@ -40,6 +39,7 @@ exports.createCoupan = async (req, res) => {
       Discount: Discount,
       coupanCode: coupanCode,
       user: user,
+      subTotal: user,
     });
     await newCoupan.save();
     res.status(200).json(success(res.statusCode, "Success", { newCoupan }));
@@ -47,7 +47,6 @@ exports.createCoupan = async (req, res) => {
     res.status(400).json(error("Error in Create Coupan", res.statusCode));
   }
 };
-
 
 /// Coupan List Api
 exports.coupanList = async (req, res) => {
@@ -151,6 +150,7 @@ exports.userCoupan = async (req, res) => {
       Discount: Discount,
       user: user,
       coupanCode: coupanCode,
+      subTotal: user,
     });
     await newCoupan.save();
     res.status(201).json(success(res.statusCode, "Success", { newCoupan }));
@@ -203,7 +203,6 @@ exports.userUpdateCoupan = async (req, res) => {
     res.status(400).json(error("Error In Update Coupan", res.statusCode));
   }
 };
-
 
 //User Delete Coupan
 exports.userDeleteCoupan = async (req, res) => {

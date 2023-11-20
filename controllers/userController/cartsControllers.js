@@ -5,7 +5,6 @@ const coupanModels = require("../../models/adminModels/coupanModels");
 const userRegister = require("../../models/userModels/userRegister");
 const userCoupan = require("../../models/adminModels/userCoupan");
 
-
 /// ------ >  Add To Carts Api
 exports.addToCarts = async (req, res) => {
   try {
@@ -85,7 +84,6 @@ exports.revomeCarts = async (req, res) => {
   }
 };
 
-
 // ---------> Carts List Api
 exports.cartsList = async (req, res) => {
   try {
@@ -134,7 +132,6 @@ exports.productList = async (req, res) => {
   }
 };
 
-
 //-----> Apply Coupan Api
 exports.coupanApply = async (req, res) => {
   try {
@@ -157,7 +154,9 @@ exports.coupanApply = async (req, res) => {
         .json(error("User Coupan Limit Expired ", res.statusCode));
     }
     validCoupan.total = validCoupan.total + +user;
+    validCoupan.subTotal = validCoupan.subTotal - 1;
     await validCoupan.save();
+    console.log(validCoupan);
     res.status(200).json(
       success(res.statusCode, "Success", {
         DiscountType,
@@ -179,7 +178,7 @@ exports.UsercoupanApply = async (req, res) => {
     if (!validCoupan) {
       return res.status(201).json(error("Invalid Coupan Code", res.statusCode));
     }
-   
+
     if (new Date() > validCoupan.endDate) {
       return res
         .status(201)
@@ -193,6 +192,7 @@ exports.UsercoupanApply = async (req, res) => {
         .json(error("User Coupan Limit Expired ", res.statusCode));
     }
     validCoupan.total = validCoupan.total + +user;
+    validCoupan.subTotal = validCoupan.subTotal - 1;
     await validCoupan.save();
     res.status(200).json(
       success(res.statusCode, "Success", {
