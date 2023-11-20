@@ -38,7 +38,7 @@ exports.getClinicianChatsByChatId = async (chatId) => {
     const chat = await chatModels.findById(chatId);
     const chats = await chatModels
       .find({
-        _id: chat.user1,
+        _id: chat._id,
       })
       .sort({ updatedAt: -1 });
     return chats;
