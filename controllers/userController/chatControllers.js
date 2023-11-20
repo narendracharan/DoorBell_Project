@@ -33,20 +33,20 @@ exports.getClinicianChats = async (_id) => {
   }
 };
 
-exports.getClinicianChatsByChatId = async (chatId) => {
-  try {
-    const chat = await chatModels.findById(chatId).populate([["user1", "user2"]])
-    // const chats = await chatModels
-    //   .find({
-    //     clinicinId: chat.clinician,
-    //   })
-    //   .sort({ updatedAt: -1 });
-    return chat;
-  } catch (err) {
-    console.log(err);
-    return;
-  }
-};
+// exports.getClinicianChatsByChatId = async (chatId) => {
+//   try {
+//     const chat = await chatModels.findById(chatId).populate([["user1", "user2"]])
+//     // const chats = await chatModels
+//     //   .find({
+//     //     clinicinId: chat.clinician,
+//     //   })
+//     //   .sort({ updatedAt: -1 });
+//     return chat;
+//   } catch (err) {
+//     console.log(err);
+//     return;
+//   }
+// };
 
 exports.sendMessage = async (data) => {
   try {

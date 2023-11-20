@@ -14,11 +14,11 @@ const schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  sentBy: {
-    type: String,
-    required: true,
-    enum: ["Mother", "Daughter", "Clinician"],
-  },
+  // sentBy: {
+  //   type: String,
+  //   required: true,
+  //   enum: ["Mother", "Daughter", "Clinician"],
+  // },
 });
 
 schema.set("timestamps", true);
