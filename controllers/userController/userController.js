@@ -26,7 +26,7 @@ exports.UserRegister = async (req, res) => {
     const checkMail = await userModels.findOne({ userEmail: userEmail });
     const checkNAME = await userModels.findOne({ userName: userName });
     if (checkNAME) {
-      return res.status(201).json(error("userName is already register",res.statusCode));
+      return res.status(201).json(error("user Name is already register",res.statusCode));
     }
 
     if (checkMail) {

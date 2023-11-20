@@ -49,7 +49,15 @@ const schema = new mongoose.Schema({
   otp:{
     type :String ,
     require:true
-  }
+  },
+  longitude: {
+    type: Number,
+    require: true,
+  },
+  latitude: {
+    type: Number,
+    require: true,
+  },
 });
 
 schema.methods.AgentAuthToken = function () {

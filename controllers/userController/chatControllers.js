@@ -64,8 +64,8 @@ exports.getMessages = async (chatId) => {
   
   exports.sendMessage = async (data) => {
     try {
-      await ChatMessage.create(data);
-      const messages = await ChatMessage.find({
+      await chatModels.create(data);
+      const messages = await chatModels.find({
         id:data.id,
       })
         .sort({ createdAt: 1 })
