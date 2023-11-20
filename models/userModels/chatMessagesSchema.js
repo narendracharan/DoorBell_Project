@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
   chatId: {
     type: mongoose.Types.ObjectId,
     ref: "Chat",
-    required: true,
+    require: true,
   },
   text: {
     type: String,
