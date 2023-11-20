@@ -55,12 +55,13 @@ exports.sendMessage = async (data) => {
       })
       .sort({ createdAt: 1 })
       .lean();
-    await chatModels
+ const msg=   await chatModels
       .findByIdAndUpdate(data.chatId, {
         lastMessage: data.text,
         timestamp: new Date(),
       })
       .populate(["user1", "user2"]);
+      console.log("messages",msg);
     const chat = await chatModels
       .findById(data.id)
       .populate(["user1", "user2"]);
