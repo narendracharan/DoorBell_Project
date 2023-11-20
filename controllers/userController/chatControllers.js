@@ -33,9 +33,9 @@ exports.getClinicianChats = async (_id) => {
   }
 };
 
-exports.getClinicianChatsByChatId = async (chatId) => {
+exports.getClinicianChatsByChatId = async (_id) => {
   try {
-    const chat = await chatModels.findById(chatId).populate([["user1", "user2"]])
+    const chat = await chatModels.findById(_id).populate([["user1", "user2"]])
     const chats = await chatModels
       .find({
         _id: chat._id,
