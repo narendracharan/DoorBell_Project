@@ -11,14 +11,15 @@ const schema = new mongoose.Schema({
     required: true,
   },
   senderId: {
-    type: String,
+    type: mongoose.Types.ObjectId,
+    ref: "Doorbeluser",
     required: true,
   },
-  // sentBy: {
-  //   type: String,
-  //   required: true,
-  //   enum: ["Mother", "Daughter", "Clinician"],
-  // },
+  sentBy: {
+    type: String,
+    required: true,
+    enum: ["User", "Admin"],
+  },
 });
 
 schema.set("timestamps", true);

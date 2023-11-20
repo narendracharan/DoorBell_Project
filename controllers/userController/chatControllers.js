@@ -5,8 +5,8 @@ const userRegister = require("../../models/userModels/userRegister");
 
 exports.getMessages = async (chatId) => {
   try {
-    const messages = await chatModels
-      .find()
+    const messages = await chatMessagesSchema
+      .find({chatId:chatId})
       .sort({ createdAt: 1 })
       .lean();
     return messages;
@@ -48,7 +48,7 @@ exports.getClinicianChatsByChatId = async (_id) => {
 
 exports.sendMessage = async (data) => {
   try {
-    await chatModels.create(data);
+    await chatMessagesSchema.create(data);
     const messages = await chatModels
       .find({
         id: data.id,
@@ -57,7 +57,7 @@ exports.sendMessage = async (data) => {
       .lean();
     await chatModels
       .findByIdAndUpdate(data.id, {
-        lastMessage: data.message,
+        lastMessage: data.text,
         timestamp: new Date(),
       })
       .populate(["user1", "user2"]);
