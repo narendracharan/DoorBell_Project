@@ -54,6 +54,7 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);
     const messages = await sendMessage(data);
+    console.log("chat_Idd",data.chatId);
     io.to(data.chatId).emit("messageList", messages);
     const chats = await getClinicianChatsByChatId(data.chatId);
     io.to(data.chatId).emit("chatList", chats);

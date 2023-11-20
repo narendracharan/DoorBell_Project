@@ -31,12 +31,12 @@ exports.getClinicianChats = async (_id) => {
   }
 };
 
-exports.getClinicianChatsByChatId = async (_id) => {
+exports.getClinicianChatsByChatId = async (chatId) => {
   try {
-    const chat = await chatModels.findById(_id).populate([["user1", "user2"]])
+    const chat = await chatModels.findById(chatId).populate([["user1", "user2"]])
     const chats = await chatModels
       .find({
-        _id: chat._id,
+        user1: chat._id,
       })
       .sort({ updatedAt: -1 });
     return chat;
@@ -49,14 +49,14 @@ exports.getClinicianChatsByChatId = async (_id) => {
 exports.sendMessage = async (data) => {
   try {
     await chatMessagesSchema.create(data);
-    const messages = await chatModels
+    const messages = await chatMessagesSchema
       .find({
-        id: data.id,
+        chatId: data.chatId,
       })
       .sort({ createdAt: 1 })
       .lean();
     await chatModels
-      .findByIdAndUpdate(data.id, {
+      .findByIdAndUpdate(data.chatId, {
         lastMessage: data.text,
         timestamp: new Date(),
       })
