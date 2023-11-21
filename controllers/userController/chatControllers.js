@@ -6,7 +6,7 @@ const userRegister = require("../../models/userModels/userRegister");
 exports.getMessages = async (chatId) => {
   try {
     const messages = await chatMessagesSchema
-      .find({chatId:chatId})
+      .find({ chatId: chatId }).populate(["senderId","chatId"])
       .sort({ createdAt: 1 })
       .lean();
     return messages;
@@ -18,11 +18,11 @@ exports.getMessages = async (chatId) => {
 
 exports.getClinicianChats = async (_id) => {
   try {
-    const chats = await chatModels
+    const chats = await chatMessagesSchema
       .find({
-        _id: _id,
+        senderId: senderId,
       })
-      .populate(["user1", "user2"])
+      .populate(["senderId","chatId"])
       .sort({ updatedAt: -1 });
     return chats;
   } catch (err) {
@@ -33,7 +33,9 @@ exports.getClinicianChats = async (_id) => {
 
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
-    const chat = await chatModels.findById(chatId).populate([["user1", "user2"]])
+    const chat = await chatModels
+      .findById(chatId)
+      .populate([["user1", "user2"]]);
     const chats = await chatModels
       .find({
         user1: chat._id,
@@ -55,13 +57,13 @@ exports.sendMessage = async (data) => {
       })
       .sort({ createdAt: 1 })
       .lean();
- const msg=   await chatModels
+    await chatModels
       .findByIdAndUpdate(data.chatId, {
         lastMessage: data.text,
         timestamp: new Date(),
       })
       .populate(["user1", "user2"]);
-      console.log("messages",msg);
+
     const chat = await chatModels
       .findById(data.id)
       .populate(["user1", "user2"]);

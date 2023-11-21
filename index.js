@@ -58,12 +58,12 @@ io.on("connection", (socket) => {
     const chats = await getClinicianChatsByChatId(data.chatId);
     io.to(data.chatId).emit("chatList", chats);
   });
-  socket.on("clinicians", async (clinicianId) => {
-    console.log("clinicians", clinicianId);
-    socket.join(clinicianId);
-    const chats = await getClinicianChats(clinicianId);
-    io.emit("chatList", chats);
- });
+  socket.on("senderMessage", async (senderId) => {
+    console.log("clinicians", senderId);
+    socket.join(senderId);
+    const chats = await getClinicianChats(senderId);
+    io.emit("senderList", chats);
+  });
 
   socket.on("disconnect", () => {
     socket.disconnect();
