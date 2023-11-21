@@ -6,10 +6,12 @@ const userRegister = require("../../models/userModels/userRegister");
 exports.getMessages = async (chatId) => {
   try {
     const messages = await chatMessagesSchema
-      .find({ chatId: chatId }).populate(["senderId","chatId"])
+      .find({ chatId: chatId })
+      .populate(["senderId", "chatId"])
       .sort({ createdAt: 1 })
       .lean();
-    return messages;
+    const msg = await chatMessagesSchema.find();
+    return [messages,msg];
   } catch (err) {
     console.log(err);
     return;
@@ -22,7 +24,7 @@ exports.getClinicianChats = async (_id) => {
       .find({
         senderId: senderId,
       })
-      .populate(["senderId","chatId"])
+      .populate(["senderId", "chatId"])
       .sort({ updatedAt: -1 });
     return chats;
   } catch (err) {
