@@ -30,6 +30,10 @@ const schema = new mongoose.Schema({
     type: Array,
     require: true,
   },
+  documentName: {
+    type: String,
+    require: true,
+  },
   //   otp: {
   //     type: Number,
   //     require: true,

@@ -3,11 +3,10 @@ const orderModels = require("../../models/userModels/orderModels");
 const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 
-
 //----> Add Agent Api
 exports.addAgent = async (req, res) => {
   try {
-    const { userName, userEmail, password, mobileNumber, idNumber, address } =
+    const { userName, userEmail,documentName, password, mobileNumber, idNumber, address } =
       req.body;
     if (!userName) {
       return res
@@ -46,26 +45,22 @@ exports.addAgent = async (req, res) => {
       mobileNumber: mobileNumber,
       idNumber: idNumber,
       address: address,
+      documentName:documentName
     });
-    // if (req.files) {
-    //   for (let i = 0; i < req.files.length; i++) {
-    //     // if (req.files[i].fieldname == "profile_Pic") {
-    //     //   newUser.profile_Pic = `${process.env.BASE_URL}/${req.files[i].filename}`;
-    //     // }
-    //     if (req.files[i].fieldname == "document") {
-    //       newUser.document.push(
-    //         `${process.env.BASE_URL}/${req.files[i].filename}`
-    //       );
-    //     }
-    //   }
-    //   }
+    if (req.files) {
+      for (let i = 0; i < req.files.length; i++) {
+        if (req.files[i].fieldname == "document") {
+          newUser.document.push(
+            `${process.env.BASE_URL}/${req.files[i].filename}`)
+        }
+      }
+    }
     await newUser.save();
     res.status(200).json(success(res.statusCode, "Success", { newUser }));
   } catch (err) {
     res.status(400).json(error("Error in Add Agent", res.statusCode));
   }
 };
-
 
 //----------> Agent List Api
 exports.agentlist = async (req, res) => {
@@ -80,7 +75,6 @@ exports.agentlist = async (req, res) => {
     res.status(400).json(error("Error In Agent List", res.statusCode));
   }
 };
-
 
 ///---------> Agent Update Api
 exports.agentUpdate = async (req, res) => {
@@ -119,7 +113,6 @@ exports.agentUpdate = async (req, res) => {
     res.status(400).json(error("Error in Agent Update", res.statusCode));
   }
 };
-
 
 /// Agent Delete Api
 exports.deleteAgent = async (req, res) => {
@@ -185,7 +178,6 @@ exports.agentOrderHistory = async (req, res) => {
     res.status(400).json(error("Error in Agent Order", res.statusCode));
   }
 };
-
 
 //--------> order Details Api
 exports.orderDetails = async (req, res) => {
@@ -305,7 +297,6 @@ exports.sendEmail = async (req, res) => {
   }
 };
 
-
 //--------> Agent Otp Verify Api
 exports.agentOtpVerify = async (req, res) => {
   try {
@@ -339,7 +330,6 @@ exports.agentOtpVerify = async (req, res) => {
     res.status(400).json(error("Error In Verify Otp", res.statusCode));
   }
 };
-
 
 // Agent Passowrd Reset Api
 exports.agentPasswordReset = async (req, res) => {
@@ -392,7 +382,6 @@ exports.agentPasswordReset = async (req, res) => {
   }
 };
 
-
 //--------> Agent Edit Profile
 exports.agentEditProfile = async (req, res) => {
   try {
@@ -428,7 +417,6 @@ exports.agentEditProfile = async (req, res) => {
   }
 };
 
-
 ///----------------> Agent Details Api
 exports.agentDetails = async (req, res) => {
   try {
@@ -441,7 +429,6 @@ exports.agentDetails = async (req, res) => {
     res.status(400).json(error("Error In Agent Details", res.statusCode));
   }
 };
-
 
 ///-------------> Order Upload Image Api
 exports.orderUploadImage = async (req, res) => {
