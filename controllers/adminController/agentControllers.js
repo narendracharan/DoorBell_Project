@@ -8,6 +8,7 @@ exports.addAgent = async (req, res) => {
   try {
     const { userName, userEmail,documentName, password, mobileNumber, idNumber, address } =
       req.body;
+      console.log(req.body);
     if (!userName) {
       return res
         .status(201)
@@ -58,6 +59,7 @@ exports.addAgent = async (req, res) => {
     await newUser.save();
     res.status(200).json(success(res.statusCode, "Success", { newUser }));
   } catch (err) {
+    console.log(err);
     res.status(400).json(error("Error in Add Agent", res.statusCode));
   }
 };
