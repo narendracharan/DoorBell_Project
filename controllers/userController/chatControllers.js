@@ -23,9 +23,8 @@ exports.getClinicianChats = async (_id) => {
   try {
     const chats = await chatMessagesSchema
       .find({
-        senderId: senderId,
       })
-      .populate(["senderId", "chatId"])
+      .populate("senderId").populate("chatId")
       .sort({ updatedAt: -1 });
     return chats;
   } catch (err) {
