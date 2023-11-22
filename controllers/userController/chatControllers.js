@@ -11,6 +11,7 @@ exports.getMessages = async (chatId) => {
       .sort({ createdAt: 1 })
       .lean();
     const msg = await chatMessagesSchema.find().populate("senderId").populate("chatId")
+    console.log(msg);
     return [messages,msg];
   } catch (err) {
     console.log(err);
