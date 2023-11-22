@@ -10,7 +10,7 @@ exports.getMessages = async (chatId) => {
       .populate("senderId").populate("chatId")
       .sort({ createdAt: 1 })
       .lean();
-    const msg = await chatMessagesSchema.find().populate("senderId").populate("chatId")
+    const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
     console.log(msg);
     return [messages,msg];
   } catch (err) {
@@ -22,7 +22,7 @@ exports.getMessages = async (chatId) => {
 exports.getClinicianChats = async (_id) => {
   try {
     const chats = await chatMessagesSchema
-      .find({
+      .find({senderId:senderId
       })
       .populate("senderId").populate("chatId")
       .sort({ updatedAt: -1 });
