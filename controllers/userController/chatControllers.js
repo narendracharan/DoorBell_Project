@@ -7,10 +7,10 @@ exports.getMessages = async (chatId) => {
   try {
     const messages = await chatMessagesSchema
       .find({ chatId: chatId })
-      .populate(["senderId", "chatId"])
+      .populate("senderId").populate("chatId")
       .sort({ createdAt: 1 })
       .lean();
-    const msg = await chatMessagesSchema.find();
+    const msg = await chatMessagesSchema.find().populate("senderId").populate("chatId")
     return [messages,msg];
   } catch (err) {
     console.log(err);

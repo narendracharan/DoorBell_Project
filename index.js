@@ -31,8 +31,13 @@ const {
 
 //process.env["BASE_URL"] = "http://ec2-16-171-57-155.eu-north-1.compute.amazonaws.com:3001";
 
+//----> Admin Routes
 app.use("/admin", adminRouter);
+
+//-----> User Routes
 app.use("/user", userRouter);
+
+//------> Agent Routes
 app.use("/agent", agentRouter);
 const staticPath = path.join(__dirname, "./public");
 app.use(express.static("./public"));

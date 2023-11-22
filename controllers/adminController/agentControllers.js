@@ -6,9 +6,16 @@ const { transporter } = require("../../services/mailServices");
 //----> Add Agent Api
 exports.addAgent = async (req, res) => {
   try {
-    const { userName, userEmail,documentName, password, mobileNumber, idNumber, address } =
-      req.body;
-      console.log(req.body);
+    const {
+      userName,
+      userEmail,
+      documentName,
+      password,
+      mobileNumber,
+      idNumber,
+      address,
+    } = req.body;
+    console.log(req.body);
     if (!userName) {
       return res
         .status(201)
@@ -46,13 +53,13 @@ exports.addAgent = async (req, res) => {
       mobileNumber: mobileNumber,
       idNumber: idNumber,
       address: address,
-      documentName:documentName
+      documentName: documentName,
     });
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
         if (req.files[i].fieldname == "document") {
           newUser.document.push(
-            `${process.env.BASE_URL}/${req.files[i].filename}`)
+            `${process.env.BASE_URL}/${req.files[i].filename}`);
         }
       }
     }
@@ -81,8 +88,15 @@ exports.agentlist = async (req, res) => {
 ///---------> Agent Update Api
 exports.agentUpdate = async (req, res) => {
   try {
-    const { userName, userEmail, password, mobileNumber, idNumber, address } =
-      req.body;
+    const {
+      userName,
+      userEmail,
+      password,
+      mobileNumber,
+      documentName,
+      idNumber,
+      address,
+    } = req.body;
     const agent = await agentSchema.findById(req.params.id);
     if (userName) {
       agent.userName = userName;
@@ -102,10 +116,16 @@ exports.agentUpdate = async (req, res) => {
     if (address) {
       agent.address = address;
     }
+    if (documentName) {
+      agent.documentName = documentName;
+    }
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
         if (req.files[i].fieldname == "profile_Pic") {
           agent.profile_Pic = `${process.env.BASE_URL}/${req.files[i].filename}`;
+        }
+        if (req.files[i].fieldname == "document") {
+          agent.document = `${process.env.BASE_URL}/${req.files[i].filename}`;
         }
       }
     }
@@ -163,6 +183,7 @@ exports.agentOrderList = async (req, res) => {
 
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {
+    console.log(err);
     res.status(400).json(error("Error in Agent Order", res.statusCode));
   }
 };
