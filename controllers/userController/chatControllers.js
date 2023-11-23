@@ -1,17 +1,17 @@
 const chatMessagesSchema = require("../../models/userModels/chatMessagesSchema");
 const chatModels = require("../../models/userModels/chatModels");
-const clinicianModels = require("../../models/userModels/clinicianModels");
-const userRegister = require("../../models/userModels/userRegister");
+
 
 exports.getMessages = async (chatId) => {
   try {
+    const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
+    console.log(msg);
     const messages = await chatMessagesSchema
       .find({ chatId: chatId })
       .populate("senderId").populate("chatId")
       .sort({ createdAt: 1 })
       .lean();
-    const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
-    console.log(msg);
+    
     return [messages,msg];
   } catch (err) {
     console.log(err);
@@ -38,11 +38,11 @@ exports.getClinicianChatsByChatId = async (chatId) => {
     const chat = await chatModels
       .findById(chatId)
       .populate([["user1", "user2"]]);
-    const chats = await chatModels
-      .find({
-        user1: chat._id,
-      })
-      .sort({ updatedAt: -1 });
+    // const chats = await chatModels
+    //   .find({
+    //     user1: chat._id,
+    //   })
+    //   .sort({ updatedAt: -1 });
     return chat;
   } catch (err) {
     console.log(err);
