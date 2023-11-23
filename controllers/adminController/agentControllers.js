@@ -179,7 +179,7 @@ exports.agentOrderList = async (req, res) => {
     const order = await orderModels
       .find({ deliverdBy: id })
       .populate(["deliverdBy", "address_Id"]);
-    const orderList = order.filter((x) => x.orderStatus == "InProgress");
+    const orderList = order.filter((x) => x.orderStatus == "In_Progress");
 
     res.status(200).json(success(res.statusCode, "Success", { orderList }));
   } catch (err) {

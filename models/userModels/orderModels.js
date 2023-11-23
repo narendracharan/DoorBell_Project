@@ -73,7 +73,7 @@ const schema = new mongoose.Schema({
   orderStatus: {
     type: String,
     default: "Pending",
-    enum: ["InProgress", "Cancelled", "Delivered", "Pending"],
+    enum: ["In_Progress", "Cancelled", "Delivered", "Pending"],
   },
   delivered_Img: {
     type: String,
