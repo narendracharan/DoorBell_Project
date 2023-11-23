@@ -12,7 +12,7 @@ const schema = new mongoose.Schema({
   },
   senderId: {
     type: mongoose.Types.ObjectId,
-    ref: "Doorbeluser",
+    ref: "Doorbeladmin",
     require: true,
   },
   sentBy: {
