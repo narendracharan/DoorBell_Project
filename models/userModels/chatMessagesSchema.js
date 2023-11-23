@@ -8,16 +8,16 @@ const schema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: true,
+    require: true,
   },
   senderId: {
     type: mongoose.Types.ObjectId,
     ref: "Doorbeluser",
-    required: true,
+    require: true,
   },
   sentBy: {
     type: String,
-    required: true,
+    require: true,
     enum: ["User", "Admin"],
   },
 });

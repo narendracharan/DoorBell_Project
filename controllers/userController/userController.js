@@ -4,6 +4,7 @@ const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 const userRegister = require("../../models/userModels/userRegister");
 const bcrypt = require("bcrypt");
+const chatMessagesSchema = require("../../models/userModels/chatMessagesSchema");
 
 
 //----------User Register Api
@@ -33,17 +34,19 @@ exports.UserRegister = async (req, res) => {
       return res.status(201).json(error("userEmail is already register",res.statusCode));
     }
     const passwordHash = await bcrypt.hash(password, 10);
+    const chat=new chatMessagesSchema({})
+    await chat.save()
     const newUser = new userModels({
       websiteName: userName,
       userEmail: userEmail,
       password: passwordHash,
       latitude:latitude,
-      longitude:longitude
+      longitude:longitude,
+      chatId:chat.id
     });
     const user = await newUser.save();
     res.status(200).json(success(res.statusCode, "Success", { user }));
   } catch (err) {
-    console.log(err);
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
