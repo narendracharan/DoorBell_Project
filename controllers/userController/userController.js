@@ -34,15 +34,12 @@ exports.UserRegister = async (req, res) => {
       return res.status(201).json(error("userEmail is already register",res.statusCode));
     }
     const passwordHash = await bcrypt.hash(password, 10);
-    const chat=new chatMessagesSchema({})
-    await chat.save()
     const newUser = new userModels({
       websiteName: userName,
       userEmail: userEmail,
       password: passwordHash,
       latitude:latitude,
-      longitude:longitude,
-      chatId:chat.id
+      longitude:longitude
     });
     const user = await newUser.save();
     res.status(200).json(success(res.statusCode, "Success", { user }));

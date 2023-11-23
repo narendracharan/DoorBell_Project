@@ -5,13 +5,11 @@ const chatModels = require("../../models/userModels/chatModels");
 exports.getMessages = async (chatId) => {
   try {
     const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
-    console.log(msg);
     const messages = await chatMessagesSchema
       .find({ chatId: chatId })
       .populate("senderId").populate("chatId")
       .sort({ createdAt: 1 })
       .lean();
-    
     return [messages,msg];
   } catch (err) {
     console.log(err);
@@ -59,12 +57,12 @@ exports.sendMessage = async (data) => {
       })
       .sort({ createdAt: 1 })
       .lean();
-    await chatMessagesSchema
-      .findByIdAndUpdate(data.chatId, {
-        text: data.text,
-        senderId:data.senderId,
-        sentBy:data.sentBy,
-      })
+    // await chatMessagesSchema
+    //   .findByIdAndUpdate(data.chatId, {
+    //     text: data.text,
+    //     senderId:data.senderId,
+    //     sentBy:data.sentBy,
+    //   })
 
     const chat = await chatModels
       .findById(data.id)

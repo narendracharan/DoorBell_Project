@@ -63,11 +63,11 @@ const schema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  chatId:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "chatMessage",
-    require: true,
-  },
+  // chatId:{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "chatMessage",
+  //   require: true,
+  // },
 
   // newAddress:{
   //     type:String,
