@@ -69,9 +69,9 @@ io.on("connection", (socket) => {
   });
   socket.on("senderMessage", async (data) => {
     console.log("clinicians", chatId);
-    socket.join(data.chatId);
+//socket.join(data.chatId);
     const chats = await getClinicianChatsByChatId(data);
-    io.emit("senderList", chats);
+    io.to(data.chatId).io.emit("senderList", chats);
   });
 
   socket.on("disconnect", () => {
