@@ -37,6 +37,7 @@ exports.getClinicianChats = async (_id) => {
 
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
+    const lastMessage=req.body.lastMessage
     const chat = await chatMessagesSchema
       .findByIdAndUpdate({chatId:chatId}, { lastMessage: lastMessage }, { new: true })
       .populate("senderId")
