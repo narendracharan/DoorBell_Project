@@ -50,14 +50,13 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
   socket.on("sendNotification", (data) => {
-    socket.broadcast.emit('getNotification', data); 
-
+    socket.broadcast.emit("getNotification", data);
   });
   socket.on("createRoom", async (chatId) => {
     console.log("createRoom", chatId);
     socket.join(chatId);
     const messages = await getMessages(chatId);
-    console.log(messages);
+   // console.log(messages);
     io.to(chatId).emit("messageList", messages);
   });
   socket.on("sendMessage", async (data) => {
@@ -69,7 +68,7 @@ io.on("connection", (socket) => {
   });
   socket.on("senderMessage", async (data) => {
     console.log("clinicians", data);
-//socket.join(data.chatId);
+    //socket.join(data.chatId);
     const chats = await getClinicianChatsByChatId(data);
     io.to(data.chatId).io.emit("senderList", chats);
   });
