@@ -13,7 +13,6 @@ exports.getMessages = async (chatId) => {
       .find()
       .populate("senderId")
       .populate("chatId");
-      await chatMessagesSchema.findByIdAndUpdate(chatId,{lastMessage:lastMessage},{new:true})
     return [messages, msg];
   } catch (err) {
     console.log(err);
@@ -37,9 +36,10 @@ exports.getClinicianChats = async (_id) => {
 
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
-    const chat = await chatModels
-      .findById(chatId)
-      .populate([["user1", "user2"]]);
+    const chat = await chatMessagesSchema
+      .findByIdAndUpdate(chatId, { lastMessage: lastMessage }, { new: true })
+      .populate("senderId")
+      .populate("chatId");
     // const chats = await chatModels
     //   .find({
     //     user1: chat._id,
