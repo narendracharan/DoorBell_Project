@@ -10,10 +10,9 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  lastMessage: {
-    type: String,
-    required: false,
-    default: "",
+  isRead: {
+    type: Boolean,
+    default: false
   },
   senderId: {
     type: mongoose.Types.ObjectId,
