@@ -10,6 +10,11 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  lastMessage: {
+    type: String,
+    required: false,
+    default: "",
+  },
   senderId: {
     type: mongoose.Types.ObjectId,
     ref: "Doorbeladmin",

@@ -1,16 +1,20 @@
 const chatMessagesSchema = require("../../models/userModels/chatMessagesSchema");
 const chatModels = require("../../models/userModels/chatModels");
 
-
 exports.getMessages = async (chatId) => {
   try {
     const messages = await chatMessagesSchema
       .find({ chatId: chatId })
-      .populate("senderId").populate("chatId")
+      .populate("senderId")
+      .populate("chatId")
       .sort({ createdAt: 1 })
       .lean();
-      const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
-    return [messages,msg];
+    const msg = await chatMessagesSchema
+      .find()
+      .populate("senderId")
+      .populate("chatId");
+      await chatMessagesSchema.findById(chatId,{lastMessage:lastMessage},{new:true})
+    return [messages, msg];
   } catch (err) {
     console.log(err);
     return;
@@ -20,9 +24,9 @@ exports.getMessages = async (chatId) => {
 exports.getClinicianChats = async (_id) => {
   try {
     const chats = await chatMessagesSchema
-      .find({senderId:senderId
-      })
-      .populate("senderId").populate("chatId")
+      .find({ senderId: senderId })
+      .populate("senderId")
+      .populate("chatId")
       .sort({ updatedAt: -1 });
     return chats;
   } catch (err) {
