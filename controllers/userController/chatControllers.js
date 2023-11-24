@@ -4,12 +4,12 @@ const chatModels = require("../../models/userModels/chatModels");
 
 exports.getMessages = async (chatId) => {
   try {
-    const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
     const messages = await chatMessagesSchema
       .find({ chatId: chatId })
       .populate("senderId").populate("chatId")
       .sort({ createdAt: 1 })
       .lean();
+      const msg = await chatMessagesSchema.find({}).populate("senderId").populate("chatId")
     return [messages,msg];
   } catch (err) {
     console.log(err);
