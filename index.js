@@ -50,9 +50,8 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
   socket.on("sendNotification", (data) => {
-    io.to(socket.id).emit("getNotification", {
-      data
-    })
+    socket.broadcast.emit('getNotification', data); 
+
   });
   socket.on("createRoom", async (chatId) => {
     console.log("createRoom", chatId);

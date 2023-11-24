@@ -10,7 +10,6 @@ const schema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  
   senderId: {
     type: mongoose.Types.ObjectId,
     ref: "Doorbeladmin",
