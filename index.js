@@ -67,10 +67,10 @@ io.on("connection", (socket) => {
     const chats = await getClinicianChatsByChatId(data.chatId);
     io.to(data.chatId).emit("chatList", chats);
   });
-  socket.on("senderMessage", async (chatId) => {
+  socket.on("senderMessage", async (data) => {
     console.log("clinicians", chatId);
-    socket.join(chatId);
-    const chats = await getClinicianChatsByChatId(chatId);
+    socket.join(data.chatId);
+    const chats = await getClinicianChatsByChatId(data);
     io.emit("senderList", chats);
   });
 
