@@ -1,5 +1,6 @@
 const chatMessagesSchema = require("../../models/userModels/chatMessagesSchema");
 const chatModels = require("../../models/userModels/chatModels");
+const notificationSchema = require("../../models/userModels/notificationSchema");
 
 exports.getMessages = async (chatId) => {
   try {
@@ -46,6 +47,18 @@ exports.getClinicianChatsByChatId = async (chatId) => {
     //   })
     //   .sort({ updatedAt: -1 });
     return chat;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
+
+exports.sendNotification = async (data) => {
+  try {
+    await notificationSchema.create(data)
+    const notification=await notificationSchema.find({senderId:data.senderId}) .sort({ createdAt: 1 })
+    .lean();
+    return notification;
   } catch (err) {
     console.log(err);
     return;
