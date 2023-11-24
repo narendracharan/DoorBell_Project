@@ -13,7 +13,7 @@ exports.getMessages = async (chatId) => {
       .find()
       .populate("senderId")
       .populate("chatId");
-      await chatMessagesSchema.findById(chatId,{lastMessage:lastMessage},{new:true})
+      await chatMessagesSchema.findByIdAndUpdate(chatId,{lastMessage:lastMessage},{new:true})
     return [messages, msg];
   } catch (err) {
     console.log(err);
