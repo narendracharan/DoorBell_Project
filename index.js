@@ -70,9 +70,8 @@ io.on("connection", (socket) => {
     console.log("updateData", data);
     socket.join(data.chatId);
     const chats = await getClinicianChatsByChatId(data);
-    io.to(data.chatId).io.emit("senderList", chats);
+    io.to(data.chatId).emit("senderList", chats);
   });
-
   socket.on("disconnect", () => {
     socket.disconnect();
     console.log("🔥: A user disconnected");
