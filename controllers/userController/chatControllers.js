@@ -38,7 +38,7 @@ exports.getClinicianChats = async (_id) => {
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
     const chat = await chatMessagesSchema
-      .findByIdAndUpdate({chatId:chatId}, { isRead: "true" }, { new: true })
+      .findByIdAndUpdate({_id:chatId}, { isRead: "true" }, { new: true })
       .populate("senderId")
       .populate("chatId");
     // const chats = await chatModels
@@ -71,9 +71,10 @@ exports.sendMessage = async (data) => {
     const messages = await chatMessagesSchema
       .find({
         chatId: data.chatId,
-      })
+      }).populate("senderId")
+      .populate("chatId")
       .sort({ createdAt: 1 })
-      .lean();
+      .lean()
     // await chatMessagesSchema
     //   .findByIdAndUpdate(data.chatId, {
     //     text: data.text,
@@ -81,9 +82,9 @@ exports.sendMessage = async (data) => {
     //     sentBy:data.sentBy,
     //   })
 
-    const chat = await chatModels
-      .findById(data.id)
-      .populate(["user1", "user2"]);
+    // const chat = await chatModels
+    //   .findById(data.id)
+    //   .populate(["user1", "user2"]);
     //   if (data.sentBy === "clinicianId") {
     //     if (chat.mother.deviceId && chat.mother.notification_status) {
     //       await sendNotification(
