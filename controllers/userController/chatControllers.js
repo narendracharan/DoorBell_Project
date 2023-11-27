@@ -38,7 +38,7 @@ exports.getClinicianChats = async (_id) => {
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
     const chat = await chatMessagesSchema
-      .findByIdAndUpdate({_id:chatId}, { isRead: "true" }, { new: true })
+      .findByIdAndUpdate(chatId, { isRead: true }, { new: true })
       .populate("senderId")
       .populate("chatId");
     // const chats = await chatModels
@@ -55,9 +55,11 @@ exports.getClinicianChatsByChatId = async (chatId) => {
 
 exports.sendNotification = async (data) => {
   try {
-    await notificationSchema.create(data)
-    const notification=await notificationSchema.find({senderId:data.senderId}) .sort({ createdAt: 1 })
-    .lean();
+    await notificationSchema.create(data);
+    const notification = await notificationSchema
+      .find({ senderId: data.senderId })
+      .sort({ createdAt: 1 })
+      .lean();
     return notification;
   } catch (err) {
     console.log(err);
@@ -71,10 +73,11 @@ exports.sendMessage = async (data) => {
     const messages = await chatMessagesSchema
       .find({
         chatId: data.chatId,
-      }).populate("senderId")
+      })
+      .populate("senderId")
       .populate("chatId")
       .sort({ createdAt: 1 })
-      .lean()
+      .lean();
     // await chatMessagesSchema
     //   .findByIdAndUpdate(data.chatId, {
     //     text: data.text,
