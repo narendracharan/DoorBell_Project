@@ -236,3 +236,33 @@ exports.adminDetails = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+exports.updateadminMode = async (req, res) => {
+  try {
+    const userDetails = await adminSchema.findByIdAndUpdate(
+      req.params.id,
+      {
+        userMode: true,
+      },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { userDetails }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.updatefalseMode = async (req, res) => {
+  try {
+    const userDetails = await adminSchema.findByIdAndUpdate(
+      req.params.id,
+      {
+        userMode: false,
+      },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { userDetails }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+

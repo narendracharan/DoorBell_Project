@@ -16,7 +16,6 @@ exports.TutorialScreen = async (req, res) => {
   }
 };
 
-
 ///---> Login User APi
 exports.loginUserApp = async (req, res) => {
   try {
@@ -119,7 +118,6 @@ exports.userAppVerify = async (req, res) => {
   }
 };
 
-
 ///  -----> Reset Password Api
 exports.resetUserAppPassword = async (req, res) => {
   try {
@@ -167,7 +165,6 @@ exports.resetUserAppPassword = async (req, res) => {
   }
 };
 
-
 //-------> User Profile
 
 exports.userProfile = async (req, res) => {
@@ -189,7 +186,6 @@ exports.userProfile = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
-
 
 ///-------> Edit User Profile
 exports.editUserProfile = async (req, res) => {
@@ -218,15 +214,14 @@ exports.editUserProfile = async (req, res) => {
       profile.userName_ar = userName_ar;
     }
     //if (req.file.length) {
-      profile.profilePic = `${process.env.BASE_URL}/${req.file.filename}`;
-   // }
+    profile.profilePic = `${process.env.BASE_URL}/${req.file.filename}`;
+    // }
     await profile.save();
     res.status(200).json(success(res.statusCode, "Success", { profile }));
   } catch (err) {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
-
 
 ///---------> Edit Image Api
 exports.editImage = async (req, res) => {
@@ -239,7 +234,6 @@ exports.editImage = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
-
 
 ///--------> About User APi
 exports.aboutUserApp = async (req, res) => {
@@ -255,7 +249,6 @@ exports.aboutUserApp = async (req, res) => {
   }
 };
 
-
 //---> Home Kit User App APi
 exports.homeKitUserApp = async (req, res) => {
   try {
@@ -269,7 +262,6 @@ exports.homeKitUserApp = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
-
 
 //---------> Forget Password Api
 exports.userforgetPassword = async (req, res) => {
@@ -313,7 +305,6 @@ exports.userforgetPassword = async (req, res) => {
   }
 };
 
-
 //--------> Faqs List Api
 exports.faqsList = async (req, res) => {
   try {
@@ -327,3 +318,34 @@ exports.faqsList = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+exports.updateUserMode = async (req, res) => {
+  try {
+    const userDetails = await userRegister.findByIdAndUpdate(
+      req.params.id,
+      {
+        userMode: true,
+      },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { userDetails }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+
+exports.updatefalseMode = async (req, res) => {
+  try {
+    const userDetails = await userRegister.findByIdAndUpdate(
+      req.params.id,
+      {
+        userMode: false,
+      },
+      { new: true }
+    );
+    res.status(200).json(success(res.statusCode, "Success", { userDetails }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};
+

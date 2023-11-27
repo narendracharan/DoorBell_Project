@@ -41,6 +41,8 @@ const {
   faqsList,
   editImage,
   chetingAdmin,
+  updateUserMode,
+  updatefalseMode,
 } = require("../controllers/userController/userAppControllers");
 const upload = require("../middleware/multer");
 const {
@@ -113,6 +115,8 @@ router.post(
 );
 router.post("/user-app-about", userAuthorisationUser, aboutUserApp);
 router.post("/user-app-productList", userAuthorisationUser, productList);
+router.post("/online-mode/:id",updateUserMode)
+router.post("/offline-mode/:id",updatefalseMode)
 
 router.post("/create-contact", userAuthorisationUser, createContact);
 router.post("/user-forgetpassword", userAuthorisationUser, userforgetPassword);

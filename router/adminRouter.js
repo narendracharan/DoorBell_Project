@@ -10,6 +10,8 @@ const {
   addLanguage,
   updateLanguage,
   adminDetails,
+  updateadminMode,
+  updatefalseMode,
 } = require("../controllers/adminController/adminController");
 const adminAuthorisationUser = require("../middleware/adminAuthentication");
 const upload = require("../middleware/multer");
@@ -173,4 +175,7 @@ router.post("/update-faqs/:id", adminAuthorisationUser, editFaqs);
 router.post("/delete-faqs/:id", adminAuthorisationUser, deleteFaq);
 router.post("/faqslist", adminAuthorisationUser, faqsList);
 router.post("/upload-image",upload.any(),addImage)
+
+router.post("/online-mode/:id",updateadminMode)
+router.post("/offline-mode/:id",updatefalseMode)
 module.exports = router;

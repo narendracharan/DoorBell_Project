@@ -63,6 +63,10 @@ const schema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  userMode:{
+    type:Boolean,
+    default:false
+  },
   // chatId:{
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: "chatMessage",

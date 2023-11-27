@@ -21,6 +21,10 @@ const schema=new mongoose.Schema({
     adminProfile:{
         type:String,
         require:true
+    },
+    adminMode:{
+        type:Boolean,
+        default:false
     }
     
 })
