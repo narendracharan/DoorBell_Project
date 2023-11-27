@@ -55,10 +55,14 @@ io.on("connection", (socket) => {
   socket.on("createRoom", async (chatId) => {
     console.log("createRoom", chatId);
     socket.join(chatId);
+    const adminMessage = await getMessages(chatId);
     const messages = await getMessages(chatId);
-   // console.log(messages);
+    // console.log(messages);
     io.to(chatId).emit("messageList", messages);
+    io.emit("adminMessage", adminMessage);
   });
+
+
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);
     const messages = await sendMessage(data);
@@ -72,6 +76,15 @@ io.on("connection", (socket) => {
     const chats = await getClinicianChatsByChatId(data);
     io.to(data.chatId).emit("senderList", chats);
   });
+
+  // socket.on("offline", () => {
+  //   // remove user from active users
+  //   onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
+  //   console.log("user is offline", onlineUsers);
+  //   // send all online users to all users
+  //   io.emit("get-users", onlineUsers);
+  // });
+
   socket.on("disconnect", () => {
     socket.disconnect();
     console.log("🔥: A user disconnected");
