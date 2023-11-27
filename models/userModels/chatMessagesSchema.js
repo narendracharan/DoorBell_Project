@@ -22,7 +22,7 @@ const schema = new mongoose.Schema({
   sentBy: {
     type: String,
     require: true,
-    enum: ["User", "Admin"],
+    enum: ["User", "Admin","Web"],
   },
 });
 
