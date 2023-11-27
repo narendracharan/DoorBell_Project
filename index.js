@@ -27,6 +27,7 @@ const {
   sendMessage,
   getClinicianChats,
   getClinicianChatsByChatId,
+  adminMessages,
 } = require("./controllers/userController/chatControllers");
 
 //process.env["BASE_URL"] = "http://ec2-16-171-57-155.eu-north-1.compute.amazonaws.com:3001";
@@ -55,13 +56,16 @@ io.on("connection", (socket) => {
   socket.on("createRoom", async (chatId) => {
     console.log("createRoom", chatId);
     socket.join(chatId);
-    const adminMessage = await getMessages(chatId);
     const messages = await getMessages(chatId);
     // console.log(messages);
     io.to(chatId).emit("messageList", messages);
+  });
+  
+  socket.on("adminMessage", async (chatId) => {
+    console.log("sendMessage", chatId);
+    const adminMessage = await adminMessages(chatId);
     io.emit("adminMessage", adminMessage);
   });
-
 
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);

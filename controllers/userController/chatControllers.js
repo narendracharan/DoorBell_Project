@@ -21,6 +21,19 @@ exports.getMessages = async (chatId) => {
   }
 };
 
+exports.adminMessages = async (chatId) => {
+  try {
+    const msg = await chatMessagesSchema
+      .find()
+      .populate("senderId")
+      .populate("chatId");
+    return msg;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
+
 exports.getClinicianChats = async (_id) => {
   try {
     const chats = await chatMessagesSchema
