@@ -241,7 +241,7 @@ exports.updateadminMode = async (req, res) => {
     const userDetails = await adminSchema.findByIdAndUpdate(
       req.params.id,
       {
-        userMode: true,
+        adminMode: true,
       },
       { new: true }
     );
