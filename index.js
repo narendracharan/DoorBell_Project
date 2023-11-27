@@ -29,6 +29,7 @@ const {
   getClinicianChatsByChatId,
   adminMessages,
 } = require("./controllers/userController/chatControllers");
+const chatMessagesSchema = require("./models/userModels/chatMessagesSchema");
 
 //process.env["BASE_URL"] = "http://ec2-16-171-57-155.eu-north-1.compute.amazonaws.com:3001";
 
@@ -60,14 +61,14 @@ io.on("connection", (socket) => {
     const adminMessage = await adminMessages(chatId);
     // console.log(messages);
     io.to(chatId).emit("messageList", messages);
-    io.emit("adminMessage", adminMessage);
+    emit("adminMessage", adminMessage);
   });
 
-  socket.on("adminMessage", async (chatId) => {
-    console.log("sendMessage", chatId);
-    const adminMessage = await adminMessages(chatId);
-    io.emit("adminMessage", adminMessage);
-  });
+  // socket.on("adminMessage", async (chatId) => {
+  //   console.log("sendMessage", chatId);
+  //   const adminMessage = await adminMessages(chatId);
+  //   io.emit("adminMessage", adminMessage);
+  // });
 
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);
@@ -76,12 +77,18 @@ io.on("connection", (socket) => {
     // const chats = await getClinicianChatsByChatId(data.chatId);
     // io.to(data.chatId).emit("chatList", chats);
   });
-  socket.on("senderMessage", async (data) => {
-    console.log("updateData", data);
-    socket.join(data.chatId);
-    const chats = await getClinicianChatsByChatId(data);
-    io.to(data.chatId).emit("senderList", chats);
-  });
+  // socket.on("senderMessage", async (data) => {
+  //   console.log("updateData", data);
+  //   socket.join(data.chatId);
+  //   const chats = await getClinicianChatsByChatId(data);
+  //   io.to(data.chatId).emit("senderList", chats);
+  // });
+  socket.on("senderMessage", async({chatId})=>{
+    const updated_message = await chatMessagesSchema.findByIdAndUpdate(chatId, {isRead: true}, {new: true});
+    if(updated_message){
+      socket.emit("senderList",updated_message)
+    }
+  })
 
   // socket.on("offline", () => {
   //   // remove user from active users
