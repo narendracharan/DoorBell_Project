@@ -63,12 +63,12 @@ io.on("connection", (socket) => {
     console.log("sendMessage", data);
     const messages = await sendMessage(data);
     io.to(data.chatId).emit("messageList", messages);
-    const chats = await getClinicianChatsByChatId(data.chatId);
-    io.to(data.chatId).emit("chatList", chats);
+    // const chats = await getClinicianChatsByChatId(data.chatId);
+    // io.to(data.chatId).emit("chatList", chats);
   });
   socket.on("senderMessage", async (data) => {
-    console.log("clinicians", data);
-    //socket.join(data.chatId);
+    console.log("updateData", data);
+    socket.join(data.chatId);
     const chats = await getClinicianChatsByChatId(data);
     io.to(data.chatId).io.emit("senderList", chats);
   });
