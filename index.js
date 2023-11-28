@@ -77,10 +77,11 @@ io.on("connection", (socket) => {
     // const chats = await getClinicianChatsByChatId(data.chatId);
     // io.to(data.chatId).emit("chatList", chats);
   });
-  socket.on("senderMessage", async (chatId) => {
-    console.log("updateData", chatId);
-    const chats = await getClinicianChatsByChatId(chatId);
-    io.to(chatId).emit("senderList", chats);
+  socket.on("senderMessage", async (data) => {
+    console.log("updateData", data);
+    const chats = await getClinicianChatsByChatId(data);
+    console.log(chats);
+    io.to(data.chatId).emit("senderList", chats);
   });
 
   socket.on("disconnect", () => {
