@@ -77,18 +77,11 @@ io.on("connection", (socket) => {
     // const chats = await getClinicianChatsByChatId(data.chatId);
     // io.to(data.chatId).emit("chatList", chats);
   });
-  socket.on("senderMessage", async (data) => {
-    console.log("updateData", data);
-    const chats = await getClinicianChatsByChatId(data);
-    io.to(data.chatId).emit("senderList", chats);
+  socket.on("senderMessage", async (chatId) => {
+    console.log("updateData", chatId);
+    const chats = await getClinicianChatsByChatId(chatId);
+    io.to(chatId).emit("senderList", chats);
   });
-  // socket.on("offline", () => {
-  //   // remove user from active users
-  //   onlineUsers = onlineUsers.filter((user) => user.socketId !== socket.id);
-  //   console.log("user is offline", onlineUsers);
-  //   // send all online users to all users
-  //   io.emit("get-users", onlineUsers);
-  // });
 
   socket.on("disconnect", () => {
     socket.disconnect();
