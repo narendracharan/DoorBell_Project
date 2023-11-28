@@ -52,7 +52,7 @@ exports.getClinicianChats = async (_id) => {
 exports.getClinicianChatsByChatId = async (chatId) => {
   try {
     const chat = await chatMessagesSchema
-      .findByIdAndUpdate(chatId, { isRead: true }, { new: true })
+      .findByIdAndUpdate(chatId, { isRead: "true" }, { new: true })
       .populate("senderId")
       .populate("chatId");
     // const chats = await chatModels
@@ -66,6 +66,10 @@ exports.getClinicianChatsByChatId = async (chatId) => {
     return;
   }
 };
+
+
+
+
 
 
 
