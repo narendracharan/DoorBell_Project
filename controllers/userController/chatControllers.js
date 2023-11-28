@@ -177,7 +177,7 @@ exports.sendMessage = async (data) => {
 exports.isReadUpdate = async (chatId) => {
   try {
     const chat = await chatMessagesSchema
-      .findByIdAndUpdate(chatId, { isRead: "true" }, { new: true })
+      .findByIdAndUpdate(chatId, { isRead: true }, { new: true })
       .populate("senderId")
       .populate("chatId");
     // const chats = await chatModels
@@ -187,7 +187,7 @@ exports.isReadUpdate = async (chatId) => {
     //   .sort({ updatedAt: -1 });
     res.status(200).json(success(res.statusCode, "Success", { chat }));
   } catch (err) {
+    
     res.status(400).json(error("Failed", res.statusCode));
-    return;
   }
 };
