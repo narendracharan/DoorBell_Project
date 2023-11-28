@@ -174,10 +174,10 @@ exports.sendMessage = async (data) => {
   }
 };
 
-exports.isReadUpdate = async (chatId) => {
+exports.isReadUpdate = async (req,res) => {
   try {
     const chat = await chatMessagesSchema
-      .findByIdAndUpdate(chatId, { isRead: true }, { new: true })
+      .findByIdAndUpdate(req.params.id, { isRead: true }, { new: true })
       .populate("senderId")
       .populate("chatId");
     // const chats = await chatModels
