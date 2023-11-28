@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
     const adminMessage = await adminMessages(chatId);
     // console.log(messages);
     io.to(chatId).emit("messageList", messages);
-    //emit("adminMessage", adminMessage);
+    io.emit("adminMessage", adminMessage);
   });
 
   // socket.on("adminMessage", async (chatId) => {

@@ -67,12 +67,6 @@ exports.getClinicianChatsByChatId = async (chatId) => {
   }
 };
 
-
-
-
-
-
-
 exports.sendNotification = async (data) => {
   try {
     await notificationSchema.create(data);
@@ -176,6 +170,24 @@ exports.sendMessage = async (data) => {
     return messages;
   } catch (err) {
     console.log(err);
+    return;
+  }
+};
+
+exports.isReadUpdate = async (chatId) => {
+  try {
+    const chat = await chatMessagesSchema
+      .findByIdAndUpdate(chatId, { isRead: "true" }, { new: true })
+      .populate("senderId")
+      .populate("chatId");
+    // const chats = await chatModels
+    //   .find({
+    //     user1: chat._id,
+    //   })
+    //   .sort({ updatedAt: -1 });
+    res.status(200).json(success(res.statusCode, "Success", { chat }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
     return;
   }
 };

@@ -52,7 +52,7 @@ const {
   addressEdit,
   deleteAddress,
 } = require("../controllers/userController/contactController");
-const { get } = require("../controllers/userController/chatControllers");
+const { get, isReadUpdate } = require("../controllers/userController/chatControllers");
 const router = express.Router();
 
 
@@ -122,5 +122,6 @@ router.post("/offline-mode/:id",updatefalseMode)
 router.post("/create-contact", userAuthorisationUser, createContact);
 router.post("/user-forgetpassword", userAuthorisationUser, userforgetPassword);
 router.post("/faqs-list", userAuthorisationUser, faqsList);
+router.post("/isReadUpdate/:id",isReadUpdate)
 
 module.exports = router;
