@@ -1,6 +1,7 @@
 const contentModels = require("../../models/adminModels/contentModels");
 const faqsModels = require("../../models/adminModels/faqsModels");
 const productModels = require("../../models/adminModels/productModels");
+const register = require("../../models/adminModels/register");
 const tutorialModels = require("../../models/adminModels/tutorialScreen");
 const userRegister = require("../../models/userModels/userRegister");
 const { error, success } = require("../../response");
@@ -349,3 +350,11 @@ exports.updatefalseMode = async (req, res) => {
   }
 };
 
+exports.adminList = async (req, res) => {
+  try {
+    const admin = await register.findOne();
+    res.status(200).json(success(res.statusCode, "Success", { admin }));
+  } catch (err) {
+    res.status(400).json(error("Failed", res.statusCode));
+  }
+};

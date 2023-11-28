@@ -43,6 +43,7 @@ const {
   chetingAdmin,
   updateUserMode,
   updatefalseMode,
+  adminList,
 } = require("../controllers/userController/userAppControllers");
 const upload = require("../middleware/multer");
 const {
@@ -123,5 +124,6 @@ router.post("/create-contact", userAuthorisationUser, createContact);
 router.post("/user-forgetpassword", userAuthorisationUser, userforgetPassword);
 router.post("/faqs-list", userAuthorisationUser, faqsList);
 router.post("/isReadUpdate/:id",isReadUpdate)
+router.post("/admin-list",adminList)
 
 module.exports = router;
