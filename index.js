@@ -80,7 +80,7 @@ io.on("connection", (socket) => {
   socket.on("senderMessage", async (chatId) => {
     console.log("updateData", chatId);
     const chats = await getClinicianChatsByChatId(chatId);
-    io.to(chatId).emit("senderList", chats);
+    io.emit("senderList", chats);
   });
 
   socket.on("disconnect", () => {
