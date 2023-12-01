@@ -49,18 +49,22 @@ app.get("/", (req, res) => {
   res.status(200).send("i am a beautiful butterfly");
 });
 
-io.on("connection", (socket) => {
+io.on("connection",async (socket) => {
    console.log(`⚡: ${socket.id} user just connected!`);
   // socket.on("sendNotification", (data) => {
   //   socket.broadcast.emit("getNotification", data);
   // });
+  
+  const adminMessage = await adminMessages();
+  console.log(adminMessage);
+  io.emit("adminMessageList", adminMessage);
+
   socket.on("createRoom", async (chatId) => {
     console.log("createRoom", chatId);
     socket.join(chatId);
     const messages = await getMessages(chatId);
     io.to(chatId).emit("messageList", messages);
   });
-
   // socket.on("adminMessage", async (chatId) => {
   //  // console.log("sendMessage", chatId);
   //   const adminMessage = await adminMessages(chatId);
