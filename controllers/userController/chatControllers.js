@@ -25,7 +25,7 @@ exports.getMessages = async (chatId) => {
 exports.adminMessages = async (chatId) => {
   try {
     const msg = await chatMessagesSchema
-      .find({senderId:chatId})
+      .find()
       .populate("senderId")
       .populate("chatId");
     return msg;

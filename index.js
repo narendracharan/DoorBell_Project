@@ -58,17 +58,14 @@ io.on("connection", (socket) => {
     console.log("createRoom", chatId);
     socket.join(chatId);
     const messages = await getMessages(chatId);
-    const adminMessage = await adminMessages(chatId);
-    // console.log(messages);
     io.to(chatId).emit("messageList", messages);
-    io.to(chatId).emit("adminMessage", adminMessage);
   });
 
-  // socket.on("adminMessage", async (chatId) => {
-  //   console.log("sendMessage", chatId);
-  //   const adminMessage = await adminMessages(chatId);
-  //   io.emit("adminMessage", adminMessage);
-  // });
+  socket.on("adminMessage", async (chatId) => {
+    console.log("sendMessage", chatId);
+    const adminMessage = await adminMessages(chatId);
+    io.emit("adminMessage", adminMessage);
+  });
 
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);
