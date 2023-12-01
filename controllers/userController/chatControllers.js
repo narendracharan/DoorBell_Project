@@ -25,7 +25,7 @@ exports.getMessages = async (chatId) => {
 exports.adminMessages = async (chatId) => {
   try {
     const msg = await chatMessagesSchema
-      .find()
+      .find({senderId:chatId})
       .populate("senderId")
       .populate("chatId");
     return msg;
@@ -174,7 +174,7 @@ exports.sendMessage = async (data) => {
   }
 };
 
-exports.isReadUpdate = async (req,res) => {
+exports.isReadUpdate = async (req, res) => {
   try {
     const chat = await chatMessagesSchema
       .findByIdAndUpdate(req.params.id, { isRead: true }, { new: true })
@@ -187,7 +187,6 @@ exports.isReadUpdate = async (req,res) => {
     //   .sort({ updatedAt: -1 });
     res.status(200).json(success(res.statusCode, "Success", { chat }));
   } catch (err) {
-    
     res.status(400).json(error("Failed", res.statusCode));
   }
 };

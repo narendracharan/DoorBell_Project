@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
     const adminMessage = await adminMessages(chatId);
     // console.log(messages);
     io.to(chatId).emit("messageList", messages);
-    io.emit("adminMessage", adminMessage);
+    io.to(chatId).emit("adminMessage", adminMessage);
   });
 
   // socket.on("adminMessage", async (chatId) => {
@@ -80,8 +80,7 @@ io.on("connection", (socket) => {
   socket.on("senderMessage", async (data) => {
     console.log("updateData", data);
     const chats = await getClinicianChatsByChatId(data);
-    console.log(chats);
-    io.to(data.chatId).emit("senderList", chats);
+    socket.emit("senderList", chats);
   });
 
   socket.on("disconnect", () => {

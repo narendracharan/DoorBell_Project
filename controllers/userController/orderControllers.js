@@ -6,9 +6,14 @@ const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 const addressModels = require("../../models/userModels/addressModels");
 const sendMail = require("../../services/EmailServices");
+const paytabs = require("paytabs_pt2");
 
+let profileID = "105265",
+  serverKey = "STJN6W2MZH-JHG2BDB6DG-KLJHRR9ZT2",
+  region = "Saudi Arabia";
+const dd =paytabs.setConfig(profileID, serverKey, region);
 
-
+console.log(dd);
 
 //  ------>    Create Order Api
 exports.createOrder = async (req, res) => {
@@ -82,8 +87,8 @@ exports.createOrder = async (req, res) => {
     // }
     // const total = await userRegister.find({ _id: user_Id });
     // const totalPrice = total.map((x) => x.totalafterDiscount);
-    const userCount=await userRegister.find().count()
-    const order_Id="doorBell"+userCount
+    const userCount = await userRegister.find().count();
+    const order_Id = "doorBell" + userCount;
     var password = firstName + "@1234";
     if (!address_Id) {
       const newAddress = new addressModels({
@@ -128,7 +133,7 @@ exports.createOrder = async (req, res) => {
       postalCode: postalCode,
       orderNotes: orderNotes,
       orderNotes_ar: orderNotes_ar,
-      order_Id:order_Id,
+      order_Id: order_Id,
       total: total,
       products: product,
       user_Id: user_Id,
@@ -180,7 +185,6 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-
 ///----------> User Order Api
 exports.userOrder = async (req, res) => {
   try {
@@ -200,7 +204,6 @@ exports.userOrder = async (req, res) => {
   }
 };
 
-
 // --------- > Order Details APi
 exports.orderDetails = async (req, res) => {
   try {
@@ -212,7 +215,6 @@ exports.orderDetails = async (req, res) => {
   }
 };
 
-
 /// ------> Order Delete Api
 exports.orderDelete = async (req, res) => {
   try {
@@ -222,3 +224,36 @@ exports.orderDelete = async (req, res) => {
     res.status(400).json(error("Failed", res.statusCode));
   }
 };
+
+exports.paytabspayment = async (req, res) => {
+  try {
+    const pay = paytabs.createPaymentPage({
+      merchant_email: "khalidfalsaud@hotmail.com",
+      secret_key: serverKey,
+      currency: "SAR",
+      amount: "10",
+      site_url: "http://localhost:5000",
+      title: "Renting a Car",
+      return_url: "http://localhost:5000/success",
+      cc_first_name: "Samy",
+      phone_number: "12332323",
+      billing_address: "Address",
+      city: "Manama",
+      state: "Manama",
+      postal_code: "1234",
+      country: "SAU", //
+      email: "narendra34@gmail.com",
+      address_shipping: "Shipping",
+      city_shipping: "Manama",
+      state_shipping: "Manama",
+      postal_code_shipping: "973",
+      country_shipping: "BHR",
+    });
+    console.log(pay);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(error("Error", res.statusCode));
+  }
+};
+
+//paytabs payment interegration api in node js?
