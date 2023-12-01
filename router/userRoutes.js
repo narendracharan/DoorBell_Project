@@ -127,6 +127,6 @@ router.post("/user-forgetpassword", userAuthorisationUser, userforgetPassword);
 router.post("/faqs-list", userAuthorisationUser, faqsList);
 router.post("/isReadUpdate/:id",isReadUpdate)
 router.post("/admin-list",adminList)
-router.post("/payment",paytabspayment)
+//router.post("/payment",paytabspayment)
 
 module.exports = router;

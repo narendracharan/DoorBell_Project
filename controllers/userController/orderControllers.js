@@ -6,14 +6,14 @@ const { error, success } = require("../../response");
 const { transporter } = require("../../services/mailServices");
 const addressModels = require("../../models/userModels/addressModels");
 const sendMail = require("../../services/EmailServices");
-const paytabs = require("paytabs_pt2");
+// const paytabs = require("paytabs_pt2");
 
-let profileID = "105265",
-  serverKey = "STJN6W2MZH-JHG2BDB6DG-KLJHRR9ZT2",
-  region = "Saudi Arabia";
-const dd =paytabs.setConfig(profileID, serverKey, region);
+// let profileID = "105265",
+//   serverKey = "STJN6W2MZH-JHG2BDB6DG-KLJHRR9ZT2",
+//   region = "Saudi Arabia";
+// const dd =paytabs.setConfig(profileID, serverKey, region);
 
-console.log(dd);
+// console.log(dd);
 
 //  ------>    Create Order Api
 exports.createOrder = async (req, res) => {
@@ -225,35 +225,35 @@ exports.orderDelete = async (req, res) => {
   }
 };
 
-exports.paytabspayment = async (req, res) => {
-  try {
-    const pay = paytabs.createPaymentPage({
-      merchant_email: "khalidfalsaud@hotmail.com",
-      secret_key: serverKey,
-      currency: "SAR",
-      amount: "10",
-      site_url: "http://localhost:5000",
-      title: "Renting a Car",
-      return_url: "http://localhost:5000/success",
-      cc_first_name: "Samy",
-      phone_number: "12332323",
-      billing_address: "Address",
-      city: "Manama",
-      state: "Manama",
-      postal_code: "1234",
-      country: "SAU", //
-      email: "narendra34@gmail.com",
-      address_shipping: "Shipping",
-      city_shipping: "Manama",
-      state_shipping: "Manama",
-      postal_code_shipping: "973",
-      country_shipping: "BHR",
-    });
-    console.log(pay);
-  } catch (err) {
-    console.log(err);
-    res.status(400).json(error("Error", res.statusCode));
-  }
-};
+// exports.paytabspayment = async (req, res) => {
+//   try {
+//     const pay = paytabs.createPaymentPage({
+//       merchant_email: "khalidfalsaud@hotmail.com",
+//       secret_key: serverKey,
+//       currency: "SAR",
+//       amount: "10",
+//       site_url: "http://localhost:5000",
+//       title: "Renting a Car",
+//       return_url: "http://localhost:5000/success",
+//       cc_first_name: "Samy",
+//       phone_number: "12332323",
+//       billing_address: "Address",
+//       city: "Manama",
+//       state: "Manama",
+//       postal_code: "1234",
+//       country: "SAU", //
+//       email: "narendra34@gmail.com",
+//       address_shipping: "Shipping",
+//       city_shipping: "Manama",
+//       state_shipping: "Manama",
+//       postal_code_shipping: "973",
+//       country_shipping: "BHR",
+//     });
+//     console.log(pay);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).json(error("Error", res.statusCode));
+//   }
+// };
 
 //paytabs payment interegration api in node js?
