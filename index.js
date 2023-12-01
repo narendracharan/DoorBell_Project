@@ -75,7 +75,7 @@ io.on("connection",async (socket) => {
     console.log("sendMessage", data);
     const messages = await sendMessage(data);
     io.to(data.chatId).emit("messageList", messages);
-    const adminMessage = await adminMessages(chatId);
+    const adminMessage = await adminMessages(data);
     console.log(adminMessage);
     io.emit("adminMessageList", adminMessage);
   });
