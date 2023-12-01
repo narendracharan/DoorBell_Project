@@ -50,10 +50,10 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`);
-  socket.on("sendNotification", (data) => {
-    socket.broadcast.emit("getNotification", data);
-  });
+   console.log(`⚡: ${socket.id} user just connected!`);
+  // socket.on("sendNotification", (data) => {
+  //   socket.broadcast.emit("getNotification", data);
+  // });
   socket.on("createRoom", async (chatId) => {
     console.log("createRoom", chatId);
     socket.join(chatId);
@@ -62,9 +62,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("adminMessage", async (chatId) => {
-    console.log("sendMessage", chatId);
+   // console.log("sendMessage", chatId);
     const adminMessage = await adminMessages(chatId);
-    io.emit("adminMessage", adminMessage);
+    io.emit("adminMessageList", adminMessage);
   });
 
   socket.on("sendMessage", async (data) => {
