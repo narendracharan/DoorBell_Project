@@ -61,18 +61,18 @@ io.on("connection", (socket) => {
     io.to(chatId).emit("messageList", messages);
   });
 
-  socket.on("adminMessage", async (chatId) => {
-   // console.log("sendMessage", chatId);
-    const adminMessage = await adminMessages(chatId);
-    io.emit("adminMessageList", adminMessage);
-  });
+  // socket.on("adminMessage", async (chatId) => {
+  //  // console.log("sendMessage", chatId);
+  //   const adminMessage = await adminMessages(chatId);
+  //   io.emit("adminMessageList", adminMessage);
+  // });
 
   socket.on("sendMessage", async (data) => {
     console.log("sendMessage", data);
     const messages = await sendMessage(data);
     io.to(data.chatId).emit("messageList", messages);
-    // const chats = await getClinicianChatsByChatId(data.chatId);
-    // io.to(data.chatId).emit("chatList", chats);
+    const adminMessage = await adminMessages(chatId);
+    io.emit("adminMessageList", adminMessage);
   });
   socket.on("senderMessage", async (data) => {
     console.log("updateData", data);
