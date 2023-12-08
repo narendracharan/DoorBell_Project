@@ -67,7 +67,7 @@ router.post("/verify-otp", OtpVerify);
 router.post("/reset-password", resetPassword);
 router.post(
   "/update-profile/:id",
-  upload.single("ProfilePic"),
+  upload.single("profilePic"),
   userAuthorisationUser,
   editProfile
 );
