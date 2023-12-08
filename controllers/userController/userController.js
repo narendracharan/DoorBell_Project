@@ -35,7 +35,7 @@ exports.UserRegister = async (req, res) => {
     }
     const passwordHash = await bcrypt.hash(password, 10);
     const newUser = new userModels({
-      websiteName: userName,
+      userName: userName,
       userEmail: userEmail,
       password: passwordHash,
       latitude:latitude,
@@ -200,10 +200,10 @@ exports.editProfile = async (req, res) => {
     //   res.status(201).json(error("please provide profile", res.statusCode));
     // }
     const data = {
-      websiteName: websiteName,
+      userName: websiteName,
       mobileNumber: mobileNumber,
       userEmail: userEmail,
-      websiteProfile: `${process.env.BASE_URL}/${req.file.filename}`,
+      profilePic: `${process.env.BASE_URL}/${req.file.filename}`,
     };
     const user = await userModels.findById(id, {
       userName: 0,

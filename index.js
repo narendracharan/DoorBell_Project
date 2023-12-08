@@ -49,12 +49,12 @@ app.get("/", (req, res) => {
   res.status(200).send("i am a beautiful butterfly");
 });
 
-io.on("connection",async (socket) => {
-   console.log(`⚡: ${socket.id} user just connected!`);
+io.on("connection", async (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
   // socket.on("sendNotification", (data) => {
   //   socket.broadcast.emit("getNotification", data);
   // });
-  
+
   const adminMessage = await adminMessages();
   console.log(adminMessage);
   io.emit("adminMessageList", adminMessage);
@@ -76,7 +76,6 @@ io.on("connection",async (socket) => {
     const messages = await sendMessage(data);
     io.to(data.chatId).emit("messageList", messages);
     const adminMessage = await adminMessages(data);
-    console.log(adminMessage);
     io.emit("adminMessageList", adminMessage);
   });
   socket.on("senderMessage", async (data) => {

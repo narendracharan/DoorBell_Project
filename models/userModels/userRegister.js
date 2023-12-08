@@ -3,18 +3,18 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 const schema = new mongoose.Schema({
-  websiteName: {
-    type: String,
-    require: true,
-  },
-  websiteName_ar: {
-    type: String,
-    require: true,
-  },
-  websiteProfile: {
-    type: String,
-    require: true,
-  },
+  // websiteName: {
+  //   type: String,
+  //   require: true,
+  // },
+  // websiteName_ar: {
+  //   type: String,
+  //   require: true,
+  // },
+  // websiteProfile: {
+  //   type: String,
+  //   require: true,
+  // },
   userName: {
     type: String,
     require: true,
