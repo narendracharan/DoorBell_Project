@@ -56,6 +56,7 @@ const {
   deleteAddress,
 } = require("../controllers/userController/contactController");
 const { get, isReadUpdate } = require("../controllers/userController/chatControllers");
+const { paytabsPament, validatePayment } = require("../controllers/userController/payment");
 const router = express.Router();
 
 
@@ -127,6 +128,7 @@ router.post("/user-forgetpassword", userAuthorisationUser, userforgetPassword);
 router.post("/faqs-list", userAuthorisationUser, faqsList);
 router.post("/isReadUpdate/:id",isReadUpdate)
 router.post("/admin-list",adminList)
-//router.post("/payment",paytabspayment)
+router.post("/payment",paytabsPament)
+//router.post("/vali-payment",validatePayment)
 
 module.exports = router;

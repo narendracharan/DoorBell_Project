@@ -256,4 +256,4 @@ exports.orderDelete = async (req, res) => {
 //   }
 // };
 
-//paytabs payment interegration api in node js?
+//paytabs payment verify api in node js?
