@@ -121,6 +121,10 @@ const schema = new mongoose.Schema({
     ref: "userAddress",
     require: true,
   },
+  tran_ref:{
+    type:String,
+    
+  }
 });
 
 schema.set("timestamps", true);

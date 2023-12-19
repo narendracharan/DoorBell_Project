@@ -43,6 +43,7 @@ exports.createOrder = async (req, res) => {
       title,
       title_ar,
       user_Id,
+      tran_ref
     } = req.body;
     // if (!firstName) {
     //   res.status(200).json(error("Please provide firstName", res.statusCode));
@@ -136,6 +137,7 @@ exports.createOrder = async (req, res) => {
       order_Id: order_Id,
       total: total,
       products: product,
+      tran_ref:tran_ref,
       user_Id: user_Id,
     });
     const saveOrder = await newOrder.save();

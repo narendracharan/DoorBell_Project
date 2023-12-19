@@ -8,7 +8,31 @@ paytabs.setConfig(profileID, serverKey, region);
 
 exports.paytabsPament = async (request, respose) => {
   try {
-    const {payment,userName,Email,mobileNumber}=request.body
+    const {
+      payment,
+      userName,
+      Email,
+      mobileNumber,
+      City,
+      State,
+      Country,
+      Street,
+    } = request.body;
+    if (!payment) {
+      return respose
+        .status(201)
+        .json(error("Please Provide Payment", respose.statusCode));
+    }
+    if (!userName) {
+      return respose
+        .status(201)
+        .json(error("Please Provide userName", respose.statusCode));
+    }
+    if (!Email) {
+      return respose
+        .status(201)
+        .json(error("Please Provide Email", respose.statusCode));
+    }
     const transaction = {
       type: "Sale",
       class: "Ecom",
@@ -20,9 +44,13 @@ exports.paytabsPament = async (request, respose) => {
       description: "test payment",
     };
     const customer = {
-      name:userName,
+      name: userName,
       email: Email,
-      phone:mobileNumber,
+      phone: mobileNumber,
+      city: City,
+      state: State,
+      country: Country,
+      street: Street,
     };
     const url = {
       response: "https://www.techgropsedev.com:2053",
@@ -38,10 +66,10 @@ exports.paytabsPament = async (request, respose) => {
       customer.name,
       customer.email,
       customer.phone,
-      // customer.street,
-      // customer.city,
-      // customer.state,
-      // customer.country,
+      customer.street,
+      customer.city,
+      customer.state,
+      customer.country,
       // customer.zip,
       // customer.IP
     ];
@@ -76,10 +104,8 @@ exports.paytabsPament = async (request, respose) => {
   }
 };
 
-
-
 // exports.validatePayment = (tranRef,callback)=>{
- 
+
 //   data = {
 //       'profile_id':profileID,
 //       'tran_ref':"TST2335300822100"
