@@ -83,7 +83,7 @@ exports.paytabsPament = async (request, respose) => {
     paymentPageCreated = function ($results) {
       respose
         .status(200)
-        .json(success("Suucess", { $results }, respose.statusCode));
+        .json(success(respose.statusCode, "Suucess", { $results }));
     };
 
     let frameMode = true;
